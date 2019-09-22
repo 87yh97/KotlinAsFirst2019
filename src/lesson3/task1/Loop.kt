@@ -108,6 +108,7 @@ fun maxDivisor(n: Int): Int = TODO()
  */
 fun isCoPrime(m: Int, n: Int): Boolean = TODO()
 
+
 /**
  * Простая
  *
