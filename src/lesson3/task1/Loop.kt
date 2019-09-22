@@ -67,7 +67,16 @@ fun digitCountInNumber(n: Int, m: Int): Int =
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun digitNumber(n: Int): Int = TODO()
+fun digitNumber(n: Int): Int {
+    var k = n
+    var a = 0
+    if (n == 0) return 1
+    while (k != 0) {
+        a += 1
+        k /= 10
+    }
+    return a
+}
 
 /**
  * Простая
@@ -75,7 +84,20 @@ fun digitNumber(n: Int): Int = TODO()
  * Найти число Фибоначчи из ряда 1, 1, 2, 3, 5, 8, 13, 21, ... с номером n.
  * Ряд Фибоначчи определён следующим образом: fib(1) = 1, fib(2) = 1, fib(n+2) = fib(n) + fib(n+1)
  */
-fun fib(n: Int): Int = TODO()
+fun fib(n: Int): Int {
+    if(n == 1 || n == 2) return 1
+    var k = 3
+    var num1: Int
+    var num2 = 1
+    var num3 = 2
+    while (k != n) {
+        num1 = num3
+        num3 += num2
+        num2 = num1
+        k++
+    }
+    return num3
+}
 
 /**
  * Простая
@@ -83,21 +105,40 @@ fun fib(n: Int): Int = TODO()
  * Для заданных чисел m и n найти наименьшее общее кратное, то есть,
  * минимальное число k, которое делится и на m и на n без остатка
  */
-fun lcm(m: Int, n: Int): Int = TODO()
+fun lcm(m: Int, n: Int): Int {
+    var k = 1
+    while ((m * k) % n != 0) {
+        k++
+    }
+    return m * k
+}
 
 /**
  * Простая
  *
  * Для заданного числа n > 1 найти минимальный делитель, превышающий 1
  */
-fun minDivisor(n: Int): Int = TODO()
+fun minDivisor(n: Int): Int {
+    var k = 2
+    while ((n % k != 0) && (k < (n / 2))) {
+        k++
+    }
+    if(k >= (n / 2)) return n
+    return k
+}
 
 /**
  * Простая
  *
  * Для заданного числа n > 1 найти максимальный делитель, меньший n
  */
-fun maxDivisor(n: Int): Int = TODO()
+fun maxDivisor(n: Int): Int {
+    var k: Int = n / 2
+    while ((n % k) != 0) {
+        k--
+    }
+    return k
+}
 
 /**
  * Простая
@@ -106,8 +147,25 @@ fun maxDivisor(n: Int): Int = TODO()
  * Взаимно простые числа не имеют общих делителей, кроме 1.
  * Например, 25 и 49 взаимно простые, а 6 и 8 -- нет.
  */
-fun isCoPrime(m: Int, n: Int): Boolean = TODO()
+fun isCoPrime(m: Int, n: Int): Boolean {
 
+    var k = 1
+    while ((m * k) % n != 0) {
+        k++
+    }
+    val c: Long = (m * k).toLong()
+    val d: Long = (m * n).toLong()
+    if (c == d) {
+        print(" $m $n ||")
+        return true
+    }
+    print(" $m $n ||")
+    return false
+}
+fun tSCD(): Int {
+
+
+}
 
 /**
  * Простая
