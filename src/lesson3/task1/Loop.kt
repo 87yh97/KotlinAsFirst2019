@@ -2,11 +2,9 @@
 
 package lesson3.task1
 
-import lesson1.task1.sqr
 import kotlin.math.min
 import kotlin.math.max
 import kotlin.math.sqrt
-import kotlin.math.pow
 
 /**
  * Пример
@@ -89,7 +87,7 @@ fun digitNumber(n: Int): Int {
  * Ряд Фибоначчи определён следующим образом: fib(1) = 1, fib(2) = 1, fib(n+2) = fib(n) + fib(n+1)
  */
 fun fib(n: Int): Int {
-    if(n == 1 || n == 2) return 1
+    if (n == 1 || n == 2) return 1
     var k = 3
     var num1: Int
     var num2 = 1
@@ -127,7 +125,7 @@ fun minDivisor(n: Int): Int {
     while ((n % k != 0) && (k < (n / 2))) {
         k++
     }
-    if(k >= (n / 2)) return n
+    if (k >= (n / 2)) return n
     return k
 }
 
