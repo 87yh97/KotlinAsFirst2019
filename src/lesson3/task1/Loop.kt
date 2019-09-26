@@ -2,7 +2,11 @@
 
 package lesson3.task1
 
+import lesson1.task1.sqr
+import kotlin.math.min
+import kotlin.math.max
 import kotlin.math.sqrt
+import kotlin.math.pow
 
 /**
  * Пример
@@ -148,22 +152,22 @@ fun maxDivisor(n: Int): Int {
  * Например, 25 и 49 взаимно простые, а 6 и 8 -- нет.
  */
 fun isCoPrime(m: Int, n: Int): Boolean {
-
-    var k = 1
-    while ((m * k) % n != 0) {
-        k++
-    }
-    val c: Long = (m * k).toLong()
-    val d: Long = (m * n).toLong()
-    if (c == d) {
-        print(" $m $n ||")
+    if (tSCD(m, n) == 1) {
         return true
     }
-    print(" $m $n ||")
     return false
 }
-fun tSCD(): Int {
 
+fun tSCD(m: Int, n: Int): Int {
+    var remainder: Int
+    var minOfNum: Int = min(m, n)
+    var maxOfNum: Int = max(m, n)
+    while (maxOfNum % minOfNum != 0) {
+        remainder = maxOfNum % minOfNum
+        maxOfNum = minOfNum
+        minOfNum = remainder
+    }
+    return minOfNum
 
 }
 
@@ -174,7 +178,17 @@ fun tSCD(): Int {
  * то есть, существует ли такое целое k, что m <= k*k <= n.
  * Например, для интервала 21..28 21 <= 5*5 <= 28, а для интервала 51..61 квадрата не существует.
  */
-fun squareBetweenExists(m: Int, n: Int): Boolean = TODO()
+fun squareBetweenExists(m: Int, n: Int): Boolean {
+    val longM: Long = m.toLong()
+    val longN: Long = n.toLong()
+    var midSquare: Long = sqrt(m.toDouble()).toLong()
+    while (midSquare * midSquare <= longN) {
+        if (midSquare * midSquare >= longM) {
+            return true
+        } else midSquare++
+    }
+    return false
+}
 
 /**
  * Средняя
