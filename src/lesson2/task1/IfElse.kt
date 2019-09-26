@@ -66,7 +66,7 @@ fun minBiRoot(a: Double, b: Double, c: Double): Double {
  */
 fun ageDescription(age: Int): String {
     if ((age % 10 == 1) && (((age / 10) % 10) != 1)) return "$age год"
-    if (((age % 10 in 2..4 )) && (((age / 10) % 10) != 1)) return "$age года"
+    if (((age % 10 in 2..4)) && (((age / 10) % 10) != 1)) return "$age года"
     return "$age лет"
 
 }
@@ -81,13 +81,12 @@ fun ageDescription(age: Int): String {
 fun timeForHalfWay(
     t1: Double, v1: Double,
     t2: Double, v2: Double,
-    t3: Double, v3: Double): Double {
-
+    t3: Double, v3: Double
+): Double {
     val halfLength: Double = (t1 * v1 + t2 * v2 + t3 * v3) / 2
     if (t1 * v1 >= halfLength) return (halfLength) / v1
     if ((t2 * v2 + t1 * v1) >= halfLength) return (t1 + ((halfLength) - (t1 * v1)) / v2)
     return (t1 + t2 + ((halfLength) - (t1 * v1) - (t2 * v2)) / v3)
-
 }
 
 /**
@@ -102,7 +101,8 @@ fun timeForHalfWay(
 fun whichRookThreatens(
     kingX: Int, kingY: Int,
     rookX1: Int, rookY1: Int,
-    rookX2: Int, rookY2: Int): Int {
+    rookX2: Int, rookY2: Int
+): Int {
     if ((kingX == rookX1 || kingY == rookY1) && (kingX == rookX2 || kingY == rookY2)) {
         return 3
     }
@@ -162,7 +162,7 @@ fun triangleKind(a: Double, b: Double, c: Double): Int {
  * Найти длину пересечения отрезков AB и CD.
  * Если пересечения нет, вернуть -1.
  */
-fun segmentLength(a: Int, b: Int, c: Int, d: Int): Int{
+fun segmentLength(a: Int, b: Int, c: Int, d: Int): Int {
     if ((b == c) || (a == d)) return 0
 
     if ((b < c) || (a > d)) return -1
