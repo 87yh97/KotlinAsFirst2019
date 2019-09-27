@@ -2,9 +2,7 @@
 
 package lesson3.task1
 
-import kotlin.math.min
-import kotlin.math.max
-import kotlin.math.sqrt
+import kotlin.math.*
 
 /**
  * Пример
@@ -125,8 +123,7 @@ fun minDivisor(n: Int): Int {
     while ((n % k != 0) && (k < (n / 2))) {
         k++
     }
-    if (k >= (n / 2)) return n
-    return k
+    return if (k >= (n / 2)) n else k
 }
 
 /**
@@ -134,13 +131,7 @@ fun minDivisor(n: Int): Int {
  *
  * Для заданного числа n > 1 найти максимальный делитель, меньший n
  */
-fun maxDivisor(n: Int): Int {
-    var k: Int = n / 2
-    while ((n % k) != 0) {
-        k--
-    }
-    return k
-}
+fun maxDivisor(n: Int): Int = n / minDivisor(n)
 
 /**
  * Простая
@@ -149,23 +140,18 @@ fun maxDivisor(n: Int): Int {
  * Взаимно простые числа не имеют общих делителей, кроме 1.
  * Например, 25 и 49 взаимно простые, а 6 и 8 -- нет.
  */
-fun isCoPrime(m: Int, n: Int): Boolean {
-    if (tSCD(m, n) == 1) {
-        return true
-    }
-    return false
-}
+fun isCoPrime(m: Int, n: Int): Boolean = tSCD(m, n)
 
-fun tSCD(m: Int, n: Int): Int {
+fun tSCD(m: Int, n: Int): Boolean {
     var remainder: Int
-    var minOfNum: Int = min(m, n)
-    var maxOfNum: Int = max(m, n)
+    var minOfNum = min(m, n)
+    var maxOfNum = max(m, n)
     while (maxOfNum % minOfNum != 0) {
         remainder = maxOfNum % minOfNum
         maxOfNum = minOfNum
         minOfNum = remainder
     }
-    return minOfNum
+    return minOfNum == 1
 
 }
 
@@ -177,8 +163,8 @@ fun tSCD(m: Int, n: Int): Int {
  * Например, для интервала 21..28 21 <= 5*5 <= 28, а для интервала 51..61 квадрата не существует.
  */
 fun squareBetweenExists(m: Int, n: Int): Boolean {
-    val longM: Long = m.toLong()
-    val longN: Long = n.toLong()
+    val longM = m.toLong()
+    val longN = n.toLong()
     var midSquare: Long = sqrt(m.toDouble()).toLong()
     while (midSquare * midSquare <= longN) {
         if (midSquare * midSquare >= longM) {

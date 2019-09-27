@@ -37,14 +37,8 @@ fun isNumberHappy(number: Int): Boolean {
  * Определить, угрожают ли они друг другу. Вернуть true, если угрожают.
  * Считать, что ферзи не могут загораживать друг друга.
  */
-fun queenThreatens(x1: Int, y1: Int, x2: Int, y2: Int): Boolean {
-    return when {
-        x1 == x2 -> true
-        y1 == y2 -> true
-        abs(x1 - x2) == abs(y1 - y2) -> true
-        else -> false
-    }
-}
+fun queenThreatens(x1: Int, y1: Int, x2: Int, y2: Int): Boolean =
+    (x1 == x2) || (y1 == y2) || (abs(x1 - x2) == abs(y1 - y2))
 
 
 /**
@@ -53,25 +47,13 @@ fun queenThreatens(x1: Int, y1: Int, x2: Int, y2: Int): Boolean {
  * Дан номер месяца (от 1 до 12 включительно) и год (положительный).
  * Вернуть число дней в этом месяце этого года по григорианскому календарю.
  */
-fun daysInMonth(month: Int, year: Int): Int {
-    return when {
-        month == 1 -> 31
-        ((year % 4 == 0 && year % 100 != 0) || (year % 400 == 0)) && (month == 2) -> 29
-        month == 2 -> 28
-        month == 3 -> 31
-        month == 4 -> 30
-        month == 5 -> 31
-        month == 6 -> 30
-        month == 7 -> 31
-        month == 8 -> 31
-        month == 9 -> 30
-        month == 10 -> 31
-        month == 11 -> 30
-        else -> 31
-    }
-
-
-}
+fun daysInMonth(month: Int, year: Int): Int =
+    /*if (month == 1 || 3 || 5 ) 31 else
+        if (month == (4 or 6 or 9 or 11)) 30 else
+            if (((year % 4 == 0 && year % 100 != 0) || (year % 400 == 0)) && (month == 2)) 29 else 28*/
+    if (month == 1 || month == 3 || month == 5 || month == 7 || month == 8 || month == 10 || month == 12) 31 else
+        if (month == 4 || month == 6 || month == 9 || month == 11) 30 else
+            if (((year % 4 == 0 && year % 100 != 0) || (year % 400 == 0)) && (month == 2)) 29 else 28
 
 /**
  * Средняя
@@ -84,9 +66,8 @@ fun circleInside(
     x1: Double, y1: Double, r1: Double,
     x2: Double, y2: Double, r2: Double
 ): Boolean {
-    val a: Double = sqrt((x1 - x2).pow(2) + (y1 - y2).pow(2))
-    if ((a + r1) <= r2) return true
-    return false
+    val a = sqrt((x1 - x2).pow(2) + (y1 - y2).pow(2))
+    return ((a + r1) <= r2)
 }
 
 /**

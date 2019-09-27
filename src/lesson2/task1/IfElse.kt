@@ -64,12 +64,10 @@ fun minBiRoot(a: Double, b: Double, c: Double): Double {
  * Мой возраст. Для заданного 0 < n < 200, рассматриваемого как возраст человека,
  * вернуть строку вида: «21 год», «32 года», «12 лет».
  */
-fun ageDescription(age: Int): String {
-    if ((age % 10 == 1) && (((age / 10) % 10) != 1)) return "$age год"
-    if (((age % 10 in 2..4)) && (((age / 10) % 10) != 1)) return "$age года"
-    return "$age лет"
-
-}
+fun ageDescription(age: Int): String =
+    if ((age % 10 == 1) && (((age / 10) % 10) != 1)) "$age год" else
+        if (((age % 10 in 2..4)) && (((age / 10) % 10) != 1)) "$age года"
+        else "$age лет"
 
 /**
  * Простая
@@ -83,10 +81,12 @@ fun timeForHalfWay(
     t2: Double, v2: Double,
     t3: Double, v3: Double
 ): Double {
-    val halfLength: Double = (t1 * v1 + t2 * v2 + t3 * v3) / 2
-    if (t1 * v1 >= halfLength) return (halfLength) / v1
-    if ((t2 * v2 + t1 * v1) >= halfLength) return (t1 + ((halfLength) - (t1 * v1)) / v2)
-    return (t1 + t2 + ((halfLength) - (t1 * v1) - (t2 * v2)) / v3)
+    val halfLength = (t1 * v1 + t2 * v2 + t3 * v3) / 2
+    return when {
+        (t1 * v1 >= halfLength) -> (halfLength) / v1
+        ((t2 * v2 + t1 * v1) >= halfLength) -> (t1 + ((halfLength) - (t1 * v1)) / v2)
+        else -> (t1 + t2 + ((halfLength) - (t1 * v1) - (t2 * v2)) / v3)
+    }
 }
 
 /**
@@ -102,19 +102,10 @@ fun whichRookThreatens(
     kingX: Int, kingY: Int,
     rookX1: Int, rookY1: Int,
     rookX2: Int, rookY2: Int
-): Int {
-    if ((kingX == rookX1 || kingY == rookY1) && (kingX == rookX2 || kingY == rookY2)) {
-        return 3
-    }
-    if ((kingX == rookX1 || kingY == rookY1)) {
-        return 1
-    }
-    if ((kingX == rookX2 || kingY == rookY2)) {
-        return 2
-    }
-    return 0
-
-}
+): Int =
+    if ((kingX == rookX1 || kingY == rookY1) && (kingX == rookX2 || kingY == rookY2)) 3 else
+        if ((kingX == rookX1 || kingY == rookY1)) 1 else
+            if ((kingX == rookX2 || kingY == rookY2)) 2 else 0
 
 /**
  * Простая
@@ -129,12 +120,12 @@ fun whichRookThreatens(
 fun rookOrBishopThreatens(
     kingX: Int, kingY: Int,
     rookX: Int, rookY: Int,
-    bishopX: Int, bishopY: Int): Int {
-    if ((kingX == rookX || kingY == rookY) && (abs(kingX - bishopX) == abs(kingY - bishopY))) return 3
-    if ((abs(kingX - bishopX) == abs(kingY - bishopY))) return 2
-    if (kingX == rookX || kingY == rookY) return 1
-    return 0
-}
+    bishopX: Int, bishopY: Int
+): Int =
+    if ((kingX == rookX || kingY == rookY) && (abs(kingX - bishopX) == abs(kingY - bishopY))) 3 else
+        if ((abs(kingX - bishopX) == abs(kingY - bishopY))) 2 else
+            if (kingX == rookX || kingY == rookY) 1 else 0
+
 
 /**
  * Простая
@@ -144,14 +135,11 @@ fun rookOrBishopThreatens(
  * прямоугольным (вернуть 1) или тупоугольным (вернуть 2).
  * Если такой треугольник не существует, вернуть -1.
  */
-fun triangleKind(a: Double, b: Double, c: Double): Int {
+fun triangleKind(a: Double, b: Double, c: Double): Int =
     if ((a + b > c) && (b + c > a) && (a + c > b)) {
-        if ((sqrt(a * a + b * b) == c) || (sqrt(c * c + b * b) == a) || (sqrt(a * a + c * c) == b)) return 1
-        if ((sqrt(a * a + b * b) < c) || (sqrt(c * c + b * b) < a) || (sqrt(a * a + c * c) < b)) return 2
-        return 0
-    }
-    return -1
-}
+        if ((sqrt(a * a + b * b) == c) || (sqrt(c * c + b * b) == a) || (sqrt(a * a + c * c) == b)) 1 else
+            if ((sqrt(a * a + b * b) < c) || (sqrt(c * c + b * b) < a) || (sqrt(a * a + c * c) < b)) 2 else 0
+    } else -1
 
 
 /**
