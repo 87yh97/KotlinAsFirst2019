@@ -240,6 +240,7 @@ class Tests {
         assertEquals(9, squareSequenceDigit(27))
         assertEquals(1, squareSequenceDigit(25))
         assertEquals(4, squareSequenceDigit(104290))
+        assertEquals(3, squareSequenceDigit(96764))
 
     }
 

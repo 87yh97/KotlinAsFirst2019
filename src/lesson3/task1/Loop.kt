@@ -318,7 +318,7 @@ fun hasDifferentDigits(n: Int): Boolean {
  * Использовать операции со строками в этой задаче запрещается.
  */
 fun squareSequenceDigit(n: Int): Int {
-    var sqrNum = 0
+    /*var sqrNum = 0
     var digitCounter = 0
     var digitLine = 0
     var square = 0L
@@ -340,20 +340,21 @@ fun squareSequenceDigit(n: Int): Int {
         if (digitNumber(digitLine) > 7) {
             digitLine %= (10.0.pow(digitNumber(digitLine) - 1)).toInt()
         }
-        println("digitLine = $digitLine")
     }
     digitLine /= 10
-
-    /*var lastDigit = digitLine % 10
-    while (digitCounter >= n) {
-        lastDigit = digitLine % 10
-        digitLine /= 10
+    return digitLine % 10*/
+    var sqrNum = 0
+    var digitCounter = 0
+    while (digitCounter < n) {
+        sqrNum++
+        digitCounter += digitNumber(sqrNum * sqrNum)
+    }
+    sqrNum *= sqrNum
+    while (digitCounter != n) {
+        sqrNum /= 10
         digitCounter--
-    }*/
-    println()
-    println("RETURN")
-    println()
-    return digitLine % 10
+    }
+    return sqrNum % 10
 }
 
 fun digitNumberLong(n: Long): Long {
@@ -366,6 +367,7 @@ fun digitNumberLong(n: Long): Long {
     }
     return a
 }
+
 fun revertLong(n: Long): Long {
     var digitCount = 0
     var num = n
@@ -385,6 +387,7 @@ fun revertLong(n: Long): Long {
     rNum /= 10
     return rNum
 }
+
 /**
  * Сложная
  *
@@ -395,34 +398,34 @@ fun revertLong(n: Long): Long {
  * Использовать операции со строками в этой задаче запрещается.
  */
 fun fibSequenceDigit(n: Int): Int = TODO()
-   /* var fibNum = 0
-    var digitCounter = 0
-    var digitLine = 0
-    var square = 0
-    var digit: Int
-    var numberOfDigitsInSquare = 0
-    while (digitCounter < n) {
-        if (numberOfDigitsInSquare == 0) {
-            fibNum++
-            square = sqr(fibNum)
-            numberOfDigitsInSquare = digitNumber(square)
-            square = revert(square)
-        }
-        digit = square % 10
-        square /= 10
-        numberOfDigitsInSquare--
-        digitLine += digit
-        digitLine *= 10
-        digitCounter++
-        if (digitNumber(digitLine) > 7) {
-            digitLine %= (10.0.pow(digitNumber(digitLine) - 1)).toInt()
-        }
-        println("digitLine = $digitLine")
-    }
-    digitLine /= 10
+/* var fibNum = 0
+ var digitCounter = 0
+ var digitLine = 0
+ var square = 0
+ var digit: Int
+ var numberOfDigitsInSquare = 0
+ while (digitCounter < n) {
+     if (numberOfDigitsInSquare == 0) {
+         fibNum++
+         square = sqr(fibNum)
+         numberOfDigitsInSquare = digitNumber(square)
+         square = revert(square)
+     }
+     digit = square % 10
+     square /= 10
+     numberOfDigitsInSquare--
+     digitLine += digit
+     digitLine *= 10
+     digitCounter++
+     if (digitNumber(digitLine) > 7) {
+         digitLine %= (10.0.pow(digitNumber(digitLine) - 1)).toInt()
+     }
+     println("digitLine = $digitLine")
+ }
+ digitLine /= 10
 
-    println()
-    println("RETURN")
-    println()
-    return digitLine % 10*/
+ println()
+ println("RETURN")
+ println()
+ return digitLine % 10*/
 
