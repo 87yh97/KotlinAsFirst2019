@@ -3,7 +3,6 @@
 package lesson3.task1
 
 import kotlin.math.*
-import lesson1.task1.sqr
 
 /**
  * Пример
