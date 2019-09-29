@@ -3,6 +3,7 @@
 package lesson3.task1
 
 import kotlin.math.*
+import lesson1.task1.sqr
 
 /**
  * Пример
@@ -256,7 +257,25 @@ fun cos(x: Double, eps: Double): Double {
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun revert(n: Int): Int = TODO()
+fun revert(n: Int): Int {
+    var digitCount = 0
+    var num = n
+    var rNum = 0
+    while (num != 0) {
+        num /= 10
+        digitCount++
+    }
+    var digit: Int
+    num = n
+    for (i in 1..digitCount) {
+        digit = num % 10
+        num /= 10
+        rNum += digit
+        rNum *= 10
+    }
+    rNum /= 10
+    return rNum
+}
 
 /**
  * Средняя
@@ -267,7 +286,7 @@ fun revert(n: Int): Int = TODO()
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun isPalindrome(n: Int): Boolean = TODO()
+fun isPalindrome(n: Int): Boolean = revert(n) == n
 
 /**
  * Средняя
@@ -277,7 +296,16 @@ fun isPalindrome(n: Int): Boolean = TODO()
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun hasDifferentDigits(n: Int): Boolean = TODO()
+fun hasDifferentDigits(n: Int): Boolean {
+    var digit = n % 10
+    var num = n / 10
+    while (digit == (num % 10)) {
+        digit = num % 10
+        num /= 10
+        if (num == 0) return false
+    }
+    return true
+}
 
 /**
  * Сложная
@@ -288,7 +316,33 @@ fun hasDifferentDigits(n: Int): Boolean = TODO()
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun squareSequenceDigit(n: Int): Int = TODO()
+fun squareSequenceDigit(n: Int): Int {
+    var sqrNum = 0
+    var digitCounter = 0
+    var digitLine = 0.toLong()
+    var square: Int
+    var digit: Int
+    while (digitCounter < n) {
+        sqrNum++
+        square = sqr(sqrNum)
+        digitCounter += digitNumber(square)
+        for (i in 1..digitNumber(square)) {
+            square = revert(square)
+            digit = square % 10
+            square /= 10
+            digitLine += digit
+            digitLine *= 10
+        }
+    }
+    digitLine /= 10
+    var lastDigit = digitLine % 10
+    while (digitCounter >= n) {
+        lastDigit = digitLine % 10
+        digitLine /= 10
+        digitCounter--
+    }
+    return lastDigit.toInt()
+}
 
 /**
  * Сложная
