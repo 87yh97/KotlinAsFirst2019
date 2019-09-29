@@ -239,6 +239,8 @@ class Tests {
         assertEquals(0, squareSequenceDigit(17))
         assertEquals(9, squareSequenceDigit(27))
         assertEquals(1, squareSequenceDigit(25))
+        assertEquals(4, squareSequenceDigit(104290))
+
     }
 
     @Test
