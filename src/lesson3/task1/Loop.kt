@@ -318,31 +318,6 @@ fun hasDifferentDigits(n: Int): Boolean {
  * Использовать операции со строками в этой задаче запрещается.
  */
 fun squareSequenceDigit(n: Int): Int {
-    /*var sqrNum = 0
-    var digitCounter = 0
-    var digitLine = 0
-    var square = 0L
-    var digit: Int
-    var numberOfDigitsInSquare = 0
-    while (digitCounter < n) {
-        if (numberOfDigitsInSquare == 0) {
-            sqrNum++
-            square = (sqrNum * sqrNum).toLong()
-            numberOfDigitsInSquare = digitNumberLong(square).toInt()
-            square = revertLong(square)
-        }
-        digit = (square % 10).toInt()
-        square /= 10
-        numberOfDigitsInSquare--
-        digitLine += digit
-        digitLine *= 10
-        digitCounter++
-        if (digitNumber(digitLine) > 7) {
-            digitLine %= (10.0.pow(digitNumber(digitLine) - 1)).toInt()
-        }
-    }
-    digitLine /= 10
-    return digitLine % 10*/
     var sqrNum = 0
     var digitCounter = 0
     while (digitCounter < n) {
@@ -357,37 +332,6 @@ fun squareSequenceDigit(n: Int): Int {
     return sqrNum % 10
 }
 
-fun digitNumberLong(n: Long): Long {
-    var k = n
-    var a = 0L
-    if (n == 0L) return 1
-    while (k != 0L) {
-        a += 1
-        k /= 10
-    }
-    return a
-}
-
-fun revertLong(n: Long): Long {
-    var digitCount = 0
-    var num = n
-    var rNum = 0L
-    while (num != 0L) {
-        num /= 10
-        digitCount++
-    }
-    var digit: Long
-    num = n
-    for (i in 1..digitCount) {
-        digit = num % 10
-        num /= 10
-        rNum += digit
-        rNum *= 10
-    }
-    rNum /= 10
-    return rNum
-}
-
 /**
  * Сложная
  *
@@ -397,35 +341,17 @@ fun revertLong(n: Long): Long {
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun fibSequenceDigit(n: Int): Int = TODO()
-/* var fibNum = 0
- var digitCounter = 0
- var digitLine = 0
- var square = 0
- var digit: Int
- var numberOfDigitsInSquare = 0
- while (digitCounter < n) {
-     if (numberOfDigitsInSquare == 0) {
-         fibNum++
-         square = sqr(fibNum)
-         numberOfDigitsInSquare = digitNumber(square)
-         square = revert(square)
-     }
-     digit = square % 10
-     square /= 10
-     numberOfDigitsInSquare--
-     digitLine += digit
-     digitLine *= 10
-     digitCounter++
-     if (digitNumber(digitLine) > 7) {
-         digitLine %= (10.0.pow(digitNumber(digitLine) - 1)).toInt()
-     }
-     println("digitLine = $digitLine")
- }
- digitLine /= 10
-
- println()
- println("RETURN")
- println()
- return digitLine % 10*/
-
+fun fibSequenceDigit(n: Int): Int {
+    var fibNum = 0
+    var digitCounter = 0
+    while (digitCounter < n) {
+        fibNum++
+        digitCounter += digitNumber(fib(fibNum))
+    }
+    var fib = fib(fibNum)
+    while (digitCounter != n) {
+        fib /= 10
+        digitCounter--
+    }
+    return fib % 10
+}
