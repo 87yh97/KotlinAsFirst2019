@@ -260,7 +260,7 @@ fun cos(x: Double, eps: Double): Double {
 fun revert(n: Int): Int {
     var digitCount = 0
     var num = n
-    var rNum = 0
+    var rNum = 0.toLong()
     while (num != 0) {
         num /= 10
         digitCount++
@@ -274,7 +274,7 @@ fun revert(n: Int): Int {
         rNum *= 10
     }
     rNum /= 10
-    return rNum
+    return rNum.toInt()
 }
 
 /**
@@ -297,6 +297,7 @@ fun isPalindrome(n: Int): Boolean = revert(n) == n
  * Использовать операции со строками в этой задаче запрещается.
  */
 fun hasDifferentDigits(n: Int): Boolean {
+    if (n / 10 == 0) return false
     var digit = n % 10
     var num = n / 10
     while (digit == (num % 10)) {
@@ -319,7 +320,46 @@ fun hasDifferentDigits(n: Int): Boolean {
 fun squareSequenceDigit(n: Int): Int {
     var sqrNum = 0
     var digitCounter = 0
-    var digitLine = 0.toLong()
+    var digitLine = 0
+    var square = 0
+    var digit: Int
+    var numberOfDigitsInSquare = 0
+    while (digitCounter < n) {
+        if (numberOfDigitsInSquare == 0) {
+            sqrNum++
+            square = sqr(sqrNum)
+            numberOfDigitsInSquare = digitNumber(square)
+            square = revert(square)
+        }
+        digit = square % 10
+        square /= 10
+        numberOfDigitsInSquare--
+        digitLine += digit
+        digitLine *= 10
+        digitCounter++
+        if (digitNumber(digitLine) > 7) {
+            digitLine %= (10.0.pow(digitNumber(digitLine) - 1)).toInt()
+        }
+        println("digitLine = $digitLine")
+    }
+    digitLine /= 10
+
+    /*var lastDigit = digitLine % 10
+    while (digitCounter >= n) {
+        lastDigit = digitLine % 10
+        digitLine /= 10
+        digitCounter--
+    }*/
+    println()
+    println("RETURN")
+    println()
+    return digitLine % 10
+}
+
+/*fun squareSequenceDigit(n: Int): Int {
+    var sqrNum = 0
+    var digitCounter = 0
+    var digitLine = 0
     var square: Int
     var digit: Int
     while (digitCounter < n) {
@@ -331,8 +371,17 @@ fun squareSequenceDigit(n: Int): Int {
             digit = square % 10
             square /= 10
             digitLine += digit
+            if (digitNumber(digitLine) > 6) {
+                digitLine %= (10.0.pow(digitNumber(digitLine))).toInt()
+            }
             digitLine *= 10
         }
+        square = sqr(sqrNum)
+        /*digitLine = revert(digitLine.toInt()).toLong() //?????
+        while (digitNumber(digitLine.toInt()) > (digitNumber(square) + 2)) {//?
+            digitLine /= 10
+        }
+        digitLine = revert(digitLine.toInt()).toLong()*/
     }
     digitLine /= 10
     var lastDigit = digitLine % 10
@@ -341,9 +390,8 @@ fun squareSequenceDigit(n: Int): Int {
         digitLine /= 10
         digitCounter--
     }
-    return lastDigit.toInt()
-}
-
+    return lastDigit
+}*/
 /**
  * Сложная
  *
