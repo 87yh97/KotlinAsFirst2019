@@ -165,7 +165,7 @@ fun tSCD(m: Int, n: Int): Boolean {
 fun squareBetweenExists(m: Int, n: Int): Boolean {
     val longM = m.toLong()
     val longN = n.toLong()
-    var midSquare: Long = sqrt(m.toDouble()).toLong()
+    var midSquare = sqrt(m.toDouble()).toLong()
     while (midSquare * midSquare <= longN) {
         if (midSquare * midSquare >= longM) {
             return true
@@ -259,11 +259,8 @@ fun cos(x: Double, eps: Double): Double {
 fun revert(n: Int): Int {
     var digitCount = 0
     var num = n
-    var rNum = 0.toLong()
-    while (num != 0) {
-        num /= 10
-        digitCount++
-    }
+    var rNum = 0
+    digitCount = digitNumber(num)
     var digit: Int
     num = n
     for (i in 1..digitCount) {
@@ -273,7 +270,7 @@ fun revert(n: Int): Int {
         rNum *= 10
     }
     rNum /= 10
-    return rNum.toInt()
+    return rNum
 }
 
 /**

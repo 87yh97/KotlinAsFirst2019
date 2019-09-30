@@ -65,9 +65,9 @@ fun minBiRoot(a: Double, b: Double, c: Double): Double {
  * вернуть строку вида: «21 год», «32 года», «12 лет».
  */
 fun ageDescription(age: Int): String =
-    if ((age % 10 == 1) && (((age / 10) % 10) != 1)) "$age год" else
-        if (((age % 10 in 2..4)) && (((age / 10) % 10) != 1)) "$age года"
-        else "$age лет"
+    if ((age % 10 == 1) && (((age / 10) % 10) != 1)) "$age год"
+    else if (((age % 10 in 2..4)) && (((age / 10) % 10) != 1)) "$age года"
+    else "$age лет"
 
 /**
  * Простая
@@ -103,9 +103,10 @@ fun whichRookThreatens(
     rookX1: Int, rookY1: Int,
     rookX2: Int, rookY2: Int
 ): Int =
-    if ((kingX == rookX1 || kingY == rookY1) && (kingX == rookX2 || kingY == rookY2)) 3 else
-        if ((kingX == rookX1 || kingY == rookY1)) 1 else
-            if ((kingX == rookX2 || kingY == rookY2)) 2 else 0
+    if ((kingX == rookX1 || kingY == rookY1) && (kingX == rookX2 || kingY == rookY2)) 3
+    else if ((kingX == rookX1 || kingY == rookY1)) 1
+    else if ((kingX == rookX2 || kingY == rookY2)) 2
+    else 0
 
 /**
  * Простая
@@ -122,9 +123,10 @@ fun rookOrBishopThreatens(
     rookX: Int, rookY: Int,
     bishopX: Int, bishopY: Int
 ): Int =
-    if ((kingX == rookX || kingY == rookY) && (abs(kingX - bishopX) == abs(kingY - bishopY))) 3 else
-        if ((abs(kingX - bishopX) == abs(kingY - bishopY))) 2 else
-            if (kingX == rookX || kingY == rookY) 1 else 0
+    if ((kingX == rookX || kingY == rookY) && (abs(kingX - bishopX) == abs(kingY - bishopY))) 3
+    else if ((abs(kingX - bishopX) == abs(kingY - bishopY))) 2
+    else if (kingX == rookX || kingY == rookY) 1
+    else 0
 
 
 /**
@@ -137,8 +139,9 @@ fun rookOrBishopThreatens(
  */
 fun triangleKind(a: Double, b: Double, c: Double): Int =
     if ((a + b > c) && (b + c > a) && (a + c > b)) {
-        if ((sqrt(a * a + b * b) == c) || (sqrt(c * c + b * b) == a) || (sqrt(a * a + c * c) == b)) 1 else
-            if ((sqrt(a * a + b * b) < c) || (sqrt(c * c + b * b) < a) || (sqrt(a * a + c * c) < b)) 2 else 0
+        if ((sqrt(a * a + b * b) == c) || (sqrt(c * c + b * b) == a) || (sqrt(a * a + c * c) == b)) 1
+        else if ((sqrt(a * a + b * b) < c) || (sqrt(c * c + b * b) < a) || (sqrt(a * a + c * c) < b)) 2
+        else 0
     } else -1
 
 
