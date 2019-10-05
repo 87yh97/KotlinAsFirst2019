@@ -259,7 +259,7 @@ fun cos(x: Double, eps: Double): Double {
 fun revert(n: Int): Int {
     var digitCount = 0
     var num = n
-    var rNum = 0
+    var rNum = 0L
     digitCount = digitNumber(num)
     var digit: Int
     num = n
@@ -270,7 +270,7 @@ fun revert(n: Int): Int {
         rNum *= 10
     }
     rNum /= 10
-    return rNum
+    return rNum.toInt()
 }
 
 /**
