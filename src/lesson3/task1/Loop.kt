@@ -257,7 +257,7 @@ fun cos(x: Double, eps: Double): Double {
  * Использовать операции со строками в этой задаче запрещается.
  */
 fun revert(n: Int): Int {
-    var digitCount = 0
+    val digitCount: Int
     var num = n
     var rNum = 0L
     digitCount = digitNumber(num)
