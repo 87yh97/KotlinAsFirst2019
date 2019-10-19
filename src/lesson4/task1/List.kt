@@ -270,7 +270,7 @@ fun convert(n: Int, base: Int): List<Int> {
     }
     val listSize = list.size
     var temp: Int
-    for (i in 0..(listSize / 2 - 1)) {
+    for (i in 0 until listSize / 2) {
         temp = list[i]
         list[i] = list[(listSize - 1) - i]
         list[(listSize - 1) - i] = temp
@@ -337,22 +337,22 @@ fun decimal(digits: List<Int>, base: Int): Int {
  * (например, str.toInt(base)), запрещается.
  */
 fun decimalFromString(str: String, base: Int): Int = TODO()
-    /*val list = convert(n, base) as MutableList<Int>
-    //val charList = mutableListOf<Char>()
-    var str = ""
-    for (i in 0 until list.size) {
-        str += if (list[i] > 9) {
-            (list[i] + 87).toChar()
-            //charList.add((list[i] + 87).toChar())
-        } else {
-            (list[i] + 48).toChar()
-            //charList.add((list[i] + 48).toChar())
-        }
+/*val list = convert(n, base) as MutableList<Int>
+//val charList = mutableListOf<Char>()
+var str = ""
+for (i in 0 until list.size) {
+    str += if (list[i] > 9) {
+        (list[i] + 87).toChar()
+        //charList.add((list[i] + 87).toChar())
+    } else {
+        (list[i] + 48).toChar()
+        //charList.add((list[i] + 48).toChar())
     }
+}
 
-    //val character = 97.toChar()
-    //for (i in 0..5) println(character)
-    return str*/
+//val character = 97.toChar()
+//for (i in 0..5) println(character)
+return str*/
 
 
 
