@@ -336,24 +336,20 @@ fun decimal(digits: List<Int>, base: Int): Int {
  * Использовать функции стандартной библиотеки, напрямую и полностью решающие данную задачу
  * (например, str.toInt(base)), запрещается.
  */
-fun decimalFromString(str: String, base: Int): Int = TODO()
-/*val list = convert(n, base) as MutableList<Int>
-//val charList = mutableListOf<Char>()
-var str = ""
-for (i in 0 until list.size) {
-    str += if (list[i] > 9) {
-        (list[i] + 87).toChar()
-        //charList.add((list[i] + 87).toChar())
-    } else {
-        (list[i] + 48).toChar()
-        //charList.add((list[i] + 48).toChar())
+fun decimalFromString(str: String, base: Int): Int {
+    var number =
+        0L // Long нужно, так как при 10-ти значном аргументе str number переполняется при последнем домножении number на base в цикле for
+    for (i in 0 until str.length) {
+        number += if (str[i].toByte().toInt() > 57) {
+            str[i].toInt() - 87
+        } else {
+            str[i].toInt() - 48
+        }
+        number *= base
     }
+    number /= base
+    return number.toInt()
 }
-
-//val character = 97.toChar()
-//for (i in 0..5) println(character)
-return str*/
-
 
 
 /**
@@ -364,7 +360,91 @@ return str*/
  * 90 = XC, 100 = C, 400 = CD, 500 = D, 900 = CM, 1000 = M.
  * Например: 23 = XXIII, 44 = XLIV, 100 = C
  */
-fun roman(n: Int): String = TODO()
+fun roman(n: Int): String {
+    var number = ""
+
+    return number
+}
+
+fun numberOfThousands(n: Int): Int {
+    var number = 0
+    var num = n
+    while (num > 999) {
+        number++
+        num -= 1000
+    }
+    return number
+}
+
+fun numberOfNineHundreds(n: Int): Int {
+    var number = 0
+    var num = n
+    while (num > 899) {
+        number++
+        num -= 900
+    }
+    return number
+}
+
+fun numberOfFiveHundreds(n: Int): Int {
+    var number = 0
+    var num = n
+    while (num > 499) {
+        number++
+        num -= 500
+    }
+    return number
+}
+
+fun numberOfFourHundreds(n: Int): Int {
+    var number = 0
+    var num = n
+    while (num > 399) {
+        number++
+        num -= 400
+    }
+    return number
+}
+
+fun numberOfOneHundreds(n: Int): Int {
+    var number = 0
+    var num = n
+    while (num > 99) {
+        number++
+        num -= 100
+    }
+    return number
+}
+
+fun numberOfNineties(n: Int): Int {
+    var number = 0
+    var num = n
+    while (num > 89) {
+        number++
+        num -= 90
+    }
+    return number
+}
+
+fun numberOfFifties(n: Int): Int {
+    var number = 0
+    var num = n
+    while (num > 49) {
+        number++
+        num -= 50
+    }
+    return number
+}
+
+fun numberOfForties(n: Int): Int {
+    var number = 0
+    var num = n
+    while (num > 39) {
+        number++
+        num -= 40
+    }
+    return number
+}
 
 /**
  * Очень сложная
