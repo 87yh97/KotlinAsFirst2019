@@ -361,49 +361,95 @@ fun decimalFromString(str: String, base: Int): Int {
  * Например: 23 = XXIII, 44 = XLIV, 100 = C
  */
 fun roman(n: Int): String {
-    var number = ""
+    var numberStr = ""
+    var number = n
+    val list = mutableListOf<Int>(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
 
-    return number
+    list[0] = numberOfThousands(number)
+    number -= list[0] * 1000
+    for (i in 0 until list[0] ) numberStr += "M"
+
+    list[1] = numberOfNineHundreds(number)
+    number -= list[1] * 900
+    if (list[1] == 1) numberStr += "CM"
+
+    list[2] = numberOfFiveHundreds(number)
+    number -= list[2] * 500
+    if (list[2] == 1) numberStr += "D"
+
+    list[3] = numberOfFourHundreds(number)
+    number -= list[3] * 400
+    if (list[3] == 3) numberStr += "CD"
+
+    list[4] = numberOfOneHundreds(number)
+    number -= list[4] * 100
+    for (i in 0 until list[4] ) numberStr += "C"
+
+    list[5] = numberOfNineties(number)
+    number -= list[5] * 90
+    if (list[5] == 1) numberStr += "XC"
+
+    list[6] = numberOfFifties(number)
+    number -= list[6] * 50
+    if (list[6] == 1) numberStr += "L"
+
+    list[7] = numberOfForties(number)
+    number -= list[7] * 40
+    if (list[7] == 1) numberStr += "XL"
+
+    list[8] = numberOfTens(number)
+    number -= list[8] * 10
+    for (i in 0 until list[8] ) numberStr += "X"
+
+    list[9] = numberOfNines(number)
+    number -= list[9] * 9
+    if (list[9] == 1) numberStr += "IX"
+
+    list[10] = numberOfFives(number)
+    number -= list[10] * 5
+    if (list[10] == 1) numberStr += "V"
+
+    list[11] = numberOfFours(number)
+    number -= list[11] * 4
+    if (list[11] == 1) numberStr += "IV"
+
+    list[12] = numberOfOnes(number)
+    for (i in 0 until list[12] ) numberStr += "I"
+    //number -= list[12] * 1
+
+    return numberStr
 }
 
 fun numberOfThousands(n: Int): Int {
-    var number = 0
+    var numb = 0
     var num = n
     while (num > 999) {
-        number++
+        numb++
         num -= 1000
     }
-    return number
+    return numb
 }
 
 fun numberOfNineHundreds(n: Int): Int {
-    var number = 0
+    return if (n > 899) 1
+    else 0
+    /*var number = 0
     var num = n
     while (num > 899) {
         number++
         num -= 900
     }
-    return number
+    return number*/
 }
 
 fun numberOfFiveHundreds(n: Int): Int {
-    var number = 0
-    var num = n
-    while (num > 499) {
-        number++
-        num -= 500
-    }
-    return number
+    return if (n > 499) 1
+    else 0
 }
 
 fun numberOfFourHundreds(n: Int): Int {
-    var number = 0
-    var num = n
-    while (num > 399) {
-        number++
-        num -= 400
-    }
-    return number
+    return if (n > 399) 1
+    else 0
 }
 
 fun numberOfOneHundreds(n: Int): Int {
@@ -417,34 +463,50 @@ fun numberOfOneHundreds(n: Int): Int {
 }
 
 fun numberOfNineties(n: Int): Int {
-    var number = 0
-    var num = n
-    while (num > 89) {
-        number++
-        num -= 90
-    }
-    return number
+    return if (n > 89) 1
+    else 0
 }
 
 fun numberOfFifties(n: Int): Int {
+    return if (n > 49) 1
+    else 0
+}
+
+fun numberOfForties(n: Int): Int {
+    return if (n > 39) 1
+    else 0
+}
+fun numberOfTens(n: Int): Int {
     var number = 0
     var num = n
-    while (num > 49) {
+    while (num > 9) {
         number++
-        num -= 50
+        num -= 10
+    }
+    return number
+}
+fun numberOfNines(n: Int): Int {
+    return if (n > 8) 1
+    else 0
+}
+fun numberOfFives(n: Int): Int {
+    return if (n > 4) 1
+    else 0
+}
+fun numberOfFours(n: Int): Int {
+    return if (n > 3) 1
+    else 0
+}
+fun numberOfOnes(n: Int): Int {
+    var number = 0
+    var num = n
+    while (num > 0) {
+        number++
+        num -= 1
     }
     return number
 }
 
-fun numberOfForties(n: Int): Int {
-    var number = 0
-    var num = n
-    while (num > 39) {
-        number++
-        num -= 40
-    }
-    return number
-}
 
 /**
  * Очень сложная
