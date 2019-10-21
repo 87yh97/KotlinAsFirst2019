@@ -379,7 +379,7 @@ fun roman(n: Int): String {
 
     list[3] = numberOfFourHundreds(number)
     number -= list[3] * 400
-    if (list[3] == 3) numberStr += "CD"
+    if (list[3] == 1) numberStr += "CD"
 
     list[4] = numberOfOneHundreds(number)
     number -= list[4] * 100
