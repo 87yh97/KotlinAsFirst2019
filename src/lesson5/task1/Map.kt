@@ -2,6 +2,8 @@
 
 package lesson5.task1
 
+//import com.sun.org.apache.xpath.internal.operations.Bool
+
 /**
  * Пример
  *
@@ -113,7 +115,12 @@ fun buildGrades(grades: Map<String, Int>): Map<Int, List<String>> {
  *   containsIn(mapOf("a" to "z"), mapOf("a" to "z", "b" to "sweet")) -> true
  *   containsIn(mapOf("a" to "z"), mapOf("a" to "zee", "b" to "sweet")) -> false
  */
-fun containsIn(a: Map<String, String>, b: Map<String, String>): Boolean = TODO()
+fun containsIn(a: Map<String, String>, b: Map<String, String>): Boolean {
+    for ((key) in a) {
+        if (!(b.containsKey(key) && a[key] == b[key])) return false
+    }
+    return true
+}
 
 /**
  * Простая
@@ -129,7 +136,11 @@ fun containsIn(a: Map<String, String>, b: Map<String, String>): Boolean = TODO()
  *   subtractOf(a = mutableMapOf("a" to "z"), mapOf("a" to "z"))
  *     -> a changes to mutableMapOf() aka becomes empty
  */
-fun subtractOf(a: MutableMap<String, String>, b: Map<String, String>): Unit = TODO()
+fun subtractOf(a: MutableMap<String, String>, b: Map<String, String>): Unit {
+    for ((key) in b) {
+        if (a.containsKey(key) && a[key] == b[key]) a.remove(key)
+    }
+}
 
 /**
  * Простая
@@ -138,7 +149,20 @@ fun subtractOf(a: MutableMap<String, String>, b: Map<String, String>): Unit = TO
  * В выходном списке не должно быть повторяюихся элементов,
  * т. е. whoAreInBoth(listOf("Марат", "Семён, "Марат"), listOf("Марат", "Марат")) == listOf("Марат")
  */
-fun whoAreInBoth(a: List<String>, b: List<String>): List<String> = TODO()
+fun whoAreInBoth(a: List<String>, b: List<String>): List<String> {
+    val map = mutableMapOf<String, Boolean>()
+    for (name in a) {
+        if (!map.containsKey(name)) map.put(name, false)
+    }
+    for (name in b) {
+        if (map.containsKey(name)) map[name] = true
+    }
+    val list = mutableListOf<String>()
+    for ((key, value) in map) {
+        if (value) list += key
+    }
+    return list
+}
 
 /**
  * Средняя
@@ -157,7 +181,22 @@ fun whoAreInBoth(a: List<String>, b: List<String>): List<String> = TODO()
  *     mapOf("Emergency" to "911", "Police" to "02")
  *   ) -> mapOf("Emergency" to "112, 911", "Police" to "02")
  */
-fun mergePhoneBooks(mapA: Map<String, String>, mapB: Map<String, String>): Map<String, String> = TODO()
+fun mergePhoneBooks(mapA: Map<String, String>, mapB: Map<String, String>): Map<String, String> {
+    val map = mapB.toMutableMap()//mutableMapOf<String, String>()
+    map.putAll(mapA)
+    for ((key, value) in mapA) {
+        if (mapB.containsKey(key) && value != mapB[key]) {
+            var tempStr = map[key].toString()
+            tempStr += ", "
+            tempStr += mapB[key]
+
+            map[key] = tempStr
+        }
+    }
+
+
+    return map
+}
 
 /**
  * Средняя
@@ -169,7 +208,30 @@ fun mergePhoneBooks(mapA: Map<String, String>, mapB: Map<String, String>): Map<S
  *   averageStockPrice(listOf("MSFT" to 100.0, "MSFT" to 200.0, "NFLX" to 40.0))
  *     -> mapOf("MSFT" to 150.0, "NFLX" to 40.0)
  */
-fun averageStockPrice(stockPrices: List<Pair<String, Double>>): Map<String, Double> = TODO()
+fun averageStockPrice(stockPrices: List<Pair<String, Double>>): Map<String, Double> { // Сабмичу сейчас только чтобы проверить на котоедовских примерах не бейте
+    val averageStockPrice = mutableMapOf<String, Double>()
+    for (index in 0 until stockPrices.size) {
+        print("KEY FOR NOW: ")
+        print(stockPrices[index].first)
+        print("  COST FOR NOW: ")
+        println(stockPrices[index].second)
+
+        if (averageStockPrice.containsKey(stockPrices[index].first)) {
+            var tempCost = (averageStockPrice[stockPrices[index].first] ?: 0.0) + stockPrices[index].second
+            tempCost /= 2
+            println("JUST'VE CALCULATED SOME SHIT $tempCost")
+            averageStockPrice[stockPrices[index].first] = tempCost
+        }
+        else {
+            averageStockPrice[stockPrices[index].first] = stockPrices[index].second
+            val temp = averageStockPrice[stockPrices[index].first]
+            println("JUST'VE PUTTED THIS SHIT: $temp")
+        }
+    }
+    println(" -----------END------------ ")
+    println()
+    return averageStockPrice
+}
 
 /**
  * Средняя
