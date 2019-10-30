@@ -209,7 +209,10 @@ fun mergePhoneBooks(mapA: Map<String, String>, mapB: Map<String, String>): Map<S
  *     -> mapOf("MSFT" to 150.0, "NFLX" to 40.0)
  */
 fun averageStockPrice(stockPrices: List<Pair<String, Double>>): Map<String, Double> { // Сабмичу сейчас только чтобы проверить на котоедовских примерах не бейте
+
     val averageStockPrice = mutableMapOf<String, Double>()
+    val numberOfSummations = mutableMapOf<String, Int>()
+
     for (index in 0 until stockPrices.size) {
         print("KEY FOR NOW: ")
         print(stockPrices[index].first)
@@ -217,16 +220,26 @@ fun averageStockPrice(stockPrices: List<Pair<String, Double>>): Map<String, Doub
         println(stockPrices[index].second)
 
         if (averageStockPrice.containsKey(stockPrices[index].first)) {
-            var tempCost = (averageStockPrice[stockPrices[index].first] ?: 0.0) + stockPrices[index].second
-            tempCost /= 2
+
+            val tempCost = (averageStockPrice[stockPrices[index].first] ?: 0.0) + stockPrices[index].second
             println("JUST'VE CALCULATED SOME SHIT $tempCost")
             averageStockPrice[stockPrices[index].first] = tempCost
+            numberOfSummations[stockPrices[index].first] = (numberOfSummations[stockPrices[index].first] ?: 0) + 1
+            //numberOfSummations[stockPrices[index].first]?.plus(1)
+
         }
         else {
+
             averageStockPrice[stockPrices[index].first] = stockPrices[index].second
             val temp = averageStockPrice[stockPrices[index].first]
+            numberOfSummations[stockPrices[index].first] = 1
             println("JUST'VE PUTTED THIS SHIT: $temp")
+
         }
+    }
+    for ((key) in averageStockPrice) {
+        //(averageStockPrice[key])?.div(numberOfSummations[key] ?: 1)
+        averageStockPrice[key] = (averageStockPrice[key] ?: 0.0) / (numberOfSummations[key] ?: 1)
     }
     println(" -----------END------------ ")
     println()
