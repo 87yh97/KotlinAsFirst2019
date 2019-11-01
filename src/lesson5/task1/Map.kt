@@ -208,41 +208,22 @@ fun mergePhoneBooks(mapA: Map<String, String>, mapB: Map<String, String>): Map<S
  *   averageStockPrice(listOf("MSFT" to 100.0, "MSFT" to 200.0, "NFLX" to 40.0))
  *     -> mapOf("MSFT" to 150.0, "NFLX" to 40.0)
  */
-fun averageStockPrice(stockPrices: List<Pair<String, Double>>): Map<String, Double> { // Сабмичу сейчас только чтобы проверить на котоедовских примерах не бейте
-
+fun averageStockPrice(stockPrices: List<Pair<String, Double>>): Map<String, Double> {
     val averageStockPrice = mutableMapOf<String, Double>()
     val numberOfSummations = mutableMapOf<String, Int>()
-
     for (index in 0 until stockPrices.size) {
-        print("KEY FOR NOW: ")
-        print(stockPrices[index].first)
-        print("  COST FOR NOW: ")
-        println(stockPrices[index].second)
-
         if (averageStockPrice.containsKey(stockPrices[index].first)) {
-
             val tempCost = (averageStockPrice[stockPrices[index].first] ?: 0.0) + stockPrices[index].second
-            println("JUST'VE CALCULATED SOME SHIT $tempCost")
             averageStockPrice[stockPrices[index].first] = tempCost
             numberOfSummations[stockPrices[index].first] = (numberOfSummations[stockPrices[index].first] ?: 0) + 1
-            //numberOfSummations[stockPrices[index].first]?.plus(1)
-
-        }
-        else {
-
+        } else {
             averageStockPrice[stockPrices[index].first] = stockPrices[index].second
-            val temp = averageStockPrice[stockPrices[index].first]
             numberOfSummations[stockPrices[index].first] = 1
-            println("JUST'VE PUTTED THIS SHIT: $temp")
-
         }
     }
     for ((key) in averageStockPrice) {
-        //(averageStockPrice[key])?.div(numberOfSummations[key] ?: 1)
         averageStockPrice[key] = (averageStockPrice[key] ?: 0.0) / (numberOfSummations[key] ?: 1)
     }
-    println(" -----------END------------ ")
-    println()
     return averageStockPrice
 }
 
@@ -261,7 +242,21 @@ fun averageStockPrice(stockPrices: List<Pair<String, Double>>): Map<String, Doub
  *     "печенье"
  *   ) -> "Мария"
  */
-fun findCheapestStuff(stuff: Map<String, Pair<String, Double>>, kind: String): String? = TODO()
+fun findCheapestStuff(stuff: Map<String, Pair<String, Double>>, kind: String): String? {
+    var stuffName: String? = null
+    for ((name, typeAndCost) in stuff) {
+        if (typeAndCost.first == kind) {
+            if (stuffName == null) {
+                stuffName = name
+            } else {
+                if ((stuff[stuffName]?.second ?: 0.0) > typeAndCost.second) {
+                    stuffName = name
+                }
+            }
+        }
+    }
+    return stuffName
+}
 
 /**
  * Средняя
@@ -272,7 +267,17 @@ fun findCheapestStuff(stuff: Map<String, Pair<String, Double>>, kind: String): S
  * Например:
  *   canBuildFrom(listOf('a', 'b', 'o'), "baobab") -> true
  */
-fun canBuildFrom(chars: List<Char>, word: String): Boolean = TODO()
+fun canBuildFrom(chars: List<Char>, word: String): Boolean {
+    var isItPossible = true
+    val setOfCharacters = chars.toSet()
+    for (character in word) {
+        if (character !in setOfCharacters) {
+            isItPossible = false
+            break
+        }
+    }
+    return isItPossible
+}
 
 /**
  * Средняя
@@ -286,7 +291,37 @@ fun canBuildFrom(chars: List<Char>, word: String): Boolean = TODO()
  * Например:
  *   extractRepeats(listOf("a", "b", "a")) -> mapOf("a" to 2)
  */
-fun extractRepeats(list: List<String>): Map<String, Int> = TODO()
+fun extractRepeats(list: List<String>): Map<String, Int> {
+    val mapOfRepeats = mutableMapOf<String, Int>()
+    val mapOfCheckedElements = mutableMapOf<String, Int>()
+    for (element in list) {
+        if (mapOfCheckedElements.containsKey(element)) {
+            if (mapOfCheckedElements[element] == 1) {
+                mapOfRepeats[element] = (mapOfRepeats[element] ?: 0) + 1
+            }
+            mapOfRepeats[element] = (mapOfRepeats[element] ?: 0) + 1
+            mapOfCheckedElements[element] = (mapOfCheckedElements[element] ?: 0) + 1
+        } else {
+            mapOfCheckedElements[element] = 1
+        }
+    }
+    return mapOfRepeats
+    /*val mapOfRepeats = mutableMapOf<String, Int>()
+    for (element in list) {
+        if (mapOfRepeats.containsKey(element)) {
+            mapOfRepeats[element] = (mapOfRepeats[element] ?: 0) + 1
+        } else {
+            mapOfRepeats[element] = 1
+        }
+    }
+    val finalMapOfRepeats = mutableMapOf<String, Int>()
+    for ((key) in mapOfRepeats) {
+        if ((mapOfRepeats[key] ?: 0) > 1) {
+            finalMapOfRepeats[key] = mapOfRepeats[key] ?: 0
+        }
+    }
+    return finalMapOfRepeats*/
+}
 
 /**
  * Средняя
@@ -297,7 +332,19 @@ fun extractRepeats(list: List<String>): Map<String, Int> = TODO()
  * Например:
  *   hasAnagrams(listOf("тор", "свет", "рот")) -> true
  */
-fun hasAnagrams(words: List<String>): Boolean = TODO()
+fun hasAnagrams(words: List<String>): Boolean {
+    var isItPossible = false
+    for (i in 0 until words.size) {
+        for (j in (i + 1) until words.size) {
+            if (canBuildFrom(words[i].toList(), words[j]) || canBuildFrom(words[j].toList(), words[i])) {
+                isItPossible = true
+                break
+            }
+        }
+        if (isItPossible) break
+    }
+    return isItPossible
+}
 
 /**
  * Сложная
