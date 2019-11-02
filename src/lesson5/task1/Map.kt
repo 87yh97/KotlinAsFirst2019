@@ -345,6 +345,7 @@ fun hasAnagrams(words: List<String>): Boolean {
                         return true
                     }
                 }
+
             }
         }
     }
