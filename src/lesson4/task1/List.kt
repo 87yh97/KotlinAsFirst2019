@@ -3,6 +3,7 @@
 package lesson4.task1
 
 import lesson1.task1.discriminant
+import lesson3.task1.digitNumber
 import lesson3.task1.isPrime
 import lesson3.task1.minDivisor
 import kotlin.math.pow
@@ -332,7 +333,8 @@ fun decimal(digits: List<Int>, base: Int): Int {
  * (например, str.toInt(base)), запрещается.
  */
 fun decimalFromString(str: String, base: Int): Int {
-    var number = 0L // Long нужно, так как при 10-ти значном аргументе str number переполняется при последнем домножении number на base в цикле for
+    var number =
+        0L // Long нужно, так как при 10-ти значном аргументе str number переполняется при последнем домножении number на base в цикле for
     for (i in 0 until str.length) {
         number += if (str[i] > '9') {
             str[i] - 'W'
@@ -357,151 +359,26 @@ fun decimalFromString(str: String, base: Int): Int {
 fun roman(n: Int): String {
     var numberStr = ""
     var number = n
-    val list = mutableListOf<Int>(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
-
-    list[0] = numberOfThousands(number)
-    number -= list[0] * 1000
-    for (i in 0 until list[0] ) numberStr += "M"
-
-    list[1] = numberOfNineHundreds(number)
-    number -= list[1] * 900
-    if (list[1] == 1) numberStr += "CM"
-
-    list[2] = numberOfFiveHundreds(number)
-    number -= list[2] * 500
-    if (list[2] == 1) numberStr += "D"
-
-    list[3] = numberOfFourHundreds(number)
-    number -= list[3] * 400
-    if (list[3] == 1) numberStr += "CD"
-
-    list[4] = numberOfOneHundreds(number)
-    number -= list[4] * 100
-    for (i in 0 until list[4] ) numberStr += "C"
-
-    list[5] = numberOfNineties(number)
-    number -= list[5] * 90
-    if (list[5] == 1) numberStr += "XC"
-
-    list[6] = numberOfFifties(number)
-    number -= list[6] * 50
-    if (list[6] == 1) numberStr += "L"
-
-    list[7] = numberOfForties(number)
-    number -= list[7] * 40
-    if (list[7] == 1) numberStr += "XL"
-
-    list[8] = numberOfTens(number)
-    number -= list[8] * 10
-    for (i in 0 until list[8] ) numberStr += "X"
-
-    list[9] = numberOfNines(number)
-    number -= list[9] * 9
-    if (list[9] == 1) numberStr += "IX"
-
-    list[10] = numberOfFives(number)
-    number -= list[10] * 5
-    if (list[10] == 1) numberStr += "V"
-
-    list[11] = numberOfFours(number)
-    number -= list[11] * 4
-    if (list[11] == 1) numberStr += "IV"
-
-    list[12] = numberOfOnes(number)
-    for (i in 0 until list[12] ) numberStr += "I"
-    //number -= list[12] * 1
-
+    val list = mutableListOf(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+    val listOfDecEquivalentOfRanks = listOf(1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1)
+    val listOfStringEquivalentOfRanks = listOf("M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I")
+    for (i in 0..12) {
+        list[i] = anyRankYouLike(i, number, listOfDecEquivalentOfRanks)
+        number -= list[i] * listOfDecEquivalentOfRanks[i]
+        for (j in 0 until list[i]) numberStr += listOfStringEquivalentOfRanks[i]
+    }
     return numberStr
 }
 
-fun numberOfThousands(n: Int): Int {
-    var numb = 0
-    var num = n
-    while (num > 999) {
-        numb++
-        num -= 1000
+fun anyRankYouLike(rank: Int, initialNumber: Int, listOfDecEquivalentOfRanks: List<Int>): Int {
+    var numberOfDigitsOfRank = 0
+    var number = initialNumber
+    while (number > (listOfDecEquivalentOfRanks[rank] - 1)) {
+        numberOfDigitsOfRank++
+        number -= listOfDecEquivalentOfRanks[rank]
     }
-    return numb
+    return numberOfDigitsOfRank
 }
-
-fun numberOfNineHundreds(n: Int): Int {
-    return if (n > 899) 1
-    else 0
-    /*var number = 0
-    var num = n
-    while (num > 899) {
-        number++
-        num -= 900
-    }
-    return number*/
-}
-
-fun numberOfFiveHundreds(n: Int): Int {
-    return if (n > 499) 1
-    else 0
-}
-
-fun numberOfFourHundreds(n: Int): Int {
-    return if (n > 399) 1
-    else 0
-}
-
-fun numberOfOneHundreds(n: Int): Int {
-    var number = 0
-    var num = n
-    while (num > 99) {
-        number++
-        num -= 100
-    }
-    return number
-}
-
-
-fun numberOfNineties(n: Int): Int {
-    return if (n > 89) 1
-    else 0
-}
-
-fun numberOfFifties(n: Int): Int {
-    return if (n > 49) 1
-    else 0
-}
-
-fun numberOfForties(n: Int): Int {
-    return if (n > 39) 1
-    else 0
-}
-fun numberOfTens(n: Int): Int {
-    var number = 0
-    var num = n
-    while (num > 9) {
-        number++
-        num -= 10
-    }
-    return number
-}
-fun numberOfNines(n: Int): Int {
-    return if (n > 8) 1
-    else 0
-}
-fun numberOfFives(n: Int): Int {
-    return if (n > 4) 1
-    else 0
-}
-fun numberOfFours(n: Int): Int {
-    return if (n > 3) 1
-    else 0
-}
-fun numberOfOnes(n: Int): Int {
-    var number = 0
-    var num = n
-    while (num > 0) {
-        number++
-        num -= 1
-    }
-    return number
-}
-
 
 /**
  * Очень сложная
@@ -510,4 +387,66 @@ fun numberOfOnes(n: Int): Int {
  * Например, 375 = "триста семьдесят пять",
  * 23964 = "двадцать три тысячи девятьсот шестьдесят четыре"
  */
-fun russian(n: Int): String = TODO()
+fun russian(n: Int): String {
+    var number = n
+    var wholeNumberString = ""
+    val numberOfDigits = mutableListOf(0, 0, 0, 0, 0, 0)
+    val wordsForHundredsOfThousands =
+        listOf("", "сто", "двести", "триста", "четыреста", "пятьсот", "шестьсот", "семьсот", "восемьсот", "девятьсот")
+    val wordsForTensOfThousands = listOf("", "десять", "двадцать", "тридцать", "сорок", "пятьдесят", "шестьдесят", "семьдесят", "восемьдесят", "девяносто")
+    val wordsForTeensOfThousands = listOf("", "одиннадцать", "двенадцать", "тринадцать", "четырнадцать", "пятнадцать", "шестнадцать", "семнадцать", "восемнадцать", "девятнадцать")
+    val wordsForUnitsOfThousands = listOf("", "одна", "две", "три", "четыре", "пять", "шесть", "семь", "восемь", "девять")
+    val wordsForThousands = listOf("", "тысяча", "тысячи", "тысяч")
+    //val wordsForHundreds = wordsForHundredsOfThousands
+    for (i in digitNumber(n) - 1 .. 0) {
+        numberOfDigits[i] = number % 10
+        number /= 10
+    }
+    wholeNumberString += wordsForHundredsOfThousands[numberOfDigits[0]]
+    wholeNumberString += if (numberOfDigits[1] == 1) {
+        if (numberOfDigits[2] == 0) "десять"
+        else wordsForTeensOfThousands[numberOfDigits[1]]
+    } else {
+        wordsForTensOfThousands[numberOfDigits[1]]
+    }
+    wholeNumberString += wordsForUnitsOfThousands[numberOfDigits[2]]
+
+
+
+    return wholeNumberString
+}
+
+/*fun ageDescription(age: Int): String =
+    if ((age % 10 == 1) && (((age / 10) % 10) != 1)) "$age год"
+    else if (((age % 10 in 2..4)) && (((age / 10) % 10) != 1)) "$age года"
+    else "$age лет"*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
