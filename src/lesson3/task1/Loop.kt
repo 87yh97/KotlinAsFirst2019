@@ -72,7 +72,7 @@ fun digitNumber(n: Int): Int {
     var a = 0
     if (n == 0) return 1
     while (k != 0) {
-        a ++
+        a++
         k /= 10
     }
     return a

@@ -293,20 +293,14 @@ fun convert(n: Int, base: Int): List<Int> {
  */
 fun convertToString(n: Int, base: Int): String {
     val list = convert(n, base) as MutableList<Int>
-    //val charList = mutableListOf<Char>()
     var str = ""
     for (i in 0 until list.size) {
         str += if (list[i] > 9) {
-            (list[i] + 87).toChar()
-            //charList.add((list[i] + 87).toChar())
+            list[i].toChar() + "W"
         } else {
-            (list[i] + 48).toChar()
-            //charList.add((list[i] + 48).toChar())
+            list[i].toChar() + "0"
         }
     }
-
-    //val character = 97.toChar()
-    //for (i in 0..5) println(character)
     return str
 }
 
@@ -338,13 +332,12 @@ fun decimal(digits: List<Int>, base: Int): Int {
  * (например, str.toInt(base)), запрещается.
  */
 fun decimalFromString(str: String, base: Int): Int {
-    var number =
-        0L // Long нужно, так как при 10-ти значном аргументе str number переполняется при последнем домножении number на base в цикле for
+    var number = 0L // Long нужно, так как при 10-ти значном аргументе str number переполняется при последнем домножении number на base в цикле for
     for (i in 0 until str.length) {
-        number += if (str[i].toByte().toInt() > 57) {
-            str[i].toInt() - 87
+        number += if (str[i] > '9') {
+            str[i] - 'W'
         } else {
-            str[i].toInt() - 48
+            (str[i] - '0')
         }
         number *= base
     }
