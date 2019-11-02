@@ -269,24 +269,15 @@ fun findCheapestStuff(stuff: Map<String, Pair<String, Double>>, kind: String): S
  *   canBuildFrom(listOf('a', 'b', 'o'), "baobab") -> true
  */
 fun canBuildFrom(chars: List<Char>, word: String): Boolean {
-    //var isItPossible = true
     val setOfCharacters = chars.toSet()
-    //val emptyCharacter = ""
-    //if (word == "") return false
-    //if ((word == "") && (chars.isEmpty())) return true
     if (word == "") return true
     for (character in word) {
-        //if (character == emptyCharacter)
-        //if (character.toString().isEmpty() && setOfCharacters.isEmpty())
         if (((character.toLowerCase() !in setOfCharacters) && (character.toUpperCase() !in setOfCharacters)) /*|| character.toString().isEmpty()*/) {
             return false
         }
     }
     return true
 }
-
-/*private fun Char.isNullOrEmpty(): Boolean {
-}*/
 
 /**
  * Средняя
@@ -342,17 +333,25 @@ fun extractRepeats(list: List<String>): Map<String, Int> {
  *   hasAnagrams(listOf("тор", "свет", "рот")) -> true
  */
 fun hasAnagrams(words: List<String>): Boolean {
-    var isItPossible = false
-    for (i in 0 until words.size) {
-        for (j in (i + 1) until words.size) {
-            if (canBuildFrom(words[i].toList(), words[j]) || canBuildFrom(words[j].toList(), words[i])) {
-                isItPossible = true
-                break
+    for (i in words.indices) {
+        if (words[i] == "") {
+            for (j in i + 1 until words.size) {
+                if (words[j] == "") return true
             }
         }
-        if (isItPossible) break
     }
-    return isItPossible
+    for (i in words.indices) {
+        if (words[i] != "") {
+            for (j in i + 1 until words.size) {
+                if (words[j] != "") {
+                    if (canBuildFrom(words[i].toList(), words[j]) || canBuildFrom(words[j].toList(), words[i])) {
+                        return true
+                    }
+                }
+            }
+        }
+    }
+    return false
 }
 
 /**
