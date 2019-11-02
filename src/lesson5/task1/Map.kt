@@ -274,7 +274,7 @@ fun canBuildFrom(chars: List<Char>, word: String): Boolean {
     //val emptyCharacter = ""
     //if (word == "") return false
     //if ((word == "") && (chars.isEmpty())) return true
-    if (word == "") return chars.isEmpty()
+    if (word == "") return true
     for (character in word) {
         //if (character == emptyCharacter)
         //if (character.toString().isEmpty() && setOfCharacters.isEmpty())
