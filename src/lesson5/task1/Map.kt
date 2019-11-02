@@ -341,7 +341,7 @@ fun hasAnagrams(words: List<String>): Boolean {
         if (words[i] != "") {
             for (j in i + 1 until words.size) {
                 if (words[j] != "") {
-                    if (canBuildFrom(words[i].toList(), words[j]) || canBuildFrom(words[j].toList(), words[i])) {
+                    if (canBuild(words[i].toList(), words[j]) || canBuild(words[j].toList(), words[i])) {
                         return true
                     }
                 }
@@ -349,6 +349,20 @@ fun hasAnagrams(words: List<String>): Boolean {
         }
     }
     return false
+}
+
+fun canBuild(chars: List<Char>, word: String): Boolean {
+    val setOfCharacters = chars.toSet()
+    //val emptyWord = ("")
+    //if (word == "") return (word[0] in setOfCharacters)
+
+    for (character in word) {
+        //if (word == "") return (character in setOfCharacters)
+        if (character !in setOfCharacters /*|| character.toString().isEmpty()*/) {
+            return false
+        }
+    }
+    return true
 }
 
 /**
