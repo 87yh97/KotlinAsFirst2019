@@ -72,7 +72,7 @@ fun digitNumber(n: Int): Int {
     var a = 0
     if (n == 0) return 1
     while (k != 0) {
-        a += 1
+        a ++
         k /= 10
     }
     return a
@@ -87,11 +87,10 @@ fun digitNumber(n: Int): Int {
 fun fib(n: Int): Int {
     if (n == 1 || n == 2) return 1
     var k = 3
-    var num1: Int
     var num2 = 1
     var num3 = 2
     while (k != n) {
-        num1 = num3
+        val num1 = num3
         num3 += num2
         num2 = num1
         k++
@@ -107,10 +106,13 @@ fun fib(n: Int): Int {
  */
 fun lcm(m: Int, n: Int): Int {
     var k = 1
-    while ((m * k) % n != 0) {
+    if (tSCD(m, n)) return m * n
+    val minOfNum = min(m, n)
+    val maxOfNum = max(m, n)
+    while ((maxOfNum * k) % minOfNum != 0) {
         k++
     }
-    return m * k
+    return maxOfNum * k
 }
 
 /**
@@ -257,14 +259,12 @@ fun cos(x: Double, eps: Double): Double {
  * Использовать операции со строками в этой задаче запрещается.
  */
 fun revert(n: Int): Int {
-    val digitCount: Int
     var num = n
     var rNum = 0L
-    digitCount = digitNumber(num)
-    var digit: Int
+    val digitCount = digitNumber(num)
     num = n
     for (i in 1..digitCount) {
-        digit = num % 10
+        val digit = num % 10
         num /= 10
         rNum += digit
         rNum *= 10

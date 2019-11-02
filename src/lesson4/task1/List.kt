@@ -190,12 +190,13 @@ fun polynom(p: List<Int>, x: Int): Int {
     return if (p.isEmpty()) 0
     else {
         var value = 0
-        for (i in p.indices) {
-            value += x.toDouble().pow(i.toDouble()).toInt() * p[i]
+        var tempX = 1
+        for (i in p) {
+            value += tempX * i
+            tempX *= x
         }
         value
     }
-
 }
 
 /**
@@ -261,7 +262,7 @@ fun factorizeToString(n: Int): String =
  * например: n = 100, base = 4 -> (1, 2, 1, 0) или n = 250, base = 14 -> (1, 3, 12)
  */
 fun convert(n: Int, base: Int): List<Int> {
-    val list: MutableList<Int> = mutableListOf()
+    val list = mutableListOf<Int>()
     var number = n
     if (number == 0) return listOf(0)
     while (number > 0) {
