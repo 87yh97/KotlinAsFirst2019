@@ -3,6 +3,7 @@
 package lesson5.task1
 
 //import com.sun.org.apache.xpath.internal.operations.Bool
+//import kotlin.text
 
 /**
  * Пример
@@ -268,19 +269,24 @@ fun findCheapestStuff(stuff: Map<String, Pair<String, Double>>, kind: String): S
  *   canBuildFrom(listOf('a', 'b', 'o'), "baobab") -> true
  */
 fun canBuildFrom(chars: List<Char>, word: String): Boolean {
-    var isItPossible = true
+    //var isItPossible = true
     val setOfCharacters = chars.toSet()
     //val emptyCharacter = ""
-    if (word == "") return false
+    //if (word == "") return false
+    //if ((word == "") && (chars.isEmpty())) return true
+    if (word == "") return chars.isEmpty()
     for (character in word) {
         //if (character == emptyCharacter)
+        //if (character.toString().isEmpty() && setOfCharacters.isEmpty())
         if (((character.toLowerCase() !in setOfCharacters) && (character.toUpperCase() !in setOfCharacters)) /*|| character.toString().isEmpty()*/) {
-            isItPossible = false
-            break
+            return false
         }
     }
-    return isItPossible
+    return true
 }
+
+/*private fun Char.isNullOrEmpty(): Boolean {
+}*/
 
 /**
  * Средняя
