@@ -427,7 +427,7 @@ fun russian(n: Int): String {
 
     wholeNumberString += wordsForHundredsOfThousands[numberOfDigits[3]]
     wholeNumberString += if (numberOfDigits[4] == 1) {
-        if (numberOfDigits[5] == 0) "десять"
+        if (numberOfDigits[5] == 0) " десять"
         else wordsForTeensOfThousands[numberOfDigits[5]]
     } else {
         wordsForTensOfThousands[numberOfDigits[4]]
