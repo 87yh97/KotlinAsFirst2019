@@ -297,9 +297,9 @@ fun convertToString(n: Int, base: Int): String {
     var str = ""
     for (i in 0 until list.size) {
         str += if (list[i] > 9) {
-            list[i].toChar() + "W"
+            (list[i] + 87).toChar()
         } else {
-            list[i].toChar() + "0"
+            (list[i] + 48).toChar()
         }
     }
     return str
