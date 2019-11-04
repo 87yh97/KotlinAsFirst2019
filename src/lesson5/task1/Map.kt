@@ -2,8 +2,6 @@
 
 package lesson5.task1
 
-//import com.sun.org.apache.xpath.internal.operations.Bool
-//import kotlin.text
 
 /**
  * Пример
@@ -98,7 +96,8 @@ fun buildGrades(grades: Map<String, Int>): Map<Int, List<String>> {
     val gradeMap = mutableMapOf<Int, List<String>>()
     for ((surname, grade) in grades) {
         if (grade in gradeMap) {
-            gradeMap[grade] = gradeMap[grade]!!.plus(surname)
+            val tempList: List<String> = gradeMap[grade] ?: listOf()
+            gradeMap[grade] = tempList + listOf(surname)
         } else {
             gradeMap[grade] = listOf(surname)
         }
@@ -354,12 +353,8 @@ fun hasAnagrams(words: List<String>): Boolean {
 
 fun canBuild(chars: List<Char>, word: String): Boolean {
     val setOfCharacters = chars.toSet()
-    //val emptyWord = ("")
-    //if (word == "") return (word[0] in setOfCharacters)
-
     for (character in word) {
-        //if (word == "") return (character in setOfCharacters)
-        if (character !in setOfCharacters /*|| character.toString().isEmpty()*/) {
+        if (character !in setOfCharacters) {
             return false
         }
     }
