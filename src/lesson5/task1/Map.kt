@@ -152,7 +152,7 @@ fun subtractOf(a: MutableMap<String, String>, b: Map<String, String>): Unit {
 fun whoAreInBoth(a: List<String>, b: List<String>): List<String> {
     val map = mutableMapOf<String, Boolean>()
     for (name in a) {
-        if (!map.containsKey(name)) map.put(name, false)
+        if (!map.containsKey(name)) map[name] = false
     }
     for (name in b) {
         if (map.containsKey(name)) map[name] = true
@@ -268,7 +268,7 @@ fun canBuildFrom(chars: List<Char>, word: String): Boolean {
     val setOfCharacters = chars.toSet()
     if (word == "") return true
     for (character in word) {
-        if (((character.toLowerCase() !in setOfCharacters) && (character.toUpperCase() !in setOfCharacters)) /*|| character.toString().isEmpty()*/) {
+        if ((character.toLowerCase() !in setOfCharacters) && (character.toUpperCase() !in setOfCharacters)) {
             return false
         }
     }
@@ -302,21 +302,6 @@ fun extractRepeats(list: List<String>): Map<String, Int> {
         }
     }
     return mapOfRepeats
-    /*val mapOfRepeats = mutableMapOf<String, Int>()
-    for (element in list) {
-        if (mapOfRepeats.containsKey(element)) {
-            mapOfRepeats[element] = (mapOfRepeats[element] ?: 0) + 1
-        } else {
-            mapOfRepeats[element] = 1
-        }
-    }
-    val finalMapOfRepeats = mutableMapOf<String, Int>()
-    for ((key) in mapOfRepeats) {
-        if ((mapOfRepeats[key] ?: 0) > 1) {
-            finalMapOfRepeats[key] = mapOfRepeats[key] ?: 0
-        }
-    }
-    return finalMapOfRepeats*/
 }
 
 /**
@@ -344,7 +329,6 @@ fun hasAnagrams(words: List<String>): Boolean {
                         return true
                     }
                 }
-
             }
         }
     }
