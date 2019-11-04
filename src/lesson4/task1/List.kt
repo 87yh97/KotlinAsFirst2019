@@ -395,79 +395,41 @@ fun russian(n: Int): String {
         numberOfDigits[5 - i] = number % 10
         number /= 10
     }
-    val wordsForHundredsOfThousands =
+    val wordsForHundredsOfAnything =
         listOf("", " сто", " двести", " триста", " четыреста", " пятьсот", " шестьсот", " семьсот", " восемьсот", " девятьсот")
-    val wordsForTensOfThousands = listOf("", " десять", " двадцать", " тридцать", " сорок", " пятьдесят", " шестьдесят", " семьдесят", " восемьдесят", " девяносто")
-    val wordsForTeensOfThousands = listOf("", " одиннадцать", " двенадцать", " тринадцать", " четырнадцать", " пятнадцать", " шестнадцать", " семнадцать", " восемнадцать", " девятнадцать")
+    val wordsForTensOfAnything = listOf("", " десять", " двадцать", " тридцать", " сорок", " пятьдесят", " шестьдесят", " семьдесят", " восемьдесят", " девяносто")
+    val wordsForTeensOfAnything = listOf("", " одиннадцать", " двенадцать", " тринадцать", " четырнадцать", " пятнадцать", " шестнадцать", " семнадцать", " восемнадцать", " девятнадцать")
     val wordsForUnitsOfThousands = listOf("", " одна", " две", " три", " четыре", " пять", " шесть", " семь", " восемь", " девять")
     val wordsForUnits = listOf("", " один", " два", " три", " четыре", " пять", " шесть", " семь", " восемь", " девять")
-    //val wordsForThousands = listOf("", "тысяча", "тысячи", "тысяч")
-    //val wordsForHundreds = wordsForHundredsOfThousands
+
     for (i in digitNumber(n) - 1 .. 0) {
         numberOfDigits[i] = number % 10
         number /= 10
     }
-    wholeNumberString += wordsForHundredsOfThousands[numberOfDigits[0]]
+    wholeNumberString += wordsForHundredsOfAnything[numberOfDigits[0]]
     wholeNumberString += if (numberOfDigits[1] == 1) {
         if (numberOfDigits[2] == 0) " десять"
-        else wordsForTeensOfThousands[numberOfDigits[2]]
+        else wordsForTeensOfAnything[numberOfDigits[2]]
     } else {
-        wordsForTensOfThousands[numberOfDigits[1]]
+        wordsForTensOfAnything[numberOfDigits[1]]
     }
     if (numberOfDigits[1] != 1) wholeNumberString += wordsForUnitsOfThousands[numberOfDigits[2]]
     if (numberOfDigits[1] == 1 ||
         (numberOfDigits[2] == 0 && (numberOfDigits[0] != 0 || numberOfDigits[1] != 0)) ||
         numberOfDigits[2] in 5..9) {
         wholeNumberString += " тысяч"
+    } else {
+        if (numberOfDigits[2] == 1) wholeNumberString += " тысяча"
+        if (numberOfDigits[2] in 2..4) wholeNumberString += " тысячи"
     }
-    if (numberOfDigits[2] == 1 ) wholeNumberString += " тысяча"
-    if (numberOfDigits[2] in 2..4) wholeNumberString += " тысячи"
-
-
-
-    wholeNumberString += wordsForHundredsOfThousands[numberOfDigits[3]]
+    wholeNumberString += wordsForHundredsOfAnything[numberOfDigits[3]]
     wholeNumberString += if (numberOfDigits[4] == 1) {
         if (numberOfDigits[5] == 0) " десять"
-        else wordsForTeensOfThousands[numberOfDigits[5]]
+        else wordsForTeensOfAnything[numberOfDigits[5]]
     } else {
-        wordsForTensOfThousands[numberOfDigits[4]]
+        wordsForTensOfAnything[numberOfDigits[4]]
     }
     if (numberOfDigits[4] != 1) wholeNumberString += wordsForUnits[numberOfDigits[5]]
     println(wholeNumberString)
     return wholeNumberString.substring(1, wholeNumberString.length)
 }
-
-/*fun ageDescription(age: Int): String =
-    if ((age % 10 == 1) && (((age / 10) % 10) != 1)) "$age год"
-    else if (((age % 10 in 2..4)) && (((age / 10) % 10) != 1)) "$age года"
-    else "$age лет"*/
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
