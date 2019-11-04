@@ -295,11 +295,12 @@ fun convert(n: Int, base: Int): List<Int> {
 fun convertToString(n: Int, base: Int): String {
     val list = convert(n, base) as MutableList<Int>
     var str = ""
+    val anyCharYouLike = "abcdefghijklmnopqrstuvwxyz"
     for (i in 0 until list.size) {
-        str += if (list[i] > 9) {
-            (list[i] + 87).toChar()
+        if (list[i] > 9) {
+            str += anyCharYouLike[list[i] - 10]
         } else {
-            (list[i] + 48).toChar()
+            str += list[i].toString()
         }
     }
     return str
