@@ -297,11 +297,8 @@ fun convertToString(n: Int, base: Int): String {
     var str = ""
     val anyCharYouLike = "abcdefghijklmnopqrstuvwxyz"
     for (i in 0 until list.size) {
-        if (list[i] > 9) {
-            str += anyCharYouLike[list[i] - 10]
-        } else {
-            str += list[i].toString()
-        }
+        str += if (list[i] > 9) anyCharYouLike[list[i] - 10]
+        else list[i].toString()
     }
     return str
 }
