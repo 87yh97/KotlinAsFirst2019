@@ -369,7 +369,49 @@ fun canBuild(chars: List<Char>, word: String): Boolean {
  *          "Mikhail" to setOf("Sveta", "Marat")
  *        )
  */
-fun propagateHandshakes(friends: Map<String, Set<String>>): Map<String, Set<String>> = TODO()
+/*var allAcquaintances = mutableMapOf<String, MutableSet<String>>()
+fun propagateHandshakes(friends: Map<String, Set<String>>): Map<String, Set<String>> {
+    for ((name, listOfFriends) in friends) {
+        allAcquaintances[name] = listOfFriends.toMutableSet()
+        for (friendsName in listOfFriends) {
+            allLevelAcquaintances(friends, friendsName, name)
+        }
+    }
+    return allAcquaintances
+}
+
+fun allLevelAcquaintances(
+    friends: Map<String, Set<String>>,
+    name: String,
+    originalName: String
+) {
+    for (friendsName in friends[name] ?: setOf()) {
+        if (allAcquaintances[originalName]?.contains(friendsName) == false && ) {
+            allLevelAcquaintances(friends, friendsName, originalName)
+        }
+    }
+}*/
+fun propagateHandshakes(friends: Map<String, Set<String>>): Map<String, Set<String>> {
+    val allAcquaintances = mutableMapOf<String, MutableSet<String>>()
+    for ((name, listOfFriends) in friends) {
+        allAcquaintances[name] = listOfFriends.toMutableSet()
+        val tempUnmodifiedFriendsSet = allAcquaintances[name]
+        for (friendsName in listOfFriends) {
+            allAcquaintances[name]?.addAll(friends[friendsName] ?: setOf())
+            if (friendsName !in allAcquaintances) allAcquaintances[friendsName] = mutableSetOf()
+        }
+        do {
+            val differenceInSets: Set<String> =
+                allAcquaintances[name] ?: setOf<String>() - (tempUnmodifiedFriendsSet ?: setOf())
+            tempUnmodifiedFriendsSet?.addAll(allAcquaintances[name] ?: setOf())
+            for (friendsName in differenceInSets) {
+                allAcquaintances[name]?.addAll(friends[friendsName] ?: setOf())
+            }
+        } while (allAcquaintances[name] != tempUnmodifiedFriendsSet)
+        allAcquaintances[name]?.remove(name)
+    }
+    return allAcquaintances
+}
 
 /**
  * Сложная
