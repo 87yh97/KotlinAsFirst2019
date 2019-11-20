@@ -392,24 +392,68 @@ fun allLevelAcquaintances(
     }
 }*/
 fun propagateHandshakes(friends: Map<String, Set<String>>): Map<String, Set<String>> {
+    println("---------------------------------------------------------------------------------------")
     val allAcquaintances = mutableMapOf<String, MutableSet<String>>()
     for ((name, listOfFriends) in friends) {
+        println("++++++++++++START OF THE ITERATION+++++++++++++++++++")
         allAcquaintances[name] = listOfFriends.toMutableSet()
-        val tempUnmodifiedFriendsSet = allAcquaintances[name]
+        print("allAcquaintances[$name] = ")
+        println(allAcquaintances[name])
+        var tempUnmodifiedFriendsSet: MutableSet<String> = mutableSetOf()
+        tempUnmodifiedFriendsSet.addAll(allAcquaintances[name] ?: setOf())
+        print("tempUnmodifiedFriendsSet = ")
+        println(tempUnmodifiedFriendsSet)
+        println()
+        println("GOING INTO FIRST FOR")
+        print("tempUnmodifiedFriendsSet = ")
+        println(tempUnmodifiedFriendsSet)
         for (friendsName in listOfFriends) {
+            print("allAcquaintances[$name] = ")
+            println(allAcquaintances[name])
+            print("tempUnmodifiedFriendsSet = ")
+            println(tempUnmodifiedFriendsSet)
             allAcquaintances[name]?.addAll(friends[friendsName] ?: setOf())
+            print("allAcquaintances[$name] = ")
+            println(allAcquaintances[name])
+            print("tempUnmodifiedFriendsSet = ")
+            println(tempUnmodifiedFriendsSet)
             if (friendsName !in allAcquaintances) allAcquaintances[friendsName] = mutableSetOf()
         }
+        println("GOT OUT OF THE FIRST FOR")
+        println()
+        print("tempUnmodifiedFriendsSet = ")
+        println(tempUnmodifiedFriendsSet)
+        println("GOING INTO THE WHILE")
         do {
+            //println("G")
+            print("tempUnmodifiedFriendsSet = ")
+            println(tempUnmodifiedFriendsSet)
             val differenceInSets: Set<String> =
-                allAcquaintances[name] ?: setOf<String>() - (tempUnmodifiedFriendsSet ?: setOf())
-            tempUnmodifiedFriendsSet?.addAll(allAcquaintances[name] ?: setOf())
-            for (friendsName in differenceInSets) {
-                allAcquaintances[name]?.addAll(friends[friendsName] ?: setOf())
+                (allAcquaintances[name] ?: setOf<String>()) - (tempUnmodifiedFriendsSet ?: setOf())
+            print("differenceInSets = ")
+            println(differenceInSets)
+            //tempUnmodifiedFriendsSet?.addAll(allAcquaintances[name] ?: setOf())
+            tempUnmodifiedFriendsSet = allAcquaintances[name] ?: mutableSetOf()
+            print("tempUnmodifiedFriendsSet = ")
+            println(tempUnmodifiedFriendsSet)
+            println()
+            println("GOING INTO THE SECOND FOR")
+            for (friendsNameTwo in differenceInSets) {
+                print("allAcquaintances[$name] = ")
+                println(allAcquaintances[name])
+                if (friends[friendsNameTwo] == null) {}//allAcquaintances[name]?.addAll(setOf())
+                else allAcquaintances[name]?.addAll(friends[friendsNameTwo]!!)
+                print("allAcquaintances[$name] = ")
+                println(allAcquaintances[name])
             }
+            println("GOT OUT OF THE SECOND FOR")
         } while (allAcquaintances[name] != tempUnmodifiedFriendsSet)
+        println()
+        println("GOT OUT OF THE WHILE")
         allAcquaintances[name]?.remove(name)
+        println("++++++++++++END OF THE ITERATION+++++++++++++++++")
     }
+    println("---------------------------------------------------------------------------------------")
     return allAcquaintances
 }
 
