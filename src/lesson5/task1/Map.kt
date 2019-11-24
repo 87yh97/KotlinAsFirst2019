@@ -421,11 +421,20 @@ fun findSumOfTwo(list: List<Int>, number: Int): Pair<Int, Int> {
             println("secondNumber = $secondNumber")
             if (diff == secondNumber) {
                 println("YESTHEYAREEQUAL")
-                if (((index - 1) >= 0) && sortedList[index - 1] == number) return Pair(index - 1, index)
-                if (((index + 1) <= (sortedList.size - 1)) && sortedList[index + 1] == number) return Pair(
-                    index,
-                    index + 1
-                )
+                if ((((index - 1) >= 0) && sortedList[index - 1] == number) ||
+                    (((index + 1) <= (sortedList.size - 1)) && sortedList[index + 1] == number)
+                ) {
+                    var first = -1
+                    var second = -1
+                    for (i in 0 until list.size) {
+                        if (list[i] == diff && first != -1) {
+                            second = i
+                            break
+                        }
+                        if (list[i] == diff) first = i
+                    }
+                    return Pair(first, second)
+                }
                 println("BUT THERE ARE NONE OF THE SAME NUMBER")
             } else {
                 val secondNumberIndex = list.indexOf(secondNumber)
