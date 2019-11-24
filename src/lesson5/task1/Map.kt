@@ -369,91 +369,26 @@ fun canBuild(chars: List<Char>, word: String): Boolean {
  *          "Mikhail" to setOf("Sveta", "Marat")
  *        )
  */
-/*var allAcquaintances = mutableMapOf<String, MutableSet<String>>()
 fun propagateHandshakes(friends: Map<String, Set<String>>): Map<String, Set<String>> {
-    for ((name, listOfFriends) in friends) {
-        allAcquaintances[name] = listOfFriends.toMutableSet()
-        for (friendsName in listOfFriends) {
-            allLevelAcquaintances(friends, friendsName, name)
-        }
-    }
-    return allAcquaintances
-}
-
-fun allLevelAcquaintances(
-    friends: Map<String, Set<String>>,
-    name: String,
-    originalName: String
-) {
-    for (friendsName in friends[name] ?: setOf()) {
-        if (allAcquaintances[originalName]?.contains(friendsName) == false && ) {
-            allLevelAcquaintances(friends, friendsName, originalName)
-        }
-    }
-}*/
-fun propagateHandshakes(friends: Map<String, Set<String>>): Map<String, Set<String>> {
-    println("---------------------------------------------------------------------------------------")
     val allAcquaintances = mutableMapOf<String, MutableSet<String>>()
     for ((name, listOfFriends) in friends) {
-        println("++++++++++++START OF THE ITERATION+++++++++++++++++++")
         allAcquaintances[name] = listOfFriends.toMutableSet()
-        print("allAcquaintances[$name] = ")
-        println(allAcquaintances[name])
-        var tempUnmodifiedFriendsSet: MutableSet<String> = mutableSetOf()
+        val tempUnmodifiedFriendsSet: MutableSet<String> = mutableSetOf()
         tempUnmodifiedFriendsSet.addAll(allAcquaintances[name] ?: setOf())
-        print("tempUnmodifiedFriendsSet = ")
-        println(tempUnmodifiedFriendsSet)
-        println()
-        println("GOING INTO FIRST FOR")
-        print("tempUnmodifiedFriendsSet = ")
-        println(tempUnmodifiedFriendsSet)
         for (friendsName in listOfFriends) {
-            print("allAcquaintances[$name] = ")
-            println(allAcquaintances[name])
-            print("tempUnmodifiedFriendsSet = ")
-            println(tempUnmodifiedFriendsSet)
             allAcquaintances[name]?.addAll(friends[friendsName] ?: setOf())
-            print("allAcquaintances[$name] = ")
-            println(allAcquaintances[name])
-            print("tempUnmodifiedFriendsSet = ")
-            println(tempUnmodifiedFriendsSet)
             if (friendsName !in allAcquaintances) allAcquaintances[friendsName] = mutableSetOf()
         }
-        println("GOT OUT OF THE FIRST FOR")
-        println()
-        print("tempUnmodifiedFriendsSet = ")
-        println(tempUnmodifiedFriendsSet)
-        println("GOING INTO THE WHILE")
         do {
-            //println("G")
-            print("tempUnmodifiedFriendsSet = ")
-            println(tempUnmodifiedFriendsSet)
             val differenceInSets: Set<String> =
-                (allAcquaintances[name] ?: setOf<String>()) - (tempUnmodifiedFriendsSet ?: setOf())
-            print("differenceInSets = ")
-            println(differenceInSets)
+                (allAcquaintances[name] ?: setOf<String>()) - (tempUnmodifiedFriendsSet)
             tempUnmodifiedFriendsSet.addAll(allAcquaintances[name] ?: setOf())
-            //tempUnmodifiedFriendsSet = allAcquaintances[name] ?: mutableSetOf()
-            print("tempUnmodifiedFriendsSet = ")
-            println(tempUnmodifiedFriendsSet)
-            println()
-            println("GOING INTO THE SECOND FOR")
             for (friendsNameTwo in differenceInSets) {
-                print("allAcquaintances[$name] = ")
-                println(allAcquaintances[name])
-                if (friends[friendsNameTwo] == null) {}//allAcquaintances[name]?.addAll(setOf())
-                else allAcquaintances[name]?.addAll(friends[friendsNameTwo]!!)
-                print("allAcquaintances[$name] = ")
-                println(allAcquaintances[name])
+                if (friends[friendsNameTwo] != null) allAcquaintances[name]?.addAll(friends[friendsNameTwo]!!)
             }
-            println("GOT OUT OF THE SECOND FOR")
         } while (allAcquaintances[name] != tempUnmodifiedFriendsSet)
-        println()
-        println("GOT OUT OF THE WHILE")
         allAcquaintances[name]?.remove(name)
-        println("++++++++++++END OF THE ITERATION+++++++++++++++++")
     }
-    println("---------------------------------------------------------------------------------------")
     return allAcquaintances
 }
 
@@ -474,7 +409,35 @@ fun propagateHandshakes(friends: Map<String, Set<String>>): Map<String, Set<Stri
  *   findSumOfTwo(listOf(1, 2, 3), 4) -> Pair(0, 2)
  *   findSumOfTwo(listOf(1, 2, 3), 6) -> Pair(-1, -1)
  */
-fun findSumOfTwo(list: List<Int>, number: Int): Pair<Int, Int> = TODO()
+fun findSumOfTwo(list: List<Int>, number: Int): Pair<Int, Int> {
+    val set: Set<Int> = list.toSet()
+    val sortedList = list.sorted()
+    for ((index, secondNumber) in sortedList.withIndex()) {
+        val diff = number - secondNumber
+        if (set.contains(diff)) {
+            println("CONTAINS")
+            println("number = $number")
+            println("diff = $diff")
+            println("secondNumber = $secondNumber")
+            if (diff == secondNumber) {
+                println("YESTHEYAREEQUAL")
+                if (((index - 1) >= 0) && sortedList[index - 1] == number) return Pair(index - 1, index)
+                if (((index + 1) <= (sortedList.size - 1)) && sortedList[index - 1] == number) return Pair(
+                    index,
+                    index + 1
+                )
+                println("BUT THERE ARE NONE OF THE SAME NUMBER")
+            } else {
+                val secondNumberIndex = list.indexOf(secondNumber)
+                val diffIndex = list.indexOf(diff)
+                return if (secondNumberIndex > diffIndex) Pair(diffIndex, secondNumberIndex)
+                else Pair(secondNumberIndex, diffIndex)
+            }
+        }
+
+    }
+    return Pair(-1, -1)
+}
 
 /**
  * Очень сложная
