@@ -422,7 +422,7 @@ fun findSumOfTwo(list: List<Int>, number: Int): Pair<Int, Int> {
             if (diff == secondNumber) {
                 println("YESTHEYAREEQUAL")
                 if (((index - 1) >= 0) && sortedList[index - 1] == number) return Pair(index - 1, index)
-                if (((index + 1) <= (sortedList.size - 1)) && sortedList[index - 1] == number) return Pair(
+                if (((index + 1) <= (sortedList.size - 1)) && sortedList[index + 1] == number) return Pair(
                     index,
                     index + 1
                 )
