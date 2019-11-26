@@ -105,10 +105,19 @@ fun fib(n: Int): Int {
  * минимальное число k, которое делится и на m и на n без остатка
  */
 fun lcm(m: Int, n: Int): Int {
-    var k = 1
+    /*var k = 1
     if (tSCD(m, n)) return m * n
     val minOfNum = min(m, n)
     val maxOfNum = max(m, n)
+    while ((maxOfNum * k) % minOfNum != 0) {
+        k++
+    }
+    return maxOfNum * k*/
+    val minOfNum = min(m, n)
+    val maxOfNum = max(m, n)
+    val diff = maxOfNum - minOfNum
+    var k: Int = 1
+    if (diff != 0 && (minOfNum / diff) > 0) k = minOfNum / diff
     while ((maxOfNum * k) % minOfNum != 0) {
         k++
     }
