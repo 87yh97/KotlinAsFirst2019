@@ -292,7 +292,7 @@ fun canBuildFrom(chars: List<Char>, word: String): Boolean {
  *   extractRepeats(listOf("a", "b", "a")) -> mapOf("a" to 2)
  */
 fun extractRepeats(list: List<String>): Map<String, Int> {
-    val mapOfRepeats = mutableMapOf<String, Int>()
+    /*val mapOfRepeats = mutableMapOf<String, Int>()
     val mapOfCheckedElements = mutableMapOf<String, Int>()
     for (element in list) {
         if (mapOfCheckedElements.containsKey(element)) {
@@ -303,6 +303,18 @@ fun extractRepeats(list: List<String>): Map<String, Int> {
             mapOfCheckedElements[element] = (mapOfCheckedElements[element] ?: 0) + 1
         } else {
             mapOfCheckedElements[element] = 1
+        }
+    }*/
+    val mapOfRepeats = mutableMapOf<String, Int>()
+    val setOfCheckedElements = mutableSetOf<String>()
+    for (element in list) {
+        if (setOfCheckedElements.contains(element)) {
+            if (element in mapOfRepeats) mapOfRepeats[element] = (mapOfRepeats[element] ?: 0) + 1
+            else mapOfRepeats[element] = 2
+           // mapOfRepeats[element] = (mapOfRepeats[element] ?: 0) + 1
+            // mapOfCheckedElements[element] = (mapOfCheckedElements[element] ?: 0) + 1
+        } else {
+            setOfCheckedElements.add(element)
         }
     }
     return mapOfRepeats
@@ -318,35 +330,6 @@ fun extractRepeats(list: List<String>): Map<String, Int> {
  *   hasAnagrams(listOf("тор", "свет", "рот")) -> true
  */
 fun hasAnagrams(words: List<String>): Boolean {
-    /*for (i in words.indices) {
-        if (words[i] == "") {
-            for (j in i + 1 until words.size) {
-                if (words[j] == "") return true
-            }
-        }
-    }
-    for (i in words.indices) {
-        if (words[i] != "") {
-            for (j in i + 1 until words.size) {
-                if (words[j] != "") {
-                    if (canBuild(words[i].toList(), words[j]) || canBuild(words[j].toList(), words[i])) {
-                        return true
-                    }
-                }
-            }
-        }
-    }*/
-    /*val wordsSet: MutableSet<Set<Char>> = mutableSetOf()
-    val wordsList: MutableList<Set<Char>> = mutableListOf()
-    for (element in words) {
-        val tempSet = element.toSet()
-        if (wordsSet.contains(tempSet)) return true
-        wordsSet.add(tempSet)
-        wordsList.add(tempSet)
-    }
-    for ((index, element) in wordsList.withIndex()) {
-
-    }*/
     val wordsSet: MutableSet<Set<Char>> = mutableSetOf()
     for (element in words) {
         val tempSet = element.toSet()
@@ -354,21 +337,10 @@ fun hasAnagrams(words: List<String>): Boolean {
         wordsSet.add(tempSet)
     }
     for (element in wordsSet) {
-        //val wordsSetWithoutCopies: Set<Set<Char>> = wordsSet.remove(element)
         if (element in wordsSet.minusElement(element)) return true
     }
 
     return false
-}
-
-fun canBuild(chars: List<Char>, word: String): Boolean {
-    val setOfCharacters = chars.toSet()
-    for (character in word) {
-        if (character !in setOfCharacters) {
-            return false
-        }
-    }
-    return true
 }
 
 /**
