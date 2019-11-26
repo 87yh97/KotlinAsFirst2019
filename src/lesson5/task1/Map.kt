@@ -292,27 +292,12 @@ fun canBuildFrom(chars: List<Char>, word: String): Boolean {
  *   extractRepeats(listOf("a", "b", "a")) -> mapOf("a" to 2)
  */
 fun extractRepeats(list: List<String>): Map<String, Int> {
-    /*val mapOfRepeats = mutableMapOf<String, Int>()
-    val mapOfCheckedElements = mutableMapOf<String, Int>()
-    for (element in list) {
-        if (mapOfCheckedElements.containsKey(element)) {
-            if (mapOfCheckedElements[element] == 1) {
-                mapOfRepeats[element] = (mapOfRepeats[element] ?: 0) + 1
-            }
-            mapOfRepeats[element] = (mapOfRepeats[element] ?: 0) + 1
-            mapOfCheckedElements[element] = (mapOfCheckedElements[element] ?: 0) + 1
-        } else {
-            mapOfCheckedElements[element] = 1
-        }
-    }*/
     val mapOfRepeats = mutableMapOf<String, Int>()
     val setOfCheckedElements = mutableSetOf<String>()
     for (element in list) {
         if (setOfCheckedElements.contains(element)) {
             if (element in mapOfRepeats) mapOfRepeats[element] = (mapOfRepeats[element] ?: 0) + 1
             else mapOfRepeats[element] = 2
-           // mapOfRepeats[element] = (mapOfRepeats[element] ?: 0) + 1
-            // mapOfCheckedElements[element] = (mapOfCheckedElements[element] ?: 0) + 1
         } else {
             setOfCheckedElements.add(element)
         }
