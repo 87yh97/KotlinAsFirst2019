@@ -318,7 +318,7 @@ fun extractRepeats(list: List<String>): Map<String, Int> {
  *   hasAnagrams(listOf("тор", "свет", "рот")) -> true
  */
 fun hasAnagrams(words: List<String>): Boolean {
-    for (i in words.indices) {
+    /*for (i in words.indices) {
         if (words[i] == "") {
             for (j in i + 1 until words.size) {
                 if (words[j] == "") return true
@@ -335,7 +335,29 @@ fun hasAnagrams(words: List<String>): Boolean {
                 }
             }
         }
+    }*/
+    /*val wordsSet: MutableSet<Set<Char>> = mutableSetOf()
+    val wordsList: MutableList<Set<Char>> = mutableListOf()
+    for (element in words) {
+        val tempSet = element.toSet()
+        if (wordsSet.contains(tempSet)) return true
+        wordsSet.add(tempSet)
+        wordsList.add(tempSet)
     }
+    for ((index, element) in wordsList.withIndex()) {
+
+    }*/
+    val wordsSet: MutableSet<Set<Char>> = mutableSetOf()
+    for (element in words) {
+        val tempSet = element.toSet()
+        if (wordsSet.contains(tempSet)) return true
+        wordsSet.add(tempSet)
+    }
+    for (element in wordsSet) {
+        //val wordsSetWithoutCopies: Set<Set<Char>> = wordsSet.remove(element)
+        if (element in wordsSet.minusElement(element)) return true
+    }
+
     return false
 }
 

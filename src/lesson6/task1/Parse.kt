@@ -69,7 +69,7 @@ fun main() {
  * Обратите внимание: некорректная с точки зрения календаря дата (например, 30.02.2009) считается неверными
  * входными данными.
  */
-fun dateStrToDigit(str: String): String {
+fun dateStrToDigit(str: String): String = TODO()/*{
     val parts = str.split(" ")
     if (parts.size != 3) return ""
     var string = ""
@@ -103,7 +103,7 @@ fun dateStrToDigit(str: String): String {
     string += "."
     string += parts[2]
     return string
-}
+}*/
 
 /**
  * Средняя
