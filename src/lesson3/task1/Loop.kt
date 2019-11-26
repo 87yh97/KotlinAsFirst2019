@@ -271,7 +271,6 @@ fun revert(n: Int): Int {
     var num = n
     var rNum = 0L
     val digitCount = digitNumber(num)
-    num = n
     for (i in 1..digitCount) {
         val digit = num % 10
         num /= 10

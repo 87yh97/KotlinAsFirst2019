@@ -337,7 +337,7 @@ fun decimalFromString(str: String, base: Int): Int {
         0L // Long нужно, так как при 10-ти значном аргументе str number переполняется при последнем домножении number на base в цикле for
     for (i in 0 until str.length) {
         number += if (str[i] > '9') {
-            str[i] - 'W'
+            (str[i] - 'a') + 10
         } else {
             (str[i] - '0')
         }
@@ -356,12 +356,14 @@ fun decimalFromString(str: String, base: Int): Int {
  * 90 = XC, 100 = C, 400 = CD, 500 = D, 900 = CM, 1000 = M.
  * Например: 23 = XXIII, 44 = XLIV, 100 = C
  */
+val list = mutableListOf(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+val listOfDecEquivalentOfRanks = listOf(1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1)
+val listOfStringEquivalentOfRanks = listOf("M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I")
+
 fun roman(n: Int): String {
     var numberStr = ""
     var number = n
-    val list = mutableListOf(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
-    val listOfDecEquivalentOfRanks = listOf(1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1)
-    val listOfStringEquivalentOfRanks = listOf("M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I")
+
     for (i in 0..12) {
         list[i] = anyRankYouLike(i, number, listOfDecEquivalentOfRanks)
         number -= list[i] * listOfDecEquivalentOfRanks[i]
@@ -387,6 +389,50 @@ fun anyRankYouLike(rank: Int, initialNumber: Int, listOfDecEquivalentOfRanks: Li
  * Например, 375 = "триста семьдесят пять",
  * 23964 = "двадцать три тысячи девятьсот шестьдесят четыре"
  */
+val wordsForHundredsOfAnything =
+    listOf(
+        "",
+        " сто",
+        " двести",
+        " триста",
+        " четыреста",
+        " пятьсот",
+        " шестьсот",
+        " семьсот",
+        " восемьсот",
+        " девятьсот"
+    )
+val wordsForTensOfAnything =
+    listOf(
+        "",
+        " десять",
+        " двадцать",
+        " тридцать",
+        " сорок",
+        " пятьдесят",
+        " шестьдесят",
+        " семьдесят",
+        " восемьдесят",
+        " девяносто"
+    )
+val wordsForTeensOfAnything =
+    listOf(
+        "",
+        " одиннадцать",
+        " двенадцать",
+        " тринадцать",
+        " четырнадцать",
+        " пятнадцать",
+        " шестнадцать",
+        " семнадцать",
+        " восемнадцать",
+        " девятнадцать"
+    )
+val wordsForUnitsOfThousands =
+    listOf("", " одна", " две", " три", " четыре", " пять", " шесть", " семь", " восемь", " девять")
+val wordsForUnits =
+    listOf("", " один", " два", " три", " четыре", " пять", " шесть", " семь", " восемь", " девять")
+
 fun russian(n: Int): String {
     var number = n
     var wholeNumberString = ""
@@ -396,49 +442,7 @@ fun russian(n: Int): String {
         number /= 10
     }
 
-    val wordsForHundredsOfAnything =
-        listOf(
-            "",
-            " сто",
-            " двести",
-            " триста",
-            " четыреста",
-            " пятьсот",
-            " шестьсот",
-            " семьсот",
-            " восемьсот",
-            " девятьсот"
-        )
-    val wordsForTensOfAnything =
-        listOf(
-            "",
-            " десять",
-            " двадцать",
-            " тридцать",
-            " сорок",
-            " пятьдесят",
-            " шестьдесят",
-            " семьдесят",
-            " восемьдесят",
-            " девяносто"
-        )
-    val wordsForTeensOfAnything =
-        listOf(
-            "",
-            " одиннадцать",
-            " двенадцать",
-            " тринадцать",
-            " четырнадцать",
-            " пятнадцать",
-            " шестнадцать",
-            " семнадцать",
-            " восемнадцать",
-            " девятнадцать"
-        )
-    val wordsForUnitsOfThousands =
-        listOf("", " одна", " две", " три", " четыре", " пять", " шесть", " семь", " восемь", " девять")
-    val wordsForUnits =
-        listOf("", " один", " два", " три", " четыре", " пять", " шесть", " семь", " восемь", " девять")
+
 
     wholeNumberString += wordsForHundredsOfAnything[numberOfDigits[0]]
 
