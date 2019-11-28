@@ -69,27 +69,53 @@ fun main() {
  * Обратите внимание: некорректная с точки зрения календаря дата (например, 30.02.2009) считается неверными
  * входными данными.
  */
-fun dateStrToDigit(str: String): String = TODO()/*{
+val monthList = mapOf(
+    "января" to Pair("1", 31),
+    "февраля" to Pair("2", 28),
+    "марта" to Pair("3", 31),
+    "апреля" to Pair("4", 30),
+    "мая" to Pair("5", 31),
+    "июня" to Pair("6", 30),
+    "июля" to Pair("7", 31),
+    "августа" to Pair("8", 31),
+    "сентября" to Pair("9", 30),
+    "октября" to Pair("10", 31),
+    "ноября" to Pair("11", 30),
+    "декабря" to Pair("12", 31)
+)
+
+fun dateStrToDigit(str: String): String /*= TODO()*/ {
     val parts = str.split(" ")
     if (parts.size != 3) return ""
+    if (!monthList.containsKey(parts[1])) return ""
+    val month = (monthList[parts[1]]?.first)?.toInt() ?: 0
+    var day = -1
+    var year = -1
+    try {
+        day = parts[0].toInt()
+        //month = parts[1].toInt()
+        year = parts[2].toInt()
+    } catch (e: NumberFormatException) {
+        return ""
+    }
+    if ((year < 0) || (parts[2].toLong() > Int.MAX_VALUE)) return ""
+    val isYearLeap: Boolean = ((year % 4 == 0 && year % 100 != 0) || (year % 400 == 0))
+    if ((day > monthList[parts[1]]?.second ?: 0) || (day < 0)) {
+        if (month == 2 && isYearLeap && month == 29) {
+        } else return ""
+    }
     var string = ""
-    string += parts[0]
-    string += "."
-    val monthList = mapOf(
-        "января" to "1",
-        "февраля" to "2",
-        "марта" to "3",
-        "апреля" to "4",
-        "мая" to "5",
-        "июня" to "6",
-        "июля" to "7",
-        "августа" to "8",
-        "сентября" to "9",
-        "октября" to "10",
-        "ноября" to "11",
-        "декабря" to "12"
-    )
-    if (monthList[parts[1]] == null) {
+    if ((day / 10) == 0) {
+        string += "0"
+    }
+    string += parts[0] + "."
+    //string += "."
+    if ((month / 10) == 0) {
+        string += "0"
+    }
+    string += monthList[parts[1]]?.first + "."
+    string += parts[2]
+    /*if (monthList[parts[1]] == null) {
         return ""
     } else {
         if ((monthList[parts[1]])?.length == 2) string += monthList[parts[1]]
@@ -97,13 +123,11 @@ fun dateStrToDigit(str: String): String = TODO()/*{
             string += "0"
             string += monthList[parts[1]]
         }
-
-    }
-
-    string += "."
-    string += parts[2]
+    }*/
+    //string += "."
+    //string += parts[2]
     return string
-}*/
+}
 
 /**
  * Средняя
@@ -115,7 +139,53 @@ fun dateStrToDigit(str: String): String = TODO()/*{
  * Обратите внимание: некорректная с точки зрения календаря дата (например, 30 февраля 2009) считается неверными
  * входными данными.
  */
-fun dateDigitToStr(digital: String): String = TODO()
+val digitalMonthList = mapOf(
+    1 to Pair("января", 31),
+    2 to Pair("февраля", 28),
+    3 to Pair("марта", 31),
+    4 to Pair("апреля", 30),
+    5 to Pair("мая", 31),
+    6 to Pair("июня", 30),
+    7 to Pair("июля", 31),
+    8 to Pair("августа", 31),
+    9 to Pair("сентября", 30),
+    10 to Pair("октября", 31),
+    11 to Pair("ноября", 30),
+    12 to Pair("декабря", 31)
+)
+
+fun dateDigitToStr(digital: String): String {
+    val parts = digital.split(".")
+    println("1")
+    if (parts.size != 3) return ""
+    println("2")
+
+    val day: Int
+    val month: Int
+    val year: Int
+    println("3")
+    try {
+        day = parts[0].toInt()
+        month = parts[1].toInt()
+        year = parts[2].toInt()
+    } catch (e: NumberFormatException) {
+        return ""
+    }
+    if (!digitalMonthList.containsKey(month)) return ""
+    println("4")
+    if ((year < 0) || (parts[2].toLong() > Int.MAX_VALUE)) return ""
+    val isYearLeap: Boolean = ((year % 4 == 0 && year % 100 != 0) || (year % 400 == 0))
+    println("5")
+    if ((day > digitalMonthList[month]?.second ?: 0) || (day < 0)) {
+        if (month == 2 && isYearLeap && month == 29) {
+        } else return ""
+    }
+    var string = ""
+    string += "$day "
+    string += digitalMonthList[month]?.first + " "
+    string += "$year"
+    return string
+}
 
 /**
  * Средняя
@@ -131,7 +201,61 @@ fun dateDigitToStr(digital: String): String = TODO()
  *
  * PS: Дополнительные примеры работы функции можно посмотреть в соответствующих тестах.
  */
-fun flattenPhoneNumber(phone: String): String = TODO()
+val otherElements: Set<Char> = setOf(
+    '(',
+    ')',
+    '-',
+    '+',
+    ' '
+)
+val numericElements: Set<Char> = setOf(
+    '0',
+    '1',
+    '2',
+    '3',
+    '4',
+    '5',
+    '6',
+    '7',
+    '8',
+    '9'
+)
+
+
+fun flattenPhoneNumber(phone: String): String {
+    var string = ""
+    var plusAppearance = false
+    var firstBracketAppearance = false
+    var secondBracketAppearance = false
+    var numberInBracketsAppearance = false
+    if (phone[0] == '+') {
+        string += '+'
+        //plusAppearance = true
+    }
+    for (letter in phone) {
+        if (letter !in numericElements && letter !in otherElements) return ""
+        if (letter == '+') {
+            if (plusAppearance) return ""
+            plusAppearance = true
+            //return ""
+        }
+        if (letter in numericElements) {
+            if (firstBracketAppearance) numberInBracketsAppearance = true
+            string += letter
+        }
+        if (letter == '(') {
+            if (firstBracketAppearance) return ""
+            firstBracketAppearance = true
+        }
+        if (letter == ')') {
+            if (secondBracketAppearance) return ""
+            if (!(firstBracketAppearance && numberInBracketsAppearance)) return ""
+            secondBracketAppearance = true
+        }
+
+    }
+    return string
+}
 
 /**
  * Средняя
