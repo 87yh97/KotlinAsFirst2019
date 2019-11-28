@@ -232,6 +232,7 @@ fun flattenPhoneNumber(phone: String): String {
     var firstBracketAppearance = false
     var secondBracketAppearance = false
     var numberInBracketsAppearance = false
+    if (phone == "") return ""
     if (phone[0] == '+') {
         string += '+'
         //plusAppearance = true
