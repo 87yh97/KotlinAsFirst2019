@@ -89,8 +89,8 @@ fun dateStrToDigit(str: String): String /*= TODO()*/ {
     if (parts.size != 3) return ""
     if (!monthList.containsKey(parts[1])) return ""
     val month = (monthList[parts[1]]?.first)?.toInt() ?: 0
-    var day = -1
-    var year = -1
+    val day: Int
+    val year: Int
     try {
         day = parts[0].toInt()
         //month = parts[1].toInt()
@@ -156,14 +156,14 @@ val digitalMonthList = mapOf(
 
 fun dateDigitToStr(digital: String): String {
     val parts = digital.split(".")
-    println("1")
+    //println("1")
     if (parts.size != 3) return ""
-    println("2")
+    //println("2")
 
     val day: Int
     val month: Int
     val year: Int
-    println("3")
+    //println("3")
     try {
         day = parts[0].toInt()
         month = parts[1].toInt()
@@ -172,13 +172,13 @@ fun dateDigitToStr(digital: String): String {
         return ""
     }
     if (!digitalMonthList.containsKey(month)) return ""
-    println("4")
+    //println("4")
     if ((year < 0) || (parts[2].toLong() > Int.MAX_VALUE)) return ""
     val isYearLeap: Boolean = ((year % 4 == 0 && year % 100 != 0) || (year % 400 == 0))
-    println("5")
-    println(day)
-    println(month)
-    println(year)
+    //println("5")
+    //println(day)
+    //println(month)
+    //println(year)
 
     if ((day > digitalMonthList[month]?.second ?: 0) || (day < 0)) {
         if (month == 2 && isYearLeap && day == 29) {
@@ -232,6 +232,7 @@ fun flattenPhoneNumber(phone: String): String {
     var firstBracketAppearance = false
     var secondBracketAppearance = false
     var numberInBracketsAppearance = false
+    var anyNumberAppearance = false
     if (phone == "") return ""
     if (phone[0] == '+') {
         string += '+'
@@ -247,6 +248,7 @@ fun flattenPhoneNumber(phone: String): String {
         if (letter in numericElements) {
             if (firstBracketAppearance) numberInBracketsAppearance = true
             string += letter
+            if (!anyNumberAppearance) anyNumberAppearance = true
         }
         if (letter == '(') {
             if (firstBracketAppearance) return ""
@@ -259,6 +261,7 @@ fun flattenPhoneNumber(phone: String): String {
         }
 
     }
+    if (!anyNumberAppearance) return ""
     return string
 }
 
