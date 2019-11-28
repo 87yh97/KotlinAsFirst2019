@@ -101,19 +101,19 @@ fun dateStrToDigit(str: String): String /*= TODO()*/ {
     if ((year < 0) || (parts[2].toLong() > Int.MAX_VALUE)) return ""
     val isYearLeap: Boolean = ((year % 4 == 0 && year % 100 != 0) || (year % 400 == 0))
     if ((day > monthList[parts[1]]?.second ?: 0) || (day < 0)) {
-        if (month == 2 && isYearLeap && month == 29) {
+        if (month == 2 && isYearLeap && day == 29) {
         } else return ""
     }
     var string = ""
     if ((day / 10) == 0) {
         string += "0"
     }
-    string += parts[0] + "."
+    string += "$day."
     //string += "."
     if ((month / 10) == 0) {
         string += "0"
     }
-    string += monthList[parts[1]]?.first + "."
+    string += "$month."
     string += parts[2]
     /*if (monthList[parts[1]] == null) {
         return ""
@@ -176,8 +176,12 @@ fun dateDigitToStr(digital: String): String {
     if ((year < 0) || (parts[2].toLong() > Int.MAX_VALUE)) return ""
     val isYearLeap: Boolean = ((year % 4 == 0 && year % 100 != 0) || (year % 400 == 0))
     println("5")
+    println(day)
+    println(month)
+    println(year)
+
     if ((day > digitalMonthList[month]?.second ?: 0) || (day < 0)) {
-        if (month == 2 && isYearLeap && month == 29) {
+        if (month == 2 && isYearLeap && day == 29) {
         } else return ""
     }
     var string = ""
