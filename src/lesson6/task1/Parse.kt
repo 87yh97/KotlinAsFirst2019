@@ -341,7 +341,7 @@ fun plusMinus(expression: String): Int {
     try {
         firstElement = numbersAndSymbols[0]
     } catch (n: IndexOutOfBoundsException) {
-        throw IllegalArgumentException()
+        throw IllegalArgumentException("test_test_test")
     }
     if (isItNumber(firstElement)) result = firstElement.toInt()
     else throw IllegalArgumentException()
