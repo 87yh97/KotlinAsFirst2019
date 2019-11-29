@@ -335,6 +335,7 @@ fun bestHighJump(jumps: String): Int {
 fun plusMinus(expression: String): Int {
     println()
     println("-----------START---------------")
+    if (expression == "") throw java.lang.IllegalArgumentException("java.lang.NumberFormatException: Only signed numbers are allowed")
     val numbersAndSymbols = expression.split(" ")
     var result: Int
     val firstElement: String
