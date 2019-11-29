@@ -301,8 +301,24 @@ fun bestLongJump(jumps: String): Int {
  * При нарушении формата входной строки, а также в случае отсутствия удачных попыток,
  * вернуть -1.
  */
-fun bestHighJump(jumps: String): Int = TODO()
-
+val allowedSymbols = setOf('-', '%', '+')
+fun bestHighJump(jumps: String): Int {
+    val jumpList = jumps.split(" ")
+    var bestJump = -1
+    for ((index, jump) in jumpList.withIndex()) {
+        try {
+            val tempJump = jump.toInt()
+            if ((index < jumpList.size - 1) && jumpList[index + 1].contains("+")) {
+                if (tempJump > bestJump) bestJump = tempJump
+            }
+        } catch (e: NumberFormatException) {
+            for (symbol in jump) {
+                if (!allowedSymbols.contains(symbol)) return -1
+            }
+        }
+    }
+    return bestJump
+}
 /**
  * Сложная
  *
