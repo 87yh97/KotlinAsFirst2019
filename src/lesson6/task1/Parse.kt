@@ -2,6 +2,10 @@
 
 package lesson6.task1
 
+//import java.lang.IllegalArgumentException
+//import com.sun.java.util.jar.pack.ConstantPool
+import kotlin.IllegalArgumentException
+
 /**
  * Пример
  *
@@ -328,8 +332,57 @@ fun bestHighJump(jumps: String): Int {
  * Вернуть значение выражения (6 для примера).
  * Про нарушении формата входной строки бросить исключение IllegalArgumentException
  */
-fun plusMinus(expression: String): Int = TODO()
+fun plusMinus(expression: String): Int {
+    println()
+    println("-----------START---------------")
+    val numbersAndSymbols = expression.split(" ")
+    var result: Int
+    val firstElement: String
+    try {
+        firstElement = numbersAndSymbols[0]
+    } catch (n: IndexOutOfBoundsException) {
+        throw IllegalArgumentException()
+    }
+    if (isItNumber(firstElement)) result = firstElement.toInt()
+    else throw IllegalArgumentException()
+    /*try {
+        result += numbersAndSymbols[0].toInt()
+    } catch (e: NumberFormatException) {
+        throw IllegalArgumentException()
+    }*/
+    var index = 1
+    while (index < numbersAndSymbols.size) {
+        val currentSymbol = numbersAndSymbols[index]
+        var nextNumber: Int
+        if (index < numbersAndSymbols.size - 1) {
+            val currentNumber = numbersAndSymbols[index + 1]
+            if (isItNumber(currentNumber)) nextNumber = currentNumber.toInt()
+            else throw IllegalArgumentException()
+            /*try {
+                nextNumber = numbersAndSymbols[index + 1].toInt()
+            } catch (e: NumberFormatException) {
+                throw IllegalArgumentException()
+            }*/
+        } else throw IllegalArgumentException()
+        if (currentSymbol != "+" && currentSymbol != "-") throw IllegalArgumentException()
+        else {
+            if (currentSymbol == "-") nextNumber *= -1
+            result += nextNumber
+        }
+        index += 2
+    }
+    println(result)
+    println("--------------END--------------")
+    println()
+    return result
+}
 
+fun isItNumber(number: String): Boolean {
+    for (symbol in number) {
+        if (!numericElements.contains(symbol)) return false
+    }
+    return true
+}
 /**
  * Сложная
  *
