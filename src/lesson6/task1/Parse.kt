@@ -333,9 +333,6 @@ fun bestHighJump(jumps: String): Int {
  * Про нарушении формата входной строки бросить исключение IllegalArgumentException
  */
 fun plusMinus(expression: String): Int {
-    println()
-    println("-----------START---------------")
-    //if (expression == "") throw IllegalArgumentException()
     val numbersAndSymbols = expression.split(" ")
     var result: Int
     val firstElement: String
@@ -349,11 +346,7 @@ fun plusMinus(expression: String): Int {
         else throw IllegalArgumentException()
     } catch (e: NumberFormatException) {
         throw IllegalArgumentException()
-    }/*try {
-        result += numbersAndSymbols[0].toInt()
-    } catch (e: NumberFormatException) {
-        throw IllegalArgumentException()
-    }*/
+    }
     var index = 1
     while (index < numbersAndSymbols.size) {
         val currentSymbol = numbersAndSymbols[index]
@@ -362,11 +355,6 @@ fun plusMinus(expression: String): Int {
             val currentNumber = numbersAndSymbols[index + 1]
             if (isItNumber(currentNumber)) nextNumber = currentNumber.toInt()
             else throw IllegalArgumentException()
-            /*try {
-                nextNumber = numbersAndSymbols[index + 1].toInt()
-            } catch (e: NumberFormatException) {
-                throw IllegalArgumentException()
-            }*/
         } else throw IllegalArgumentException()
         if (currentSymbol != "+" && currentSymbol != "-") throw IllegalArgumentException()
         else {
@@ -375,16 +363,15 @@ fun plusMinus(expression: String): Int {
         }
         index += 2
     }
-    println(result)
-    println("--------------END--------------")
-    println()
     return result
 }
 
 fun isItNumber(number: String): Boolean {
-    for (symbol in number) {
+    val a = Regex("""[^0123456789]""").find(number)
+    if (a != null) return false
+    /*for (symbol in number) {
         if (!numericElements.contains(symbol)) return false
-    }
+    }*/
     return true
 }
 /**
