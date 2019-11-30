@@ -395,7 +395,7 @@ fun firstDuplicateIndex(str: String): Int {
 fun mostExpensive(description: String): String {
     val products = description.split(" ")
     val productsSize = products.size
-    //if ((productsSize % 2) != 0 || description.contains(Regex("""\s\s""")))
+    if (((productsSize % 2) == 1) || description.contains(Regex("""\s\s"""))) return ""
     var theMostExpensiveProduct: Pair<String, Double>
 
     try {
@@ -408,11 +408,16 @@ fun mostExpensive(description: String): String {
                     firstProductLabel,
                     firstProductStringCost.substring(0, firstProductStringCost.length - 1).toDouble()
                 )
-            else return firstProductLabel
+
+            else {
+                if (firstProductStringCost.matches(Regex("""\d+\.\d+"""))) return firstProductLabel
+                else return ""
+            }
         } else return ""
     } catch (e: NumberFormatException) {
         return ""
     }
+    //println(theMostExpensiveProduct.second)
     var index = 2
     while (index < productsSize) {
         val currentProductStringCost: String
@@ -436,6 +441,7 @@ fun mostExpensive(description: String): String {
             Pair(products[index], currentProductCost)
         index += 2
     }
+    println(theMostExpensiveProduct.second)
     return theMostExpensiveProduct.first
 }
 
