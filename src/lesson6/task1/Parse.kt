@@ -365,7 +365,14 @@ fun isItNumber(number: String): Boolean {
  * Пример: "Он пошёл в в школу" => результат 9 (индекс первого 'в')
  */
 fun firstDuplicateIndex(str: String): Int {
+    //val check = str.contains(Regex("""\s\s"""))
+    if (str.contains(Regex("""\s\s"""))) return -1
+    //val words = Regex("""\s+""").split(str)
     val words = str.split(" ")
+    println()
+    println(words)
+    println()
+    //if (str == "  ") println(words)
     var symbolIndex = 0
     for ((index, word) in words.withIndex()) {
         if (index < words.size - 1 && words[index + 1].toLowerCase() == word.toLowerCase()) return symbolIndex
