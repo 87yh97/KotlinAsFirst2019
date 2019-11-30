@@ -367,11 +367,11 @@ fun plusMinus(expression: String): Int {
 }
 
 fun isItNumber(number: String): Boolean {
-    val a = Regex("""[^0123456789]""").find(number)
+    /*val a = Regex("""[^0123456789]""").find(number)
     if (a != null) return false
-    /*for (symbol in number) {
+    */for (symbol in number) {
         if (!numericElements.contains(symbol)) return false
-    }*/
+    }
     return true
 }
 /**
