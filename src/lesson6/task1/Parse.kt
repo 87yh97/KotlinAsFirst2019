@@ -364,7 +364,15 @@ fun isItNumber(number: String): Boolean {
  * Вернуть индекс начала первого повторяющегося слова, или -1, если повторов нет.
  * Пример: "Он пошёл в в школу" => результат 9 (индекс первого 'в')
  */
-fun firstDuplicateIndex(str: String): Int = TODO()
+fun firstDuplicateIndex(str: String): Int {
+    val words = str.split(" ")
+    var symbolIndex = 0
+    for ((index, word) in words.withIndex()) {
+        if (index < words.size - 1 && words[index + 1].toLowerCase() == word.toLowerCase()) return symbolIndex
+        symbolIndex += word.length + 1
+    }
+    return -1
+}
 
 /**
  * Сложная
