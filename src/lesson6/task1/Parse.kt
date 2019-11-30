@@ -342,11 +342,14 @@ fun plusMinus(expression: String): Int {
     try {
         firstElement = numbersAndSymbols[0]
     } catch (n: IndexOutOfBoundsException) {
-        throw IllegalArgumentException("test_test_test")
+        throw IllegalArgumentException()
     }
-    if (isItNumber(firstElement)) result = firstElement.toInt()
-    else throw IllegalArgumentException()
-    /*try {
+    try {
+        if (isItNumber(firstElement)) result = firstElement.toInt()
+        else throw IllegalArgumentException()
+    } catch (e: NumberFormatException) {
+        throw IllegalArgumentException()
+    }/*try {
         result += numbersAndSymbols[0].toInt()
     } catch (e: NumberFormatException) {
         throw IllegalArgumentException()
