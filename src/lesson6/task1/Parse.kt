@@ -392,7 +392,52 @@ fun firstDuplicateIndex(str: String): Int {
  * или пустую строку при нарушении формата строки.
  * Все цены должны быть больше либо равны нуля.
  */
-fun mostExpensive(description: String): String = TODO()
+fun mostExpensive(description: String): String {
+    val products = description.split(" ")
+    val productsSize = products.size
+    //if ((productsSize % 2) != 0 || description.contains(Regex("""\s\s""")))
+    var theMostExpensiveProduct: Pair<String, Double>
+
+    try {
+
+        if (productsSize > 1) {
+            val firstProductStringCost = products[1]
+            val firstProductLabel = products[0]
+            if (productsSize > 2) theMostExpensiveProduct =
+                Pair(
+                    firstProductLabel,
+                    firstProductStringCost.substring(0, firstProductStringCost.length - 1).toDouble()
+                )
+            else return firstProductLabel
+        } else return ""
+    } catch (e: NumberFormatException) {
+        return ""
+    }
+    var index = 2
+    while (index < productsSize) {
+        val currentProductStringCost: String
+        val currentProductCost: Double
+        //var currentProduct: Pair<String, Int>
+        try {
+            currentProductStringCost = products[index + 1]
+        } catch (e: IndexOutOfBoundsException) {
+            return ""
+        }
+        currentProductCost = try {
+            if (index < productsSize - 2) currentProductStringCost.substring(
+                0,
+                currentProductStringCost.length - 1
+            ).toDouble()
+            else currentProductStringCost.toDouble()
+        } catch (e: NumberFormatException) {
+            return ""
+        }
+        if (currentProductCost > theMostExpensiveProduct.second) theMostExpensiveProduct =
+            Pair(products[index], currentProductCost)
+        index += 2
+    }
+    return theMostExpensiveProduct.first
+}
 
 /**
  * Сложная
