@@ -449,6 +449,7 @@ val romanList = listOf("M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V
 val decimalEquivalent = listOf(1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1)
 
 fun fromRoman(roman: String): Int {
+    if (roman == "") return -1
     if ((!roman.matches(Regex("""M*((CM)?|(DC{0,3})?|(D)?|(CD)?|C{0,3}?)?((XC)?|(LX{0,3})?|(L)?|(XL)?|(X{0,3})?)?((IX)?|(VI{0,3})?|(V)?|(IV)?|(I{0,3})?)?""")))) {
         return -1
     }

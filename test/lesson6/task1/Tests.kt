@@ -147,6 +147,9 @@ class Tests {
         assertEquals(694, fromRoman("DCXCIV"))
         assertEquals(49, fromRoman("XLIX"))
         assertEquals(-1, fromRoman("Z"))
+        assertEquals(-1, fromRoman("0"))
+        assertEquals(-1, fromRoman(""))
+        //assertEquals(-1, fromRoman("1"))
     }
 
     @Test
