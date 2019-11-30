@@ -397,7 +397,7 @@ fun mostExpensive(description: String): String {
     val productsSize = products.size
     if (((productsSize % 2) == 1) || description.contains(Regex("""\s\s"""))) return ""
     var theMostExpensiveProduct: Pair<String, Double>
-
+    println(products)
     try {
 
         if (productsSize > 1) {
@@ -408,10 +408,11 @@ fun mostExpensive(description: String): String {
                     firstProductLabel,
                     firstProductStringCost.substring(0, firstProductStringCost.length - 1).toDouble()
                 )
-
             else {
-                if (firstProductStringCost.matches(Regex("""\d+\.\d+"""))) return firstProductLabel
-                else return ""
+                return if (firstProductStringCost.matches(Regex("""\d+\.\d+""")) ||
+                    firstProductStringCost.matches(Regex("""\d+"""))
+                ) firstProductLabel
+                else ""
             }
         } else return ""
     } catch (e: NumberFormatException) {
