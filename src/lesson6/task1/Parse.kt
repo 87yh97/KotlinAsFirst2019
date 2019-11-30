@@ -88,7 +88,7 @@ val monthList = mapOf(
     "декабря" to Pair("12", 31)
 )
 
-fun dateStrToDigit(str: String): String /*= TODO()*/ {
+fun dateStrToDigit(str: String): String {
     val parts = str.split(" ")
     if (parts.size != 3) return ""
     if (!monthList.containsKey(parts[1])) return ""
@@ -97,7 +97,6 @@ fun dateStrToDigit(str: String): String /*= TODO()*/ {
     val year: Int
     try {
         day = parts[0].toInt()
-        //month = parts[1].toInt()
         year = parts[2].toInt()
     } catch (e: NumberFormatException) {
         return ""
@@ -113,23 +112,11 @@ fun dateStrToDigit(str: String): String /*= TODO()*/ {
         string += "0"
     }
     string += "$day."
-    //string += "."
     if ((month / 10) == 0) {
         string += "0"
     }
     string += "$month."
     string += parts[2]
-    /*if (monthList[parts[1]] == null) {
-        return ""
-    } else {
-        if ((monthList[parts[1]])?.length == 2) string += monthList[parts[1]]
-        else {
-            string += "0"
-            string += monthList[parts[1]]
-        }
-    }*/
-    //string += "."
-    //string += parts[2]
     return string
 }
 
@@ -143,6 +130,7 @@ fun dateStrToDigit(str: String): String /*= TODO()*/ {
  * Обратите внимание: некорректная с точки зрения календаря дата (например, 30 февраля 2009) считается неверными
  * входными данными.
  */
+
 val digitalMonthList = mapOf(
     1 to Pair("января", 31),
     2 to Pair("февраля", 28),
@@ -160,14 +148,11 @@ val digitalMonthList = mapOf(
 
 fun dateDigitToStr(digital: String): String {
     val parts = digital.split(".")
-    //println("1")
     if (parts.size != 3) return ""
-    //println("2")
-
     val day: Int
     val month: Int
     val year: Int
-    //println("3")
+
     try {
         day = parts[0].toInt()
         month = parts[1].toInt()
@@ -176,13 +161,9 @@ fun dateDigitToStr(digital: String): String {
         return ""
     }
     if (!digitalMonthList.containsKey(month)) return ""
-    //println("4")
+
     if ((year < 0) || (parts[2].toLong() > Int.MAX_VALUE)) return ""
     val isYearLeap: Boolean = ((year % 4 == 0 && year % 100 != 0) || (year % 400 == 0))
-    //println("5")
-    //println(day)
-    //println(month)
-    //println(year)
 
     if ((day > digitalMonthList[month]?.second ?: 0) || (day < 0)) {
         if (month == 2 && isYearLeap && day == 29) {
@@ -209,6 +190,7 @@ fun dateDigitToStr(digital: String): String {
  *
  * PS: Дополнительные примеры работы функции можно посмотреть в соответствующих тестах.
  */
+
 val otherElements: Set<Char> = setOf(
     '(',
     ')',
@@ -229,7 +211,6 @@ val numericElements: Set<Char> = setOf(
     '9'
 )
 
-
 fun flattenPhoneNumber(phone: String): String {
     var string = ""
     var plusAppearance = false
@@ -240,14 +221,12 @@ fun flattenPhoneNumber(phone: String): String {
     if (phone == "") return ""
     if (phone[0] == '+') {
         string += '+'
-        //plusAppearance = true
     }
     for (letter in phone) {
         if (letter !in numericElements && letter !in otherElements) return ""
         if (letter == '+') {
             if (plusAppearance) return ""
             plusAppearance = true
-            //return ""
         }
         if (letter in numericElements) {
             if (firstBracketAppearance) numberInBracketsAppearance = true
@@ -279,7 +258,7 @@ fun flattenPhoneNumber(phone: String): String {
  * Прочитать строку и вернуть максимальное присутствующее в ней число (717 в примере).
  * При нарушении формата входной строки или при отсутствии в ней чисел, вернуть -1.
  */
-val allowedElements = setOf("-", "%")
+
 fun bestLongJump(jumps: String): Int {
     val jumpList = jumps.split(" ")
     var bestJump = -1
@@ -305,7 +284,9 @@ fun bestLongJump(jumps: String): Int {
  * При нарушении формата входной строки, а также в случае отсутствия удачных попыток,
  * вернуть -1.
  */
+
 val allowedSymbols = setOf('-', '%', '+')
+
 fun bestHighJump(jumps: String): Int {
     val jumpList = jumps.split(" ")
     var bestJump = -1
@@ -323,6 +304,7 @@ fun bestHighJump(jumps: String): Int {
     }
     return bestJump
 }
+
 /**
  * Сложная
  *
@@ -332,6 +314,7 @@ fun bestHighJump(jumps: String): Int {
  * Вернуть значение выражения (6 для примера).
  * Про нарушении формата входной строки бросить исключение IllegalArgumentException
  */
+
 fun plusMinus(expression: String): Int {
     val numbersAndSymbols = expression.split(" ")
     var result: Int
@@ -367,13 +350,11 @@ fun plusMinus(expression: String): Int {
 }
 
 fun isItNumber(number: String): Boolean {
-    /*val a = Regex("""[^0123456789]""").find(number)
+    val a = Regex("""[^0123456789]""").find(number)
     if (a != null) return false
-    */for (symbol in number) {
-        if (!numericElements.contains(symbol)) return false
-    }
     return true
 }
+
 /**
  * Сложная
  *
