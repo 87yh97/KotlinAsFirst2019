@@ -350,8 +350,7 @@ fun plusMinus(expression: String): Int {
 }
 
 fun isItNumber(number: String): Boolean {
-    val a = Regex("""[^0123456789]""").find(number)
-    if (a != null) return false
+    if (Regex("""[^0123456789]""").find(number) != null) return false
     return true
 }
 
@@ -365,14 +364,8 @@ fun isItNumber(number: String): Boolean {
  * Пример: "Он пошёл в в школу" => результат 9 (индекс первого 'в')
  */
 fun firstDuplicateIndex(str: String): Int {
-    //val check = str.contains(Regex("""\s\s"""))
     if (str.contains(Regex("""\s\s"""))) return -1
-    //val words = Regex("""\s+""").split(str)
     val words = str.split(" ")
-    println()
-    println(words)
-    println()
-    //if (str == "  ") println(words)
     var symbolIndex = 0
     for ((index, word) in words.withIndex()) {
         if (index < words.size - 1 && words[index + 1].toLowerCase() == word.toLowerCase()) return symbolIndex
@@ -397,9 +390,7 @@ fun mostExpensive(description: String): String {
     val productsSize = products.size
     if (((productsSize % 2) == 1) || description.contains(Regex("""\s\s"""))) return ""
     var theMostExpensiveProduct: Pair<String, Double>
-    println(products)
     try {
-
         if (productsSize > 1) {
             val firstProductStringCost = products[1]
             val firstProductLabel = products[0]
@@ -418,12 +409,10 @@ fun mostExpensive(description: String): String {
     } catch (e: NumberFormatException) {
         return ""
     }
-    //println(theMostExpensiveProduct.second)
     var index = 2
     while (index < productsSize) {
         val currentProductStringCost: String
         val currentProductCost: Double
-        //var currentProduct: Pair<String, Int>
         try {
             currentProductStringCost = products[index + 1]
         } catch (e: IndexOutOfBoundsException) {
@@ -442,7 +431,6 @@ fun mostExpensive(description: String): String {
             Pair(products[index], currentProductCost)
         index += 2
     }
-    println(theMostExpensiveProduct.second)
     return theMostExpensiveProduct.first
 }
 
@@ -457,7 +445,40 @@ fun mostExpensive(description: String): String {
  *
  * Вернуть -1, если roman не является корректным римским числом
  */
-fun fromRoman(roman: String): Int = TODO()
+val romanList = listOf("M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I")
+val decimalEquivalent = listOf(1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1)
+
+fun fromRoman(roman: String): Int {
+    if ((!roman.matches(Regex("""M*((CM)?|(DC{0,3})?|(D)?|(CD)?|C{0,3}?)?((XC)?|(LX{0,3})?|(L)?|(XL)?|(X{0,3})?)?((IX)?|(VI{0,3})?|(V)?|(IV)?|(I{0,3})?)?""")))) {
+        return -1
+    }
+    println("IMSTUCK1")
+    var workingString = roman
+    val rankList = mutableListOf(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+    for ((index, element) in romanList.withIndex()) {
+            if ((workingString.length > 1) && (workingString.substring(0, 2)) == element) {
+                rankList[index] = 1
+                println("IMSTUCK2")
+                if (workingString.length == 2) break
+                else workingString = workingString.substring(2)
+            }
+
+            while ((workingString.isNotEmpty()) && workingString[0].toString() == element) {
+                rankList[index] ++
+                if (workingString.length == 1) break
+                else workingString = workingString.substring(1)
+                println("IMSTUCK3")
+
+            }
+            println("IMSTUCK4")
+    }
+    var decimalFromRoman = 0
+    for (index in 0 .. 12) {
+        println("IMSTUCK5")
+        decimalFromRoman += decimalEquivalent[index] * rankList[index]
+    }
+    return decimalFromRoman
+}
 
 /**
  * Очень сложная
