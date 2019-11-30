@@ -335,7 +335,7 @@ fun bestHighJump(jumps: String): Int {
 fun plusMinus(expression: String): Int {
     println()
     println("-----------START---------------")
-    if (expression == "") throw IllegalArgumentException()
+    //if (expression == "") throw IllegalArgumentException()
     val numbersAndSymbols = expression.split(" ")
     var result: Int
     val firstElement: String
