@@ -512,9 +512,6 @@ fun fromRoman(roman: String): Int {
  *
  */
 fun computeDeviceCells(cells: Int, commands: String, limit: Int): List<Int> {
-    println("------------------START------------------------")
-    println(commands)
-    val listOfCommands = mutableListOf<String>()
     var tempCommands = commands
     while (tempCommands.length > 100) {
         if (!tempCommands.substring(0, 100).matches(Regex("""((>)*(<)*(\+)*(\[)*(\])*( )*(-)*)+"""))) {
@@ -525,20 +522,11 @@ fun computeDeviceCells(cells: Int, commands: String, limit: Int): List<Int> {
     if (!tempCommands.matches(Regex("""((>)*(<)*(\+)*(\[)*(\])*( )*(-)*)+"""))) {
         throw IllegalArgumentException()
     }
-
-    /*try {
-        if (!commands.matches(Regex("""((>)*(<)*(\+)*(\[)*(\])*( )*(-)*)+"""))) {
-            throw IllegalArgumentException()
-        }
-    } catch (e: StackOverflowError) {
-        throw StackOverflowError()
-    }*/
     if (cells == 0) return listOf()
     val cellsList = mutableListOf<Int>()
     for (i in 0 until cells) cellsList.add(0)
     if (limit == 0 || commands == "") return cellsList
     val offsettingCommandsCount = mutableListOf(0, 0)
-
     for (command in commands) {
         when (command) {
             '[' -> offsettingCommandsCount[0]++
@@ -548,113 +536,75 @@ fun computeDeviceCells(cells: Int, commands: String, limit: Int): List<Int> {
     }
     if (offsettingCommandsCount[0] != offsettingCommandsCount[1]) throw IllegalArgumentException()
     var currentCell = cells / 2
-    println(currentCell)
     var nestingLevel = 0
     var index = 0
     val nestingLevelIndexes = mutableMapOf<Int, Int>()
     var implementedCommandsCounter = 0
-    var cellsListSnapshot = mutableListOf<Int>()
     var wasCellsListSnapshoted = false
-    var nestingLevelSnapshot = -1
-    var indexSnapshot = -1
+    var indexSnapshot = 0
     var cellSnapshot = 0
-    var nextIndexSnapshot = -1
-    var currentCellSnapshot = -1
-        while ((index in 0 until commands.length) && (implementedCommandsCounter < limit)) {
-            print(commands[index])
-
-            when (commands[index]) {
-                '+' -> {
-                    cellsList[currentCell]++
-                    index++
-                }
-                '-' -> {
-                    cellsList[currentCell]--
-                    index++
-                }
-                '<' -> {
-                    currentCell--
-                    if (currentCell < 0) throw IllegalStateException()
-                    index++
-                }
-                '>' -> {
-                    currentCell++
-                    if (currentCell > cells - 1) throw IllegalStateException()
-                    index++
-                }
-                '[' -> {
-                    if (cellsList[currentCell] != 0) {
-                        nestingLevel++
-                        nestingLevelIndexes[nestingLevel] = index
-                        index++
-                    } else {
-                        var tempNestingLevel = 1
-                        while (tempNestingLevel != 0) {
-                            index++
-                            when (commands[index]) {
-                                '[' -> tempNestingLevel++
-                                ']' -> tempNestingLevel--
-                            }
-                        }
-                        index++
-                    }
-                    println("[ $nestingLevel")
-                }
-                ']' -> {
-                    if (cellsList[currentCell] != 0) {
-                        //RECRECRECRECRECRECRECRECRECRECRECRECRECRECRECRECRECRECRECREC
-
-                        /*if (!wasCellsListSnapshoted) {
-                            indexSnapshot = index
-                            cellSnapshot = cellsList[currentCell]
-                            wasCellsListSnapshoted = true
-                        } else {
-                            if (indexSnapshot == index && cellSnapshot == currentCell) return cellsList
-                            else wasCellsListSnapshoted = false
-                        }*/
-
-
-                        if (!wasCellsListSnapshoted) {
-                            wasCellsListSnapshoted = true
-                            nestingLevelSnapshot = nestingLevel
-                            indexSnapshot = index
-                            currentCellSnapshot = currentCell
-                            cellSnapshot = cellsList[currentCell]
-                            //cellsListSnapshot = cellsList
-                            nextIndexSnapshot = nestingLevelIndexes[nestingLevel] ?: 0
-                        }
-                        else {
-                            if (//(cellsList == cellsListSnapshot) &&
-                               // (nestingLevel == nestingLevelSnapshot) &&
-                                (index == indexSnapshot) &&
-                                (currentCell == currentCellSnapshot) &&
-                                ((cellsList[currentCell] != 0) && (cellsList[currentCell] == cellSnapshot)) //&&
-                              //  (cellSnapshot == currentCell) &&
-                               // (nextIndexSnapshot == nestingLevelIndexes[nestingLevel])
-                            ) return cellsList
-                            else wasCellsListSnapshoted = false
-                        }
-
-                        //RECRECRECRECRECRECRECRECRECRECRECRECRECRECRECRECRECRECRECREC
-
-                        index = (nestingLevelIndexes[nestingLevel] ?: 0) + 1
-                    } else {
-                        nestingLevelIndexes.remove(nestingLevel)
-                        nestingLevel--
-                        index++
-                    }
-                    println("$nestingLevel ]")
-                }
-                ' ' -> index++
+    var currentCellSnapshot = 0
+    while ((index in 0 until commands.length) && (implementedCommandsCounter < limit)) {
+        when (commands[index]) {
+            '+' -> {
+                cellsList[currentCell]++
+                index++
             }
-            implementedCommandsCounter++
-            /*if (nestingLevel == 0) {
-
-        }*/
+            '-' -> {
+                cellsList[currentCell]--
+                index++
+            }
+            '<' -> {
+                currentCell--
+                if (currentCell < 0) throw IllegalStateException()
+                index++
+            }
+            '>' -> {
+                currentCell++
+                if (currentCell > cells - 1) throw IllegalStateException()
+                index++
+            }
+            '[' -> {
+                if (cellsList[currentCell] != 0) {
+                    nestingLevel++
+                    nestingLevelIndexes[nestingLevel] = index
+                    index++
+                } else {
+                    var tempNestingLevel = 1
+                    while (tempNestingLevel != 0) {
+                        index++
+                        when (commands[index]) {
+                            '[' -> tempNestingLevel++
+                            ']' -> tempNestingLevel--
+                        }
+                    }
+                    index++
+                }
+            }
+            ']' -> {
+                if (cellsList[currentCell] != 0) {
+                    if (!wasCellsListSnapshoted) {
+                        wasCellsListSnapshoted = true
+                        indexSnapshot = index
+                        currentCellSnapshot = currentCell
+                        cellSnapshot = cellsList[currentCell]
+                    } else {
+                        if ((index == indexSnapshot) &&
+                            (currentCell == currentCellSnapshot) &&
+                            ((cellsList[currentCell] != 0) && (cellsList[currentCell] == cellSnapshot))
+                        ) return cellsList
+                        else wasCellsListSnapshoted = false
+                    }
+                    index = (nestingLevelIndexes[nestingLevel] ?: 0) + 1
+                } else {
+                    nestingLevelIndexes.remove(nestingLevel)
+                    nestingLevel--
+                    index++
+                }
+            }
+            ' ' -> index++
         }
-
-    println()
-    println("-----------------------END-----------------------")
-    println()
+        implementedCommandsCounter++
+    }
     return cellsList
 }
