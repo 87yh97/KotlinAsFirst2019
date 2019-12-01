@@ -514,13 +514,25 @@ fun fromRoman(roman: String): Int {
 fun computeDeviceCells(cells: Int, commands: String, limit: Int): List<Int> {
     println("------------------START------------------------")
     println(commands)
-    try {
+    val listOfCommands = mutableListOf<String>()
+    var tempCommands = commands
+    while (tempCommands.length > 100) {
+        if (!tempCommands.substring(0, 100).matches(Regex("""((>)*(<)*(\+)*(\[)*(\])*( )*(-)*)+"""))) {
+            throw IllegalArgumentException()
+        }
+        tempCommands = tempCommands.substring(100, tempCommands.length)
+    }
+    if (!tempCommands.matches(Regex("""((>)*(<)*(\+)*(\[)*(\])*( )*(-)*)+"""))) {
+        throw IllegalArgumentException()
+    }
+
+    /*try {
         if (!commands.matches(Regex("""((>)*(<)*(\+)*(\[)*(\])*( )*(-)*)+"""))) {
             throw IllegalArgumentException()
         }
     } catch (e: StackOverflowError) {
-        return listOf(0)
-    }
+        throw StackOverflowError()
+    }*/
     if (cells == 0) return listOf()
     val cellsList = mutableListOf<Int>()
     for (i in 0 until cells) cellsList.add(0)
