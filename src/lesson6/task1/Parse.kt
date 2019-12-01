@@ -544,6 +544,7 @@ fun computeDeviceCells(cells: Int, commands: String, limit: Int): List<Int> {
             '[' -> offsettingCommandsCount[0]++
             ']' -> offsettingCommandsCount[1]++
         }
+        if (offsettingCommandsCount[1] > offsettingCommandsCount[0]) throw IllegalArgumentException()
     }
     if (offsettingCommandsCount[0] != offsettingCommandsCount[1]) throw IllegalArgumentException()
     var currentCell = cells / 2
