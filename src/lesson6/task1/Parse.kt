@@ -4,6 +4,7 @@ package lesson6.task1
 
 //import java.lang.IllegalArgumentException
 //import com.sun.java.util.jar.pack.ConstantPool
+import java.lang.IllegalStateException
 import kotlin.IllegalArgumentException
 
 /**
@@ -509,4 +510,90 @@ fun fromRoman(roman: String): Int {
  * IllegalArgumentException должен бросаться даже если ошибочная команда не была достигнута в ходе выполнения.
  *
  */
-fun computeDeviceCells(cells: Int, commands: String, limit: Int): List<Int> = TODO()
+fun computeDeviceCells(cells: Int, commands: String, limit: Int): List<Int> {
+    println("------------------START------------------------")
+    println(commands)
+    if (!commands.matches(Regex("""((>)*(<)*(\+)*(\[)*(\])*( )*(-)*)+"""))) {
+        throw IllegalArgumentException()
+    }
+    if (cells == 0) return listOf()
+    val cellsList = mutableListOf<Int>()
+    for (i in 0 until cells) cellsList.add(0)
+    if (limit == 0 || commands == "") return cellsList
+    val offsettingCommandsCount = mutableListOf(0, 0)
+
+    for (command in commands) {
+        when (command) {
+            '[' -> offsettingCommandsCount[0]++
+            ']' -> offsettingCommandsCount[1]++
+        }
+    }
+    if (offsettingCommandsCount[0] != offsettingCommandsCount[1]) throw IllegalArgumentException()
+    var currentCell = cells / 2
+    println(currentCell)
+    var nestingLevel = 0
+    var index = 0
+    val nestingLevelIndexes = mutableMapOf<Int, Int>()
+    var implementedCommandsCounter = 0
+    while ((index in 0 until commands.length) && (implementedCommandsCounter < limit)) {
+        print(commands[index])
+
+        when (commands[index]) {
+            '+' -> {
+                cellsList[currentCell]++
+                index++
+            }
+            '-' -> {
+                cellsList[currentCell]--
+                index++
+            }
+            '<' -> {
+                currentCell--
+                if (currentCell < 0) throw IllegalStateException()
+                index++
+            }
+            '>' -> {
+                currentCell++
+                if (currentCell > cells - 1) throw IllegalStateException()
+                index++
+            }
+            '[' -> {
+                if (cellsList[currentCell] != 0) {
+                    nestingLevel++
+                    nestingLevelIndexes[nestingLevel] = index
+                    index++
+                } else {
+                    var tempNestingLevel = 1
+                    while (tempNestingLevel != 0) {
+                        index++
+                        when (commands[index]) {
+                            '[' -> tempNestingLevel++
+                            ']' -> tempNestingLevel--
+                        }
+                    }
+                    index++
+                }
+             println("[ $nestingLevel")
+            }
+            ']' -> {
+                if (cellsList[currentCell] != 0) {
+                    index = (nestingLevelIndexes[nestingLevel] ?: 0) + 1
+                } else {
+                    nestingLevelIndexes.remove(nestingLevel)
+                    nestingLevel--
+                    index++
+                }
+                println("$nestingLevel ]")
+            }
+            ' ' -> index++
+        }
+        implementedCommandsCounter++
+        /*if (nestingLevel == 0) {
+
+        }*/
+    }
+    println()
+    println("-----------------------END-----------------------")
+    println()
+    return cellsList
+}

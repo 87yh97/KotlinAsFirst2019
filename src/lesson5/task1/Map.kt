@@ -398,27 +398,12 @@ fun findSumOfTwo(list: List<Int>, number: Int): Pair<Int, Int> {
     for ((index, secondNumber) in sortedList.withIndex()) {
         val diff = number - secondNumber
         if (set.contains(diff)) {
-            println("CONTAINS")
-            println("number = $number")
-            println("diff = $diff")
-            println("secondNumber = $secondNumber")
             if (diff == secondNumber) {
-                println("YESTHEYAREEQUAL")
                 if ((((index - 1) >= 0) && sortedList[index - 1] == number) ||
                     (((index + 1) <= (sortedList.size - 1)) && sortedList[index + 1] == number)
                 ) {
-                    val first = list.indexOf(diff)
-                    val second = list.lastIndexOf(diff)
-                    /*for (i in 0 until list.size) {
-                        if (list[i] == diff && first != -1) {
-                            second = i
-                            break
-                        }
-                        if (list[i] == diff) first = i
-                    }*/
-                    return Pair(first, second)
+                    return Pair(list.indexOf(diff), list.lastIndexOf(diff))
                 }
-                println("BUT THERE ARE NONE OF THE SAME NUMBER")
             } else {
                 val secondNumberIndex = list.indexOf(secondNumber)
                 val diffIndex = list.indexOf(diff)
@@ -426,7 +411,6 @@ fun findSumOfTwo(list: List<Int>, number: Int): Pair<Int, Int> {
                 else Pair(secondNumberIndex, diffIndex)
             }
         }
-
     }
     return Pair(-1, -1)
 }
