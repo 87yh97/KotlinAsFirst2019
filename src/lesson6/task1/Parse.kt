@@ -586,6 +586,7 @@ fun computeDeviceCells(cells: Int, commands: String, limit: Int): List<Int> {
                 ']' -> {
                     if (cellsList[currentCell] != 0) {
                         //RECRECRECRECRECRECRECRECRECRECRECRECRECRECRECRECRECRECRECREC
+                        /*
                         /*if (!wasCellsListSnapshoted) {
                             indexSnapshot = index
                             cellSnapshot = cellsList[currentCell]
@@ -617,7 +618,7 @@ fun computeDeviceCells(cells: Int, commands: String, limit: Int): List<Int> {
                             ) return cellsList
                             else wasCellsListSnapshoted = false
                         }
-
+*/
                         //RECRECRECRECRECRECRECRECRECRECRECRECRECRECRECRECRECRECRECREC
 
                         index = (nestingLevelIndexes[nestingLevel] ?: 0) + 1
