@@ -2,12 +2,6 @@
 
 package lesson6.task1
 
-//import java.lang.IllegalArgumentException
-//import com.sun.java.util.jar.pack.ConstantPool
-import java.lang.IllegalStateException
-import java.util.concurrent.TimeoutException
-import kotlin.IllegalArgumentException
-
 /**
  * Пример
  *
