@@ -449,33 +449,25 @@ val romanList = listOf("M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V
 val decimalEquivalent = listOf(1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1)
 
 fun fromRoman(roman: String): Int {
-    if (roman == "") return -1
-    if ((!roman.matches(Regex("""M*((CM)?|(DC{0,3})?|(D)?|(CD)?|C{0,3}?)?((XC)?|(LX{0,3})?|(L)?|(XL)?|(X{0,3})?)?((IX)?|(VI{0,3})?|(V)?|(IV)?|(I{0,3})?)?""")))) {
+    if (roman == "" || (!roman.matches(Regex("""M*((CM)?|(DC{0,3})?|(D)?|(CD)?|C{0,3}?)?((XC)?|(LX{0,3})?|(L)?|(XL)?|(X{0,3})?)?((IX)?|(VI{0,3})?|(V)?|(IV)?|(I{0,3})?)?""")))) {
         return -1
     }
-    println("IMSTUCK1")
     var workingString = roman
     val rankList = mutableListOf(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
     for ((index, element) in romanList.withIndex()) {
-            if ((workingString.length > 1) && (workingString.substring(0, 2)) == element) {
-                rankList[index] = 1
-                println("IMSTUCK2")
-                if (workingString.length == 2) break
-                else workingString = workingString.substring(2)
-            }
-
-            while ((workingString.isNotEmpty()) && workingString[0].toString() == element) {
-                rankList[index] ++
-                if (workingString.length == 1) break
-                else workingString = workingString.substring(1)
-                println("IMSTUCK3")
-
-            }
-            println("IMSTUCK4")
+        if ((workingString.length > 1) && (workingString.substring(0, 2)) == element) {
+            rankList[index] = 1
+            if (workingString.length == 2) break
+            else workingString = workingString.substring(2)
+        }
+        while ((workingString.isNotEmpty()) && workingString[0].toString() == element) {
+            rankList[index]++
+            if (workingString.length == 1) break
+            else workingString = workingString.substring(1)
+        }
     }
     var decimalFromRoman = 0
-    for (index in 0 .. 12) {
-        println("IMSTUCK5")
+    for (index in 0..12) {
         decimalFromRoman += decimalEquivalent[index] * rankList[index]
     }
     return decimalFromRoman
