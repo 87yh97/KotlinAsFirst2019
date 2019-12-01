@@ -367,7 +367,7 @@ fun propagateHandshakes(friends: Map<String, Set<String>>): Map<String, Set<Stri
                 (allAcquaintances[name] ?: setOf<String>()) - (tempUnmodifiedFriendsSet)
             tempUnmodifiedFriendsSet.addAll(allAcquaintances[name] ?: setOf())
             for (friendsNameTwo in differenceInSets) {
-                if (friends[friendsNameTwo] != null) allAcquaintances[name]?.addAll(friends[friendsNameTwo]!!)
+                if (friends[friendsNameTwo] != null) allAcquaintances[name]?.addAll(friends[friendsNameTwo] ?: setOf())
             }
         } while (allAcquaintances[name] != tempUnmodifiedFriendsSet)
         allAcquaintances[name]?.remove(name)
@@ -407,15 +407,15 @@ fun findSumOfTwo(list: List<Int>, number: Int): Pair<Int, Int> {
                 if ((((index - 1) >= 0) && sortedList[index - 1] == number) ||
                     (((index + 1) <= (sortedList.size - 1)) && sortedList[index + 1] == number)
                 ) {
-                    var first = -1
-                    var second = -1
-                    for (i in 0 until list.size) {
+                    val first = list.indexOf(diff)
+                    val second = list.lastIndexOf(diff)
+                    /*for (i in 0 until list.size) {
                         if (list[i] == diff && first != -1) {
                             second = i
                             break
                         }
                         if (list[i] == diff) first = i
-                    }
+                    }*/
                     return Pair(first, second)
                 }
                 println("BUT THERE ARE NONE OF THE SAME NUMBER")
