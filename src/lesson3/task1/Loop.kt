@@ -104,7 +104,7 @@ fun fib(n: Int): Int {
  * Для заданных чисел m и n найти наименьшее общее кратное, то есть,
  * минимальное число k, которое делится и на m и на n без остатка
  */
-fun lcm(m: Int, n: Int): Int = (max(m, n) / tSCD(m ,n)) * min(m, n)
+fun lcm(m: Int, n: Int): Int = (max(m, n) / tSCD(m, n)) * min(m, n)
 
 /**
  * Простая
