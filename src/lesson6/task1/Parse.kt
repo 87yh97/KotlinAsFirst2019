@@ -514,8 +514,12 @@ fun fromRoman(roman: String): Int {
 fun computeDeviceCells(cells: Int, commands: String, limit: Int): List<Int> {
     println("------------------START------------------------")
     println(commands)
-    if (!commands.matches(Regex("""((>)*(<)*(\+)*(\[)*(\])*( )*(-)*)+"""))) {
-        throw IllegalArgumentException()
+    try {
+        if (!commands.matches(Regex("""((>)*(<)*(\+)*(\[)*(\])*( )*(-)*)+"""))) {
+            throw IllegalArgumentException()
+        }
+    } catch (e: StackOverflowError) {
+        return listOf(0)
     }
     if (cells == 0) return listOf()
     val cellsList = mutableListOf<Int>()
@@ -586,7 +590,7 @@ fun computeDeviceCells(cells: Int, commands: String, limit: Int): List<Int> {
                 ']' -> {
                     if (cellsList[currentCell] != 0) {
                         //RECRECRECRECRECRECRECRECRECRECRECRECRECRECRECRECRECRECRECREC
-                        /*
+
                         /*if (!wasCellsListSnapshoted) {
                             indexSnapshot = index
                             cellSnapshot = cellsList[currentCell]
@@ -611,14 +615,13 @@ fun computeDeviceCells(cells: Int, commands: String, limit: Int): List<Int> {
                                // (nestingLevel == nestingLevelSnapshot) &&
                                 (index == indexSnapshot) &&
                                 (currentCell == currentCellSnapshot) &&
-                                ((cellsList[currentCell] != 0) && (((cellsList[currentCell] > 0) && (cellsList[currentCell] >= cellSnapshot)) ||
-                                 (((cellsList[currentCell] < 0) && (cellsList[currentCell] <= cellSnapshot))))) //&&
+                                ((cellsList[currentCell] != 0) && (cellsList[currentCell] == cellSnapshot)) //&&
                               //  (cellSnapshot == currentCell) &&
                                // (nextIndexSnapshot == nestingLevelIndexes[nestingLevel])
                             ) return cellsList
                             else wasCellsListSnapshoted = false
                         }
-*/
+
                         //RECRECRECRECRECRECRECRECRECRECRECRECRECRECRECRECRECRECRECREC
 
                         index = (nestingLevelIndexes[nestingLevel] ?: 0) + 1
