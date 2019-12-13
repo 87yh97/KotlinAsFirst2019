@@ -443,6 +443,8 @@ fun bagPacking(treasures: Map<String, Pair<Int, Int>>, capacity: Int): Set<Strin
     //val allPreviousBags = MutableMap<<Int>, List<Int>>
     //allPreviousBags
     var nameIndex = 1
+    var takenTreasuresWeight = 0
+    var takenTreasuresCost = 0
     val takenTreasures = mutableSetOf<String>()
     for (j in 0 .. capacity)  allPreviousBags[0][j] = 0
 
@@ -460,8 +462,12 @@ fun bagPacking(treasures: Map<String, Pair<Int, Int>>, capacity: Int): Set<Strin
                         (allPreviousBags[nameIndex - 1][tempCapacity - values.first] + values.second)
                     )
                     if (allPreviousBags[nameIndex - 1][tempCapacity - values.first] + values.second >
-                        allPreviousBags[nameIndex - 1][tempCapacity]
-                    ) takenTreasures.add(name)
+                        allPreviousBags[nameIndex - 1][tempCapacity] && (takenTreasuresWeight + values.first) <= tempCapacity
+                    ) {
+                        takenTreasures.add(name)
+                        takenTreasuresWeight += values.first
+                        takenTreasuresCost += values.second
+                    }
                 //}
             }
         }
