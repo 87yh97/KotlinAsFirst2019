@@ -58,12 +58,19 @@ fun countSubstrings(inputName: String, substrings: List<String>): Map<String, In
     val str: String = File(inputName).bufferedReader().readLines().toString()
     for (word in substrings) {
         residenceMap[word] = 0
-        if (str.contains(word)) {
-            residenceMap[word] = 1
+        var tempStr = str
+        if (tempStr.contains(word, true)) {
+            //residenceMap[word] = 1
             var tempIndex = 0
-            while (tempIndex < str.length) {
-                tempIndex = str.findAnyOf(listOf(word), tempIndex, true)?.first ?: str.length + word.length
+            while (tempStr.contains(word, true)) {
+                tempIndex = tempStr.findAnyOf(listOf(word), tempIndex, true)?.first ?: tempStr.length
+                tempIndex++
                 residenceMap[word] = (residenceMap[word] ?: 0) + 1
+                if (tempIndex < tempStr.length) {
+                    tempStr = tempStr.substring(tempIndex, tempStr.length)
+                    tempIndex = 0
+                }
+                else break
             }
         }
     }
