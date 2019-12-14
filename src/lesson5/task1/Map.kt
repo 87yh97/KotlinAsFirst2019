@@ -460,7 +460,8 @@ fun bagPacking(treasures: Map<String, Pair<Int, Int>>, capacity: Int): Set<Strin
         nameIndex++
     }
     val listOfTreasures = treasures.flatMap { listOf(it.key) }
-   // var i = treasures.size
+        listOfTreasures.reversed()
+    // var i = treasures.size
     /*for (i in treasures.size downTo 1) {
         if ((allPreviousBags[i][capacity] > allPreviousBags[i - 1][capacity])
         ) {
@@ -469,9 +470,13 @@ fun bagPacking(treasures: Map<String, Pair<Int, Int>>, capacity: Int): Set<Strin
             takenTreasures.add(listOfTreasures[i - 1])
         }
     }*/
-    for (i in 0 until treasures.size) {
+    /*for (i in 0 until treasures.size) {
         if ((allPreviousBags[i][capacity] < allPreviousBags[i + 1][capacity])
         ) {
+            val one = allPreviousBags[i + 1][capacity]
+            val two = allPreviousBags[i][capacity]
+            val diff = one - two
+            val three = treasures[listOfTreasures[i]]?.second
             if ((allPreviousBags[i + 1][capacity] - allPreviousBags[i][capacity]) ==
                 treasures[listOfTreasures[i]]?.second ?: 0)
                 takenTreasures.add(listOfTreasures[i])
@@ -483,6 +488,18 @@ fun bagPacking(treasures: Map<String, Pair<Int, Int>>, capacity: Int): Set<Strin
                 }
             }
         }
+    }*/
+    val setOfTakenTreasures = mutableSetOf<String>()
+    var currentCapacity = capacity
+    //var currentTreasure
+    for (i in treasures.size downTo 1) {
+        if (allPreviousBags[i][currentCapacity] == allPreviousBags[i - 1][currentCapacity]) {
+            //treasures[listOfTreasures[i]].
+        }
+        else {
+            setOfTakenTreasures.add(listOfTreasures[i - 1])
+            currentCapacity -= treasures[listOfTreasures[i - 1]]?.first ?: 0
+        }
     }
-    return takenTreasures.toSet()
+    return setOfTakenTreasures
 }

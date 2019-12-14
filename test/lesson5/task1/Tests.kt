@@ -394,10 +394,10 @@ class Tests {
             )
         )
         assertEquals(
-            emptySet<String>(),
+            setOf("6", "5", "3", "2", "1", "0"),
             bagPacking(
-                mapOf("Кубок" to (500 to 2000), "Слиток" to (1000 to 5000)),
-                450
+                mapOf("0" to (1 to 1), "1" to (1 to 1), "2" to (41 to 1), "3" to (1 to 1), "4" to (456 to 1), "5" to (329 to 2), "6" to (2 to 2)),
+                830
             )
         )
     }
