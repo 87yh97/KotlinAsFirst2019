@@ -60,7 +60,6 @@ fun countSubstrings(inputName: String, substrings: List<String>): Map<String, In
         residenceMap[word] = 0
         var tempStr = str
         if (tempStr.contains(word, true)) {
-            //residenceMap[word] = 1
             var tempIndex = 0
             while (tempStr.contains(word, true)) {
                 tempIndex = tempStr.findAnyOf(listOf(word), tempIndex, true)?.first ?: tempStr.length
@@ -69,8 +68,7 @@ fun countSubstrings(inputName: String, substrings: List<String>): Map<String, In
                 if (tempIndex < tempStr.length) {
                     tempStr = tempStr.substring(tempIndex, tempStr.length)
                     tempIndex = 0
-                }
-                else break
+                } else break
             }
         }
     }

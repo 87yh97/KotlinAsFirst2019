@@ -436,39 +436,53 @@ fun findSumOfTwo(list: List<Int>, number: Int): Pair<Int, Int> {
  *     450
  *   ) -> emptySet()
  */
-fun bagPacking(treasures: Map<String, Pair<Int, Int>>, capacity: Int): Set<String> = TODO()/*{
-    //val nameList: MutableList<String> = mutableListOf()
-    //val smallArray = arrayOf<Int>(capacity + 1)
-    val allPreviousBags: Array<Array<Int>> = Array(treasures.size + 1) { Array(capacity + 1) {0} }
-    //val allPreviousBags = MutableMap<<Int>, List<Int>>
-    //allPreviousBags
+fun bagPacking(treasures: Map<String, Pair<Int, Int>>, capacity: Int): Set<String> {
+    val allPreviousBags: Array<Array<Int>> = Array(treasures.size + 1) { Array(capacity + 1) { 0 } }
     var nameIndex = 1
-    val takenTreasures = mutableSetOf<String>()
-    for (j in 0 .. capacity)  allPreviousBags[0][j] = 0
+    val takenTreasures = mutableListOf<String>()
+    for (j in 0..capacity) allPreviousBags[0][j] = 0
+    for (j in 0..treasures.size) allPreviousBags[j][0] = 0
 
     for ((name, values) in treasures) {
-        //nameList.add(name)
         for (tempCapacity in 0..capacity) {
             if (tempCapacity < values.first) {
-                //if (nameIndex == 0) allPreviousBags[nameIndex][tempCapacity] = 0
                 allPreviousBags[nameIndex][tempCapacity] = allPreviousBags[nameIndex - 1][tempCapacity]
             } else {
-                //if (nameIndex == 0) allPreviousBags[nameIndex][tempCapacity] = 0
-                //else {
-                    allPreviousBags[nameIndex][tempCapacity] = maxOf(
-                        allPreviousBags[nameIndex - 1][tempCapacity],
-                        (allPreviousBags[nameIndex - 1][tempCapacity - values.first] + values.second)
-                    )
-                    if (allPreviousBags[nameIndex - 1][tempCapacity - values.first] + values.second >
-                        allPreviousBags[nameIndex - 1][tempCapacity] && tempCapacity == capacity
-                    ) takenTreasures.add(name)
-                //}
+                allPreviousBags[nameIndex][tempCapacity] = maxOf(
+                    allPreviousBags[nameIndex - 1][tempCapacity],
+                    (allPreviousBags[nameIndex - 1][tempCapacity - values.first] + values.second)
+                )
+                /*if (allPreviousBags[nameIndex - 1][tempCapacity - values.first] + values.second >
+                    allPreviousBags[nameIndex - 1][tempCapacity] //&& tempCapacity == capacity
+                ) takenTreasures.add(name)*/
             }
         }
         nameIndex++
     }
-    /*for (treasureIndex in 0 until nameList.size) {
-        for ()
+    val listOfTreasures = treasures.flatMap { listOf(it.key) }
+   // var i = treasures.size
+    /*for (i in treasures.size downTo 1) {
+        if ((allPreviousBags[i][capacity] > allPreviousBags[i - 1][capacity])
+        ) {
+            if ((allPreviousBags[i][capacity] - allPreviousBags[i - 1][capacity]) ==
+                treasures[listOfTreasures[i - 1]]?.second ?: 0)
+            takenTreasures.add(listOfTreasures[i - 1])
+        }
     }*/
-    return takenTreasures
-}*/
+    for (i in 0 until treasures.size) {
+        if ((allPreviousBags[i][capacity] < allPreviousBags[i + 1][capacity])
+        ) {
+            if ((allPreviousBags[i + 1][capacity] - allPreviousBags[i][capacity]) ==
+                treasures[listOfTreasures[i]]?.second ?: 0)
+                takenTreasures.add(listOfTreasures[i])
+            else {
+                if (i != 0) {
+                    val lastIndex = takenTreasures.lastIndex
+                    takenTreasures.removeAt(lastIndex)
+                    takenTreasures.add(listOfTreasures[i])
+                }
+            }
+        }
+    }
+    return takenTreasures.toSet()
+}
