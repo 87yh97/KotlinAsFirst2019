@@ -115,12 +115,14 @@ fun sibilants(inputName: String, outputName: String) {
             var tempLine = line.trimEnd()
             //tempLine = tempLine.trimEnd()
             for (i in line.trimEnd().indices - 1) {
-                if (line[i].toString().matches(Regex("""[жшчщЖШЧЩ]"""))) {
-                    val nextSymbol = line[i + 1]
-                    if (nextSymbol.toString().matches(Regex("""[ыяюЫЯЮ]"""))) {
-                        tempLine = tempLine.substring(0, i + 1)
-                        tempLine += replaceMap[nextSymbol]
-                        if (i + 2 < line.trimEnd().length) tempLine += line.trimEnd().substring(i + 2, line.trimEnd().length)
+                if (line.trimEnd()[i].toString().matches(Regex("""[жшчщЖШЧЩ]"""))) {
+                    if (i + 1 < line.trimEnd().length) {
+                        val nextSymbol = line.trimEnd()[i + 1]
+                        if (nextSymbol.toString().matches(Regex("""[ыяюЫЯЮ]"""))) {
+                            tempLine = tempLine.substring(0, i + 1)
+                            tempLine += replaceMap[nextSymbol]
+                            if (i + 2 < line.trimEnd().length) tempLine += line.trimEnd().substring(i + 2, line.trimEnd().length)
+                        }
                     }
                 }
             }

@@ -102,11 +102,11 @@ Basic, Ruby, Swift.
  * жИ шИ ЖИ Ши ЖА шА Жа ша жу шу жу щу ча шу щу ща жа жи жи жу чу ча
  */"""
         )
-        /*File("temp.txt").delete()
-        sibilants("input/MY.txt", "temp2.txt")
+        File("temp.txt").delete()
+        /*sibilants("input/MY.txt", "temp2.txt")
         assertFileContent(
             "temp2.txt",
-            """АЖАА --"""
+            """ААЖАААЖ"""
         )
         File("temp2.txt").delete()*/
     }
