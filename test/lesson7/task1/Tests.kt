@@ -77,7 +77,7 @@ Basic, Ruby, Swift.
     @Test
     @Tag("Normal")
     fun sibilants() {
-        /*sibilants("input/sibilants_in1.txt", "temp.txt")
+        sibilants("input/sibilants_in1.txt", "temp.txt")
         assertFileContent(
             "temp.txt",
             """/**
@@ -94,14 +94,14 @@ Basic, Ruby, Swift.
  *
  * жИ шИ ЖИ Ши ЖА шА Жа ша жу шу жу щу ча шу щу ща жа жи жи жу чу ча
  */"""
-        )*/
+        )
         File("temp.txt").delete()
-        sibilants("input/MY.txt", "temp2.txt")
+        /*sibilants("input/MY.txt", "temp2.txt")
         assertFileContent(
             "temp2.txt",
             """АЖИАА -"""
         )
-        File("temp2.txt").delete()
+        File("temp2.txt").delete()*/
     }
 
     @Test
