@@ -491,12 +491,9 @@ fun bagPacking(treasures: Map<String, Pair<Int, Int>>, capacity: Int): Set<Strin
     }*/
     val setOfTakenTreasures = mutableSetOf<String>()
     var currentCapacity = capacity
-    //var currentTreasure
+
     for (i in treasures.size downTo 1) {
-        if (allPreviousBags[i][currentCapacity] == allPreviousBags[i - 1][currentCapacity]) {
-            //treasures[listOfTreasures[i]].
-        }
-        else {
+        if (allPreviousBags[i][currentCapacity] != allPreviousBags[i - 1][currentCapacity]) {
             setOfTakenTreasures.add(listOfTreasures[i - 1])
             currentCapacity -= treasures[listOfTreasures[i - 1]]?.first ?: 0
         }
