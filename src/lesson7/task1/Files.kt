@@ -100,6 +100,7 @@ val replaceMap = mapOf(
 
 fun sibilants(inputName: String, outputName: String) {
     val writer = File(outputName).bufferedWriter()
+
     for (line in File(inputName).readLines()) {
         if (line.matches(Regex(""".*[жшчщЖШЧЩ][ыяюЫЯЮ].*"""))) {
             var tempLine = line
