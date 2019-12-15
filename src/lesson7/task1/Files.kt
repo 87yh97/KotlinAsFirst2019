@@ -100,14 +100,14 @@ val replaceMap = mapOf(
 
 fun sibilants(inputName: String, outputName: String) {
     val writer = File(outputName).bufferedWriter()
-
+    var firstLine = true
     for (line in File(inputName).readLines()) {
-        line.trimEnd()
+        //line.trimEnd()
         if (line.matches(Regex(""".*[жшчщЖШЧЩ][ыяюЫЯЮ].*"""))) {
             var tempLine = line
+            //tempLine = tempLine.trimEnd()
             for (i in line.indices - 1) {
                 if (line[i].toString().matches(Regex("""[жшчщЖШЧЩ]"""))) {
-
                     val nextSymbol = line[i + 1]
                     if (nextSymbol.toString().matches(Regex("""[ыяюЫЯЮ]"""))) {
                         tempLine = tempLine.substring(0, i + 1)
@@ -116,12 +116,19 @@ fun sibilants(inputName: String, outputName: String) {
                     }
                 }
             }
-            writer.write(tempLine)
-            writer.write("\n")
+            if (!firstLine) {
+                writer.write("\n")
+            }
+            writer.write(tempLine.trimEnd())
+
         } else {
-            writer.write(line)
-            writer.write("\n")
+            if (!firstLine) {
+                writer.write("\n")
+            }
+            writer.write(line.trimEnd())
+
         }
+        firstLine = false
     }
     writer.close()
 }

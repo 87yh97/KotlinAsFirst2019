@@ -99,7 +99,7 @@ Basic, Ruby, Swift.
         /*sibilants("input/MY.txt", "temp2.txt")
         assertFileContent(
             "temp2.txt",
-            """АЖИАА -"""
+            """АЖАА --"""
         )
         File("temp2.txt").delete()*/
     }
