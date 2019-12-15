@@ -439,7 +439,6 @@ fun findSumOfTwo(list: List<Int>, number: Int): Pair<Int, Int> {
 fun bagPacking(treasures: Map<String, Pair<Int, Int>>, capacity: Int): Set<String> {
     val allPreviousBags: Array<Array<Int>> = Array(treasures.size + 1) { Array(capacity + 1) { 0 } }
     var nameIndex = 1
-    val takenTreasures = mutableListOf<String>()
     for (j in 0..capacity) allPreviousBags[0][j] = 0
     for (j in 0..treasures.size) allPreviousBags[j][0] = 0
 
@@ -452,43 +451,13 @@ fun bagPacking(treasures: Map<String, Pair<Int, Int>>, capacity: Int): Set<Strin
                     allPreviousBags[nameIndex - 1][tempCapacity],
                     (allPreviousBags[nameIndex - 1][tempCapacity - values.first] + values.second)
                 )
-                /*if (allPreviousBags[nameIndex - 1][tempCapacity - values.first] + values.second >
-                    allPreviousBags[nameIndex - 1][tempCapacity] //&& tempCapacity == capacity
-                ) takenTreasures.add(name)*/
             }
         }
         nameIndex++
     }
     val listOfTreasures = treasures.flatMap { listOf(it.key) }
-        listOfTreasures.reversed()
-    // var i = treasures.size
-    /*for (i in treasures.size downTo 1) {
-        if ((allPreviousBags[i][capacity] > allPreviousBags[i - 1][capacity])
-        ) {
-            if ((allPreviousBags[i][capacity] - allPreviousBags[i - 1][capacity]) ==
-                treasures[listOfTreasures[i - 1]]?.second ?: 0)
-            takenTreasures.add(listOfTreasures[i - 1])
-        }
-    }*/
-    /*for (i in 0 until treasures.size) {
-        if ((allPreviousBags[i][capacity] < allPreviousBags[i + 1][capacity])
-        ) {
-            val one = allPreviousBags[i + 1][capacity]
-            val two = allPreviousBags[i][capacity]
-            val diff = one - two
-            val three = treasures[listOfTreasures[i]]?.second
-            if ((allPreviousBags[i + 1][capacity] - allPreviousBags[i][capacity]) ==
-                treasures[listOfTreasures[i]]?.second ?: 0)
-                takenTreasures.add(listOfTreasures[i])
-            else {
-                if (i != 0) {
-                    val lastIndex = takenTreasures.lastIndex
-                    takenTreasures.removeAt(lastIndex)
-                    takenTreasures.add(listOfTreasures[i])
-                }
-            }
-        }
-    }*/
+    listOfTreasures.reversed()
+
     val setOfTakenTreasures = mutableSetOf<String>()
     var currentCapacity = capacity
 
