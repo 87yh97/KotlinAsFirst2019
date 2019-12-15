@@ -89,13 +89,13 @@ fun countSubstrings(inputName: String, substrings: List<String>): Map<String, In
  * Исключения (жюри, брошюра, парашют) в рамках данного задания обрабатывать не нужно
  *
  */
-fun testik(line: String) {
+/*fun testik(line: String) {
     for (i in line.trimEnd().indices) {
         println(i)
         println(line[i])
         println("---")
     }
-}
+}*/
 
 val replaceMap = mapOf(
     'ы' to 'и',

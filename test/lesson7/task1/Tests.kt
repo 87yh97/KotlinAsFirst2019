@@ -74,11 +74,11 @@ Basic, Ruby, Swift.
         )
     }
 
-    @Test
+    /*@Test
     @Tag("Normal")
     fun testik() {
         testik("ааааажяаж\n")
-    }
+    }*/
 
 
     @Test
