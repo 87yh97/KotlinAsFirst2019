@@ -104,9 +104,9 @@ fun sibilants(inputName: String, outputName: String) {
     for (line in File(inputName).readLines()) {
         //line.trimEnd()
         if (line.matches(Regex(""".*[жшчщЖШЧЩ][ыяюЫЯЮ].*"""))) {
-            var tempLine = line
+            var tempLine = line.trimEnd()
             //tempLine = tempLine.trimEnd()
-            for (i in line.indices - 1) {
+            for (i in line.trimEnd().indices - 1) {
                 if (line[i].toString().matches(Regex("""[жшчщЖШЧЩ]"""))) {
                     val nextSymbol = line[i + 1]
                     if (nextSymbol.toString().matches(Regex("""[ыяюЫЯЮ]"""))) {
