@@ -89,6 +89,14 @@ fun countSubstrings(inputName: String, substrings: List<String>): Map<String, In
  * Исключения (жюри, брошюра, парашют) в рамках данного задания обрабатывать не нужно
  *
  */
+fun testik(line: String) {
+    for (i in line.trimEnd().indices) {
+        println(i)
+        println(line[i])
+        println("---")
+    }
+}
+
 val replaceMap = mapOf(
     'ы' to 'и',
     'я' to 'а',
@@ -112,7 +120,7 @@ fun sibilants(inputName: String, outputName: String) {
                     if (nextSymbol.toString().matches(Regex("""[ыяюЫЯЮ]"""))) {
                         tempLine = tempLine.substring(0, i + 1)
                         tempLine += replaceMap[nextSymbol]
-                        if (i + 2 < line.length) tempLine += line.substring(i + 2, line.length)
+                        if (i + 2 < line.trimEnd().length) tempLine += line.trimEnd().substring(i + 2, line.trimEnd().length)
                     }
                 }
             }
