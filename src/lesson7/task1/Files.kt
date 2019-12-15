@@ -102,6 +102,7 @@ fun sibilants(inputName: String, outputName: String) {
     val writer = File(outputName).bufferedWriter()
 
     for (line in File(inputName).readLines()) {
+        line.trimEnd()
         if (line.matches(Regex(""".*[жшчщЖШЧЩ][ыяюЫЯЮ].*"""))) {
             var tempLine = line
             for (i in line.indices - 1) {
