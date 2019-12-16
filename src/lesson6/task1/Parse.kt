@@ -329,11 +329,13 @@ fun plusMinus(expression: String): Int {
     val numbersAndSymbols = expression.split(" ")
     var result: Int
     val firstElement: String
-    try {
+    /*try {
         firstElement = numbersAndSymbols[0]
     } catch (n: IndexOutOfBoundsException) {
         throw IllegalArgumentException()
-    }
+    }*/
+    if (numbersAndSymbols.isEmpty()) throw IllegalArgumentException()
+    firstElement = numbersAndSymbols[0]
     try {
         if (isItNumber(firstElement)) result = firstElement.toInt()
         else throw IllegalArgumentException()
