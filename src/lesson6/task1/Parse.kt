@@ -100,8 +100,7 @@ fun dateStrToDigit(str: String): String {
     if ((year < 0) || (parts[2].toLong() > Int.MAX_VALUE)) return ""
     val isYearLeap: Boolean = ((year % 4 == 0 && year % 100 != 0) || (year % 400 == 0))
     if ((day > monthList[parts[1]]?.second ?: 0) || (day < 0)) {
-        if (month == 2 && isYearLeap && day == 29) {
-        } else return ""
+        if (month != 2 || !isYearLeap || day != 29) return ""
     }
     var string = ""
     if ((day / 10) == 0) {
@@ -127,35 +126,7 @@ fun dateStrToDigit(str: String): String {
  * входными данными.
  */
 
-val monthListTest = mapOf(
-    "января" to Pair("1", 31),
-    "февраля" to Pair("2", 28),
-    "марта" to Pair("3", 31),
-    "апреля" to Pair("4", 30),
-    "мая" to Pair("5", 31),
-    "июня" to Pair("6", 30),
-    "июля" to Pair("7", 31),
-    "августа" to Pair("8", 31),
-    "сентября" to Pair("9", 30),
-    "октября" to Pair("10", 31),
-    "ноября" to Pair("11", 30),
-    "декабря" to Pair("12", 31)
-)
-
-val digitalMonthList = monthListTest.map { it.value.first.toInt() to Pair(it.key, it.value.second) }.toMap()/*mapOf(
-    1 to Pair("января", 31),
-    2 to Pair("февраля", 28),
-    3 to Pair("марта", 31),
-    4 to Pair("апреля", 30),
-    5 to Pair("мая", 31),
-    6 to Pair("июня", 30),
-    7 to Pair("июля", 31),
-    8 to Pair("августа", 31),
-    9 to Pair("сентября", 30),
-    10 to Pair("октября", 31),
-    11 to Pair("ноября", 30),
-    12 to Pair("декабря", 31)
-)*/
+val digitalMonthList = monthList.map { it.value.first.toInt() to Pair(it.key, it.value.second) }.toMap()
 
 fun dateDigitToStr(digital: String): String {
     val parts = digital.split(".")
@@ -329,11 +300,6 @@ fun plusMinus(expression: String): Int {
     val numbersAndSymbols = expression.split(" ")
     var result: Int
     val firstElement: String
-    /*try {
-        firstElement = numbersAndSymbols[0]
-    } catch (n: IndexOutOfBoundsException) {
-        throw IllegalArgumentException()
-    }*/
     if (numbersAndSymbols.isEmpty()) throw IllegalArgumentException()
     firstElement = numbersAndSymbols[0]
     try {
@@ -398,7 +364,7 @@ fun firstDuplicateIndex(str: String): Int {
  * Все цены должны быть больше либо равны нуля.
  */
 fun mostExpensive(description: String): String {
-    val products = description.split(" ")
+    /*val products = description.split(" ")
     val productsSize = products.size
     if (((productsSize % 2) == 1) || description.contains(Regex("""\s\s"""))) return ""
     var theMostExpensiveProduct: Pair<String, Double>
@@ -439,6 +405,33 @@ fun mostExpensive(description: String): String {
         } catch (e: NumberFormatException) {
             return ""
         }
+        if (currentProductCost > theMostExpensiveProduct.second) theMostExpensiveProduct =
+            Pair(products[index], currentProductCost)
+        index += 2
+    }
+    return theMostExpensiveProduct.first*/
+    if (!description.matches(Regex("""(((\S)+ \d+((\.)\d*)?); )*((\S)+ \d+(\.\d*)?)"""))) return ""
+    val products = description.split(Regex("""(;? )"""))
+    var theMostExpensiveProduct: Pair<String, Double> = Pair(products[0], products[1].toDouble())
+    val productsSize = products.size
+
+    //val firstProductStringCost = products[1]
+    //val firstProductLabel = products[0]
+    //if (productsSize > 2) theMostExpensiveProduct =
+    //   Pair(
+    //       firstProductLabel,
+    //       firstProductStringCost.substring(0, firstProductStringCost.length - 1).toDouble()
+    //   )
+    /*else {
+        return if (firstProductStringCost.matches(Regex("""\d+\.\d+""")) ||
+            firstProductStringCost.matches(Regex("""\d+"""))
+        ) firstProductLabel
+        else ""
+    }*/
+    var index = 2
+    while (index < productsSize) {
+        //val currentProductStringCost = products[index]
+        val currentProductCost = products[index + 1].toDouble()
         if (currentProductCost > theMostExpensiveProduct.second) theMostExpensiveProduct =
             Pair(products[index], currentProductCost)
         index += 2
