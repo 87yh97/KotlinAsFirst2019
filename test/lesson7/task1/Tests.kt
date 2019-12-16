@@ -73,14 +73,6 @@ Basic, Ruby, Swift.
             countSubstrings("input/substrings_in2.txt", listOf("--", "ее", "животное", "."))
         )
     }
-
-    /*@Test
-    @Tag("Normal")
-    fun testik() {
-        testik("ааааажяаж\n")
-    }*/
-
-
     @Test
     @Tag("Normal")
     fun sibilants() {
@@ -103,12 +95,6 @@ Basic, Ruby, Swift.
  */"""
         )
         File("temp.txt").delete()
-        /*sibilants("input/MY.txt", "temp2.txt")
-        assertFileContent(
-            "temp2.txt",
-            """АЖА"""
-        )
-        File("temp2.txt").delete()*/
     }
     @Test
     @Tag("Normal")

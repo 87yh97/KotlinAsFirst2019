@@ -3,6 +3,7 @@
 package lesson7.task1
 
 import java.io.File
+import kotlin.math.max
 
 /**
  * Пример
@@ -89,13 +90,6 @@ fun countSubstrings(inputName: String, substrings: List<String>): Map<String, In
  * Исключения (жюри, брошюра, парашют) в рамках данного задания обрабатывать не нужно
  *
  */
-/*fun testik(line: String) {
-    for (i in line.trimEnd().indices) {
-        println(i)
-        println(line[i])
-        println("---")
-    }
-}*/
 
 val replaceMap = mapOf(
     'ы' to 'и',
@@ -107,47 +101,12 @@ val replaceMap = mapOf(
 )
 
 fun sibilants(inputName: String, outputName: String) {
-    /*val writer = File(outputName).bufferedWriter()
-    var firstLine = true
-    for (line in File(inputName).readLines()) {
-        //line.trimEnd()
-        if (line.matches(Regex(""".*[жшчщЖШЧЩ][ыяюЫЯЮ].*"""))) {
-            var tempLine = line.trimEnd()
-            //tempLine = tempLine.trimEnd()
-            for (i in line.trimEnd().indices - 1) {
-                if (line.trimEnd()[i].toString().matches(Regex("""[жшчщЖШЧЩ]"""))) {
-                    if (i + 1 < line.trimEnd().length) {
-                        val nextSymbol = line.trimEnd()[i + 1]
-                        if (nextSymbol.toString().matches(Regex("""[ыяюЫЯЮ]"""))) {
-                            tempLine = tempLine.substring(0, i + 1)
-                            tempLine += replaceMap[nextSymbol]
-                            if (i + 2 < line.trimEnd().length) tempLine += line.trimEnd().substring(i + 2, line.trimEnd().length)
-                        }
-                    }
-                }
-            }
-            if (!firstLine) {
-                writer.write("\n")
-            }
-            writer.write(tempLine.trimEnd())
-
-        } else {
-            if (!firstLine) {
-                writer.write("\n")
-            }
-            writer.write(line.trimEnd())
-
-        }
-        firstLine = false
-    }
-    writer.close()*/
     val writer = File(outputName).bufferedWriter()
     var firstLine = true
     for (line in File(inputName).readLines()) {
         var tempLine = line
         var tempIndex = -1
         while (tempLine.matches(Regex(""".*[жшчщЖШЧЩ][ыяюЫЯЮ].*"""))) {
-
             tempIndex = tempLine.findAnyOf(listOf("ж", "ш", "ч", "щ", "Ж", "Ч", "Ш", "Щ"), tempIndex + 1)?.first ?: -1
             if (tempIndex == -1) break
             if ((tempIndex + 1 < line.length) && line[tempIndex + 1].toString().matches(Regex("""[ыяюЫЯЮ]"""))) {
@@ -155,19 +114,9 @@ fun sibilants(inputName: String, outputName: String) {
                 tempLine += replaceMap[line[tempIndex + 1]]
                 if (tempIndex + 2 < line.length) tempLine += line.substring(tempIndex + 2, line.length)
             }
-
-
         }
-        if (!firstLine) {
-            writer.write("\n")
-        }
+        if (!firstLine) writer.write("\n")
         writer.write(tempLine.trimEnd())
-        /*else {
-            if (!firstLine) {
-                writer.write("\n")
-            }
-            writer.write(line.trimEnd())
-            */
         firstLine = false
         }
 
@@ -193,11 +142,26 @@ fun sibilants(inputName: String, outputName: String) {
  *
  */
 fun centerFile(inputName: String, outputName: String) {
-    TODO()
-    /*val writer = File(outputName).bufferedWriter()
-    for (line in ) {
-
-    }*/
+    //TODO()
+    val writer = File(outputName).bufferedWriter()
+    var maxLength = 0
+    var isFirstLine = true
+    for (line in File(inputName).readLines()) {
+        if (line.trim().length > maxLength) maxLength = line.trim().length
+    }
+    for (line in File(inputName).readLines()) {
+        val length = line.trim().length
+        val spacesToAdd = (maxLength - length) / 2
+        var tempLine = ""
+        for (i in 0 until spacesToAdd) {
+            tempLine += " "
+        }
+        tempLine += line.trim()
+        if (!isFirstLine) writer.write("\n")
+        isFirstLine = false
+        writer.write(tempLine)
+    }
+    writer.close()
 }
 
 /**
