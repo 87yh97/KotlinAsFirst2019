@@ -171,6 +171,8 @@ class Tests {
             listOf(0, 6, 5, 4, 3, 2, 1, 0, -1, -1, -2),
             computeDeviceCells(11, "<<<<< + >>>>>>>>>> --[<-] >+[>+] >++[--< <[<] >+[>+] >++]", 256)
         )
+        assertEquals(listOf(2), computeDeviceCells(1, "+[+-]", 3420))
+        assertEquals(listOf(124, 1), computeDeviceCells(2, "[+][+++++]+[<+>]", 500))
         assertThrows(IllegalArgumentException::class.java) { computeDeviceCells(10, "===", 3) }
         assertThrows(IllegalArgumentException::class.java) { computeDeviceCells(10, "+>+>[+>", 3) }
         assertThrows(IllegalStateException::class.java) { computeDeviceCells(20, ">>>>>>>>>>>>>", 12) }
