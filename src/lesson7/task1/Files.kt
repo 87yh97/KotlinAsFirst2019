@@ -3,7 +3,6 @@
 package lesson7.task1
 
 import java.io.File
-import kotlin.math.max
 
 /**
  * Пример
@@ -190,14 +189,8 @@ fun centerFile(inputName: String, outputName: String) {
  * 7) В самой длинной строке каждая пара соседних слов должна быть отделена В ТОЧНОСТИ одним пробелом
  * 8) Если входной файл удовлетворяет требованиям 1-7, то он должен быть в точности идентичен выходному файлу
  */
-/*fun alignByMe(intLa: Int) {
-    //TODO()
-    val line = Regex("""a{5}""").toString()
-    println(line)
-}*/
 
 fun alignFileByWidth(inputName: String, outputName: String) {
-    /*TODO()*/
     val writer = File(outputName).bufferedWriter()
     var maxLength = 0
     val reader = File(inputName)
@@ -214,40 +207,22 @@ fun alignFileByWidth(inputName: String, outputName: String) {
         }
     }
 
-
-
     var firstLine = true
     for (line in reader.readLines()) {
-        /*if (line.isEmpty()) {
-            if (!firstLine) {
-                writer.write("\n")
-            }
-            firstLine = false
-            writer.write("")
-        }*/
         val words = line.trim().split(Regex("""( )+""")).toMutableList()
-        /*if (words == listOf(""," ")) {
-            if (!firstLine) {
-                writer.write("\n")
-            }
-            firstLine = false
-            writer.write("")
-        }*/
         if (words.size < 2) {
             if (!firstLine) {
                 writer.write("\n")
             }
             firstLine = false
             writer.write(words[0])
-
         } else {
             var tempLength = 0
             for (i in words.indices) {
                 words[i] = words[i].trim()
                 tempLength += words[i].length
             }
-            //tempLength += words.size - 1
-            //val stringla = Regex(""" {87}""")
+
             val numberOfSpaceRanges = words.size - 1
             val numberOfSpaces = maxLength - tempLength
             val spacesBetweenEach = numberOfSpaces / numberOfSpaceRanges
@@ -255,16 +230,10 @@ fun alignFileByWidth(inputName: String, outputName: String) {
             val listOfSpaces = mutableListOf<Int>()
             for (i in 0 until numberOfBiggerSpaceRanges) listOfSpaces.add(spacesBetweenEach + 1)
             for (i in numberOfBiggerSpaceRanges until numberOfSpaceRanges) listOfSpaces.add(spacesBetweenEach)
-            //if ()
-            //for (i in words.indices) {
-            //    listOfSpaces
-            // }
-            // if (numberOfSpaces % words.size != 0) spacesBetweenEach++
-            //while (numberOfSpaces > spacesBetweenEach)
+
             var tempLine = ""
             tempLine += words[0]
             for (i in 1 until words.size) {
-                //tempLine += listOfSpaces[i - 1]
                 for (j in 0 until listOfSpaces[i - 1]) tempLine += " "
                 tempLine += words[i]
             }
@@ -275,10 +244,6 @@ fun alignFileByWidth(inputName: String, outputName: String) {
             writer.write(tempLine)
         }
     }
-
-
-
-
     writer.close()
 }
 

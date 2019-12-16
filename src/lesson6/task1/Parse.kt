@@ -127,7 +127,22 @@ fun dateStrToDigit(str: String): String {
  * входными данными.
  */
 
-val digitalMonthList = mapOf(
+val monthListTest = mapOf(
+    "января" to Pair("1", 31),
+    "февраля" to Pair("2", 28),
+    "марта" to Pair("3", 31),
+    "апреля" to Pair("4", 30),
+    "мая" to Pair("5", 31),
+    "июня" to Pair("6", 30),
+    "июля" to Pair("7", 31),
+    "августа" to Pair("8", 31),
+    "сентября" to Pair("9", 30),
+    "октября" to Pair("10", 31),
+    "ноября" to Pair("11", 30),
+    "декабря" to Pair("12", 31)
+)
+
+val digitalMonthList = monthListTest.map { it.value.first.toInt() to Pair(it.key, it.value.second) }.toMap()/*mapOf(
     1 to Pair("января", 31),
     2 to Pair("февраля", 28),
     3 to Pair("марта", 31),
@@ -140,7 +155,7 @@ val digitalMonthList = mapOf(
     10 to Pair("октября", 31),
     11 to Pair("ноября", 30),
     12 to Pair("декабря", 31)
-)
+)*/
 
 fun dateDigitToStr(digital: String): String {
     val parts = digital.split(".")
@@ -162,8 +177,7 @@ fun dateDigitToStr(digital: String): String {
     val isYearLeap: Boolean = ((year % 4 == 0 && year % 100 != 0) || (year % 400 == 0))
 
     if ((day > digitalMonthList[month]?.second ?: 0) || (day < 0)) {
-        if (month == 2 && isYearLeap && day == 29) {
-        } else return ""
+        if (month != 2 || !isYearLeap || day != 29) return ""
     }
     var string = ""
     string += "$day "
@@ -534,11 +548,7 @@ fun computeDeviceCells(cells: Int, commands: String, limit: Int): List<Int> {
     var index = 0
     val nestingLevelIndexes = mutableMapOf<Int, Int>()
     var implementedCommandsCounter = 0
-    var wasCellsListSnapshoted = false
-    var indexSnapshot = 0
-    var cellSnapshot = 0
-    var currentCellSnapshot = 0
-    while ((index in 0 until commands.length) && (implementedCommandsCounter < limit)) {
+    while ((index in commands.indices) && (implementedCommandsCounter < limit)) {
         when (commands[index]) {
             '+' -> {
                 cellsList[currentCell]++
