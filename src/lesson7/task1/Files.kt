@@ -107,7 +107,7 @@ val replaceMap = mapOf(
 )
 
 fun sibilants(inputName: String, outputName: String) {
-    val writer = File(outputName).bufferedWriter()
+    /*val writer = File(outputName).bufferedWriter()
     var firstLine = true
     for (line in File(inputName).readLines()) {
         //line.trimEnd()
@@ -140,8 +140,40 @@ fun sibilants(inputName: String, outputName: String) {
         }
         firstLine = false
     }
+    writer.close()*/
+    val writer = File(outputName).bufferedWriter()
+    var firstLine = true
+    for (line in File(inputName).readLines()) {
+        var tempLine = line
+        var tempIndex = -1
+        while (tempLine.matches(Regex(""".*[жшчщЖШЧЩ][ыяюЫЯЮ].*"""))) {
+
+            tempIndex = tempLine.findAnyOf(listOf("ж", "ш", "ч", "щ", "Ж", "Ч", "Ш", "Щ"), tempIndex + 1)?.first ?: -1
+            if (tempIndex == -1) break
+            if ((tempIndex + 1 < line.length) && line[tempIndex + 1].toString().matches(Regex("""[ыяюЫЯЮ]"""))) {
+                tempLine = tempLine.substring(0, tempIndex + 1)
+                tempLine += replaceMap[line[tempIndex + 1]]
+                if (tempIndex + 2 < line.length) tempLine += line.substring(tempIndex + 2, line.length)
+            }
+
+
+        }
+        if (!firstLine) {
+            writer.write("\n")
+        }
+        writer.write(tempLine.trimEnd())
+        /*else {
+            if (!firstLine) {
+                writer.write("\n")
+            }
+            writer.write(line.trimEnd())
+            */
+        firstLine = false
+        }
+
     writer.close()
 }
+
 
 /**
  * Средняя

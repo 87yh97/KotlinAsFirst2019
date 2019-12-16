@@ -106,10 +106,9 @@ Basic, Ruby, Swift.
         /*sibilants("input/MY.txt", "temp2.txt")
         assertFileContent(
             "temp2.txt",
-            """ААЖАААЖ"""
+            """АЖА"""
         )
         File("temp2.txt").delete()*/
-    }
 
     @Test
     @Tag("Normal")
