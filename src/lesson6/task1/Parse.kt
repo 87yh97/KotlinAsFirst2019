@@ -364,73 +364,12 @@ fun firstDuplicateIndex(str: String): Int {
  * Все цены должны быть больше либо равны нуля.
  */
 fun mostExpensive(description: String): String {
-    /*val products = description.split(" ")
-    val productsSize = products.size
-    if (((productsSize % 2) == 1) || description.contains(Regex("""\s\s"""))) return ""
-    var theMostExpensiveProduct: Pair<String, Double>
-    try {
-        if (productsSize > 1) {
-            val firstProductStringCost = products[1]
-            val firstProductLabel = products[0]
-            if (productsSize > 2) theMostExpensiveProduct =
-                Pair(
-                    firstProductLabel,
-                    firstProductStringCost.substring(0, firstProductStringCost.length - 1).toDouble()
-                )
-            else {
-                return if (firstProductStringCost.matches(Regex("""\d+\.\d+""")) ||
-                    firstProductStringCost.matches(Regex("""\d+"""))
-                ) firstProductLabel
-                else ""
-            }
-        } else return ""
-    } catch (e: NumberFormatException) {
-        return ""
-    }
-    var index = 2
-    while (index < productsSize) {
-        val currentProductStringCost: String
-        val currentProductCost: Double
-        try {
-            currentProductStringCost = products[index + 1]
-        } catch (e: IndexOutOfBoundsException) {
-            return ""
-        }
-        currentProductCost = try {
-            if (index < productsSize - 2) currentProductStringCost.substring(
-                0,
-                currentProductStringCost.length - 1
-            ).toDouble()
-            else currentProductStringCost.toDouble()
-        } catch (e: NumberFormatException) {
-            return ""
-        }
-        if (currentProductCost > theMostExpensiveProduct.second) theMostExpensiveProduct =
-            Pair(products[index], currentProductCost)
-        index += 2
-    }
-    return theMostExpensiveProduct.first*/
     if (!description.matches(Regex("""(((\S)+ \d+((\.)\d*)?); )*((\S)+ \d+(\.\d*)?)"""))) return ""
     val products = description.split(Regex("""(;? )"""))
     var theMostExpensiveProduct: Pair<String, Double> = Pair(products[0], products[1].toDouble())
     val productsSize = products.size
-
-    //val firstProductStringCost = products[1]
-    //val firstProductLabel = products[0]
-    //if (productsSize > 2) theMostExpensiveProduct =
-    //   Pair(
-    //       firstProductLabel,
-    //       firstProductStringCost.substring(0, firstProductStringCost.length - 1).toDouble()
-    //   )
-    /*else {
-        return if (firstProductStringCost.matches(Regex("""\d+\.\d+""")) ||
-            firstProductStringCost.matches(Regex("""\d+"""))
-        ) firstProductLabel
-        else ""
-    }*/
     var index = 2
     while (index < productsSize) {
-        //val currentProductStringCost = products[index]
         val currentProductCost = products[index + 1].toDouble()
         if (currentProductCost > theMostExpensiveProduct.second) theMostExpensiveProduct =
             Pair(products[index], currentProductCost)
@@ -452,9 +391,9 @@ fun mostExpensive(description: String): String {
  */
 val romanList = listOf("M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I")
 val decimalEquivalent = listOf(1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1)
-
+val regex = Regex("""M*((CM)?|(DC{0,3})?|(D)?|(CD)?|C{0,3}?)?((XC)?|(LX{0,3})?|(L)?|(XL)?|(X{0,3})?)?((IX)?|(VI{0,3})?|(V)?|(IV)?|(I{0,3})?)?""")
 fun fromRoman(roman: String): Int {
-    if (roman == "" || (!roman.matches(Regex("""M*((CM)?|(DC{0,3})?|(D)?|(CD)?|C{0,3}?)?((XC)?|(LX{0,3})?|(L)?|(XL)?|(X{0,3})?)?((IX)?|(VI{0,3})?|(V)?|(IV)?|(I{0,3})?)?""")))) {
+    if (roman == "" || (!roman.matches(regex))) {
         return -1
     }
     var workingString = roman
