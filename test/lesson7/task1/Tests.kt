@@ -109,7 +109,7 @@ Basic, Ruby, Swift.
             """АЖА"""
         )
         File("temp2.txt").delete()*/
-
+    }
     @Test
     @Tag("Normal")
     fun centerFile() {
