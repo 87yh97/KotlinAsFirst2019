@@ -126,27 +126,46 @@ fun diameter(vararg points: Point): Segment {
     val thePeakCoords = mutableListOf(points[0].x, points[0].x, points[0].y, points[0].y)
     //                                                       Leftmost crd Rightmost crd Highest crd  Lowest crd
     for (point in points) {
-        if (point.x <= thePeakCoords[0]) {
-            thePeakCoords[0] = point.x
-            thePeakPoints[0] = point
-        }
-        if (point.x >= thePeakCoords[1]) {
-            thePeakCoords[1] = point.x
-            thePeakPoints[1] = point
-        }
-        if (point.y >= thePeakCoords[2]) {
-            thePeakCoords[2] = point.y
-            thePeakPoints[2] = point
-        }
-        if (point.y <= thePeakCoords[3]) {
-            thePeakCoords[3] = point.y
-            thePeakPoints[3] = point
+        if (points.size >= 4) {
+            if (point.x <= thePeakCoords[0]) {
+                thePeakCoords[0] = point.x
+                thePeakPoints[0] = point
+            }
+            if (point.x >= thePeakCoords[1] && point !in thePeakPoints) {
+                thePeakCoords[1] = point.x
+                thePeakPoints[1] = point
+            }
+            if (point.y >= thePeakCoords[2] && point !in thePeakPoints) {
+                thePeakCoords[2] = point.y
+                thePeakPoints[2] = point
+            }
+            if (point.y <= thePeakCoords[3] && point !in thePeakPoints) {
+                thePeakCoords[3] = point.y
+                thePeakPoints[3] = point
+            }
+        } else {
+            if (point.x <= thePeakCoords[0]) {
+                thePeakCoords[0] = point.x
+                thePeakPoints[0] = point
+            }
+            if (point.x >= thePeakCoords[1]) {
+                thePeakCoords[1] = point.x
+                thePeakPoints[1] = point
+            }
+            if (point.y >= thePeakCoords[2]) {
+                thePeakCoords[2] = point.y
+                thePeakPoints[2] = point
+            }
+            if (point.y <= thePeakCoords[3]) {
+                thePeakCoords[3] = point.y
+                thePeakPoints[3] = point
+            }
         }
     }
     var maxDistance = -1.0
     var pairWithMaxDistance = Pair(points[0], points[0])
     for (i in 0 .. 3) {
-        for (j in (i + 1) .. 3) {
+        for (j in 0 .. 3) {
             val currentDistance = thePeakPoints[i].distance(thePeakPoints[j])
             if (currentDistance > maxDistance) {
                 maxDistance = currentDistance
