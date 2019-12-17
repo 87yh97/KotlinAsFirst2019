@@ -3,6 +3,7 @@
 package lesson8.task1
 
 import lesson1.task1.sqr
+import java.lang.IllegalArgumentException
 import kotlin.math.PI
 import kotlin.math.cos
 import kotlin.math.sin
@@ -81,9 +82,9 @@ data class Circle(val center: Point, val radius: Double) {
      */
     fun distance(other: Circle): Double {
         val distance = center.distance(other.center)
-        val radiusSumm = radius + other.radius
-        if (distance <= radiusSumm) return 0.0
-        return distance - radiusSumm
+        val radiusSum = radius + other.radius
+        if (distance <= radiusSum) return 0.0
+        return distance - radiusSum
     }
 
     /**
@@ -91,7 +92,9 @@ data class Circle(val center: Point, val radius: Double) {
      *
      * Вернуть true, если и только если окружность содержит данную точку НА себе или ВНУТРИ себя
      */
-    fun contains(p: Point): Boolean = TODO()
+    fun contains(p: Point): Boolean {
+        return center.distance(p) <= radius
+    }
 }
 
 /**
@@ -111,7 +114,48 @@ data class Segment(val begin: Point, val end: Point) {
  * Дано множество точек. Вернуть отрезок, соединяющий две наиболее удалённые из них.
  * Если в множестве менее двух точек, бросить IllegalArgumentException
  */
-fun diameter(vararg points: Point): Segment = TODO()
+fun diameter(vararg points: Point): Segment {
+
+    if (points.size < 2) throw(IllegalArgumentException())
+    val thePeakPoints = mutableListOf(
+        Point(0.0, 0.0), // Leftmost point
+        Point(0.0, 0.0), // Rightmost point
+        Point(0.0, 0.0), // Highest point
+        Point(0.0, 0.0) // Lowest point
+    )
+    val thePeakCoords = mutableListOf(points[0].x, points[0].x, points[0].y, points[0].y)
+    //                                                       Leftmost crd Rightmost crd Highest crd  Lowest crd
+    for (point in points) {
+        if (point.x < thePeakCoords[0]) {
+            thePeakCoords[0] = point.x
+            thePeakPoints[0] = point
+        }
+        if (point.x > thePeakCoords[1]) {
+            thePeakCoords[1] = point.x
+            thePeakPoints[1] = point
+        }
+        if (point.y > thePeakCoords[2]) {
+            thePeakCoords[2] = point.y
+            thePeakPoints[2] = point
+        }
+        if (point.y < thePeakCoords[3]) {
+            thePeakCoords[3] = point.y
+            thePeakPoints[3] = point
+        }
+    }
+    var maxDistance = -1.0
+    var pairWithMaxDistance = Pair(points[0], points[0])
+    for (i in 0 .. 3) {
+        for (j in (i + 1) .. 3) {
+            val currentDistance = thePeakPoints[i].distance(thePeakPoints[j])
+            if (currentDistance > maxDistance) {
+                maxDistance = currentDistance
+                pairWithMaxDistance = Pair(thePeakPoints[i], thePeakPoints[j])
+            }
+        }
+    }
+    return Segment(pairWithMaxDistance.first, pairWithMaxDistance.second)
+}
 
 /**
  * Простая
