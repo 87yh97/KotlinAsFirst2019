@@ -126,19 +126,19 @@ fun diameter(vararg points: Point): Segment {
     val thePeakCoords = mutableListOf(points[0].x, points[0].x, points[0].y, points[0].y)
     //                                                       Leftmost crd Rightmost crd Highest crd  Lowest crd
     for (point in points) {
-        if (point.x < thePeakCoords[0]) {
+        if (point.x <= thePeakCoords[0]) {
             thePeakCoords[0] = point.x
             thePeakPoints[0] = point
         }
-        if (point.x > thePeakCoords[1]) {
+        if (point.x >= thePeakCoords[1]) {
             thePeakCoords[1] = point.x
             thePeakPoints[1] = point
         }
-        if (point.y > thePeakCoords[2]) {
+        if (point.y >= thePeakCoords[2]) {
             thePeakCoords[2] = point.y
             thePeakPoints[2] = point
         }
-        if (point.y < thePeakCoords[3]) {
+        if (point.y <= thePeakCoords[3]) {
             thePeakCoords[3] = point.y
             thePeakPoints[3] = point
         }
