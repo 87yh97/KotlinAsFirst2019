@@ -18,7 +18,7 @@ data class Point(val x: Double, val y: Double) {
      *
      * Рассчитать (по известной формуле) расстояние между двумя точками
      */
-    fun distance(other: Point): Double = sqrt(sqr(x - other.x) + sqr(y - other.y))
+    fun distance(other: Point): Double = sqrt((x - other.x)*(x - other.x) + (y - other.y)*(y - other.y))
 }
 
 /**
@@ -115,7 +115,7 @@ data class Segment(val begin: Point, val end: Point) {
  * Если в множестве менее двух точек, бросить IllegalArgumentException
  */
 fun diameter(vararg points: Point): Segment {
-
+    /*
     if (points.size < 2) throw(IllegalArgumentException())
     val thePeakPoints = mutableListOf(
         points[0], // Leftmost point
@@ -126,40 +126,22 @@ fun diameter(vararg points: Point): Segment {
     val thePeakCoords = mutableListOf(points[0].x, points[0].x, points[0].y, points[0].y)
     //                                                       Leftmost crd Rightmost crd Highest crd  Lowest crd
     for (point in points) {
-        if (points.size >= 4) {
-            if (point.x <= thePeakCoords[0]) {
-                thePeakCoords[0] = point.x
-                thePeakPoints[0] = point
-            }
-            if (point.x >= thePeakCoords[1] && point !in thePeakPoints) {
-                thePeakCoords[1] = point.x
-                thePeakPoints[1] = point
-            }
-            if (point.y >= thePeakCoords[2] && point !in thePeakPoints) {
-                thePeakCoords[2] = point.y
-                thePeakPoints[2] = point
-            }
-            if (point.y <= thePeakCoords[3] && point !in thePeakPoints) {
-                thePeakCoords[3] = point.y
-                thePeakPoints[3] = point
-            }
-        } else {
-            if (point.x <= thePeakCoords[0]) {
-                thePeakCoords[0] = point.x
-                thePeakPoints[0] = point
-            }
-            if (point.x >= thePeakCoords[1]) {
-                thePeakCoords[1] = point.x
-                thePeakPoints[1] = point
-            }
-            if (point.y >= thePeakCoords[2]) {
-                thePeakCoords[2] = point.y
-                thePeakPoints[2] = point
-            }
-            if (point.y <= thePeakCoords[3]) {
-                thePeakCoords[3] = point.y
-                thePeakPoints[3] = point
-            }
+
+        if (point.x <= thePeakCoords[0]) {
+            thePeakCoords[0] = point.x
+            thePeakPoints[0] = point
+        }
+        if (point.x >= thePeakCoords[1]) {
+            thePeakCoords[1] = point.x
+            thePeakPoints[1] = point
+        }
+        if (point.y >= thePeakCoords[2]) {
+            thePeakCoords[2] = point.y
+            thePeakPoints[2] = point
+        }
+        if (point.y <= thePeakCoords[3]) {
+            thePeakCoords[3] = point.y
+            thePeakPoints[3] = point
         }
     }
     var maxDistance = -1.0
@@ -170,6 +152,65 @@ fun diameter(vararg points: Point): Segment {
             if (currentDistance > maxDistance) {
                 maxDistance = currentDistance
                 pairWithMaxDistance = Pair(thePeakPoints[i], thePeakPoints[j])
+            }
+        }
+    }
+     */
+    /*
+    var maxDistance = -1.0
+    var pairWithMaxDistance = Pair(points[0], points[0])
+    for (point in points) {
+        for (point2 in points) {
+            val currentDistance = point.distance(point2)
+            if (currentDistance > maxDistance) {
+                maxDistance = currentDistance
+                pairWithMaxDistance = Pair(point, point2)
+            }
+        }
+    }
+
+     */
+    /*
+    if (points.size < 2) throw(IllegalArgumentException())
+    val thePeakPoints = mutableListOf(
+        points[0], // Левая нижняя 0
+        points[0], // Левая верхняя 1
+        points[0], // Правая верхняя 2
+        points[0] // Правая нижняя 3
+    )
+    //val thePeakCoords = mutableListOf(points[0].x, points[0].x, points[0].y, points[0].y)
+    //                                                       Leftmost crd Rightmost crd Highest crd  Lowest crd
+    for (point in points) {
+
+        if (point.x <= thePeakPoints[0].x || point.x <= thePeakPoints[1].x) { //Если левее или равен любой из левых
+            if (point.y < thePeakPoints[0].y) thePeakPoints[0] = point // Если ниже левой нижней
+            if (point.y > thePeakPoints[1].y) thePeakPoints[1] = point // Если выше левой верхней
+        }
+
+        if (point.x >= thePeakPoints[2].x || point.x >= thePeakPoints[3].x) { //Если правее или равен правой
+            if (point.y < thePeakPoints[3].y) thePeakPoints[3] = point // Если ниже правой нижней
+            if (point.y > thePeakPoints[2].y) thePeakPoints[2] = point // Если выше правой нижней
+        }
+
+        if (point.y >= thePeakPoints[1].y || point.y >= thePeakPoints[2].y) {
+            if (point.x < thePeakPoints[1].x) thePeakPoints[1] = point
+            if (point.x > thePeakPoints[2].x) thePeakPoints[2] = point
+        }
+
+        if (point.y <= thePeakPoints[0].y || point.y <= thePeakPoints[3].y) {
+            if (point.x < thePeakPoints[0].x) thePeakPoints[0] = point
+            if (point.x > thePeakPoints[2].x) thePeakPoints[2] = point
+        }
+
+    }*/
+    var maxDistance = -1.0
+    var pairWithMaxDistance = Pair(points[0], points[0])
+    for (i in points.indices) {
+        for (j in i until points.size) {
+            val currentDistance = points[i].distance(points[j])
+            if (currentDistance > maxDistance) {
+                maxDistance = currentDistance
+                pairWithMaxDistance = Pair(points[i], points[j])
             }
         }
     }
