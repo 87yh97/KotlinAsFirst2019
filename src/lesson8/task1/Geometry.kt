@@ -235,7 +235,20 @@ fun findNearestCirclePair(vararg circles: Circle): Pair<Circle, Circle> = TODO()
 fun circleByThreePoints(a: Point, b: Point, c: Point): Circle {
     val firstBisector = bisectorByPoints(a, b)
     val secondBisector = bisectorByPoints(b, c)
-    val center = firstBisector.crossPoint(secondBisector)
+    val thirdBisector = bisectorByPoints(a, c)
+
+    val firstCenter = firstBisector.crossPoint(secondBisector)
+    val secondCenter = secondBisector.crossPoint(thirdBisector)
+    val thirdCenter = firstBisector.crossPoint(thirdBisector)
+
+    val center: Any
+
+    center = if (firstCenter == secondCenter) firstCenter
+    else {
+        if (firstCenter == thirdCenter) firstCenter
+        else thirdCenter
+    }
+
     return Circle(center, center.distance(a))
 }
 
