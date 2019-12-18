@@ -145,19 +145,22 @@ fun centerFile(inputName: String, outputName: String) {
     var maxLength = 0
     var isFirstLine = true
     for (line in File(inputName).readLines()) {
-        if (line.trim().length > maxLength) maxLength = line.trim().length
+        val trimmedLine = line.trim()
+        if (trimmedLine.length > maxLength) maxLength = trimmedLine.length
     }
     for (line in File(inputName).readLines()) {
-        val length = line.trim().length
+        val trimmedLine = line.trim()
+        val length = trimmedLine.length
         val spacesToAdd = (maxLength - length) / 2
-        var tempLine = ""
-        for (i in 0 until spacesToAdd) {
-            tempLine += " "
-        }
-        tempLine += line.trim()
+        val tempLine = " ".repeat(spacesToAdd)
+        //for (i in 0 until spacesToAdd) {
+        //    tempLine += " "
+        //}
+        //tempLine += trimmedLine
         if (!isFirstLine) writer.write("\n")
         isFirstLine = false
         writer.write(tempLine)
+        writer.write(trimmedLine)
     }
     writer.close()
 }
@@ -227,7 +230,7 @@ fun alignFileByWidth(inputName: String, outputName: String) {
             val numberOfSpaces = maxLength - tempLength
             val spacesBetweenEach = numberOfSpaces / numberOfSpaceRanges
             val numberOfBiggerSpaceRanges = numberOfSpaces - spacesBetweenEach * numberOfSpaceRanges
-            val listOfSpaces = mutableListOf<Int>()
+            /*val listOfSpaces = mutableListOf<Int>()
             for (i in 0 until numberOfBiggerSpaceRanges) listOfSpaces.add(spacesBetweenEach + 1)
             for (i in numberOfBiggerSpaceRanges until numberOfSpaceRanges) listOfSpaces.add(spacesBetweenEach)
 
@@ -236,6 +239,19 @@ fun alignFileByWidth(inputName: String, outputName: String) {
             for (i in 1 until words.size) {
                 for (j in 0 until listOfSpaces[i - 1]) tempLine += " "
                 tempLine += words[i]
+            }*/
+            var tempLine = ""
+            tempLine += words[0]
+            var wordIndex = 1
+            for (i in 0 until numberOfBiggerSpaceRanges) {
+                tempLine = tempLine.padEnd(tempLine.length + spacesBetweenEach + 1, ' ')
+                tempLine += words[wordIndex]
+                wordIndex++
+            }
+            for (i in numberOfBiggerSpaceRanges until numberOfSpaceRanges) {
+                tempLine = tempLine.padEnd(tempLine.length + spacesBetweenEach, ' ')
+                tempLine += words[wordIndex]
+                wordIndex++
             }
             if (!firstLine) {
                 writer.write("\n")
