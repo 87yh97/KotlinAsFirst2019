@@ -221,7 +221,9 @@ fun bisectorByPoints(a: Point, b: Point): Line {
  * Задан список из n окружностей на плоскости. Найти пару наименее удалённых из них.
  * Если в списке менее двух окружностей, бросить IllegalArgumentException
  */
-fun findNearestCirclePair(vararg circles: Circle): Pair<Circle, Circle> = TODO()
+fun findNearestCirclePair(vararg circles: Circle): Pair<Circle, Circle> {
+TODO()
+}
 
 /**
  * Сложная
@@ -241,15 +243,20 @@ fun circleByThreePoints(a: Point, b: Point, c: Point): Circle {
     val secondCenter = secondBisector.crossPoint(thirdBisector)
     val thirdCenter = firstBisector.crossPoint(thirdBisector)
 
-    val center: Any
+    //val center: Any
 
-    center = if (firstCenter == secondCenter) firstCenter
+    /*center = if (firstCenter == secondCenter) firstCenter
     else {
         if (firstCenter == thirdCenter) firstCenter
         else thirdCenter
-    }
-
-    return Circle(center, center.distance(a))
+    }*/
+    /*if (firstCenter.y <= secondCenter.y && firstCenter.y >= thirdCenter.y ||
+            ) center = firstCenter
+    if (secondCenter.y <= firstCenter.y && secondCenter.y >= thirdCenter.y) center = firstCenter
+    if (thirdCenter.y <= secondCenter.y && firstCenter.y >= thirdCenter.y) center = firstCenter*/
+    val list = mutableListOf(firstCenter, secondCenter, thirdCenter)
+    list.sortBy{it.y}
+    return Circle(list[1], list[1].distance(a))
 }
 
 /**
