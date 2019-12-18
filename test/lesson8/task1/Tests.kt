@@ -726,6 +726,7 @@ class Tests {
                 )
             ) < 1e-5
         )
+
         assertTrue(
             Point(2.0, 2.0).distance(
                 Line(Point(0.0, 0.0), PI / 4).crossPoint(
@@ -735,6 +736,8 @@ class Tests {
         )
         val p = Point(1.0, 3.0)
         assertTrue(p.distance(Line(p, 1.0).crossPoint(Line(p, 2.0))) < 1e-5)
+
+
     }
 
     @Test

@@ -4,10 +4,7 @@ package lesson8.task1
 
 import lesson1.task1.sqr
 import java.lang.IllegalArgumentException
-import kotlin.math.PI
-import kotlin.math.cos
-import kotlin.math.sin
-import kotlin.math.sqrt
+import kotlin.math.*
 
 /**
  * Точка на плоскости
@@ -167,7 +164,14 @@ class Line private constructor(val b: Double, val angle: Double) {
      * Найти точку пересечения с другой линией.
      * Для этого необходимо составить и решить систему из двух уравнений (каждое для своей прямой)
      */
-    fun crossPoint(other: Line): Point = TODO()
+
+    fun crossPoint(other: Line): Point {
+
+        val x = ((other.b / cos(other.angle) - b / cos(angle)) / (tan(angle) - tan(other.angle)))
+
+        val y = (x*tan(other.angle)) + (other.b/cos(other.angle))
+        return Point(x, y)
+    }
 
     override fun equals(other: Any?) = other is Line && angle == other.angle && b == other.b
 
@@ -179,7 +183,9 @@ class Line private constructor(val b: Double, val angle: Double) {
 
     override fun toString() = "Line(${cos(angle)} * y = ${sin(angle)} * x + $b)"
 }
-
+//val a = Line(Point(1.0, 1.0), 1.0)
+//val c = Line(3.0, 1.0)
+//val b = a.
 /**
  * Средняя
  *
