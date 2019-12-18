@@ -126,6 +126,24 @@ class Tests {
         assertTrue(Circle(Point(0.0, 3.0), 5.01).contains(Point(-4.0, 0.0)))
     }
 
+    /*
+    @Test
+    fun middlePoint() {
+        assertEquals(Point(1.0, 1.0), Segment(Point(0.0, 0.0), Point(2.0, 2.0)).middlePoint())
+        assertEquals(Point(-1.0, 1.0), Segment(Point(0.0, 0.0), Point(-2.0, 2.0)).middlePoint())
+        assertEquals(Point(-1.0, -1.0), Segment(Point(0.0, 0.0), Point(-2.0, -2.0)).middlePoint())
+        assertEquals(Point(1.0, -1.0), Segment(Point(0.0, 0.0), Point(2.0, -2.0)).middlePoint())
+    }
+    @Test
+    fun halfLength() {
+        assertEquals(sqrt(2.0),Segment(Point(0.0, 0.0), Point(2.0, 2.0)).halfLength())
+        assertEquals(sqrt(2.0), Segment(Point(0.0, 0.0), Point(-2.0, 2.0)).halfLength())
+        assertEquals(sqrt(2.0), Segment(Point(0.0, 0.0), Point(-2.0, -2.0)).halfLength())
+        assertEquals(sqrt(2.0), Segment(Point(0.0, 0.0), Point(2.0, -2.0)).halfLength())
+    }
+
+     */
+
     @Test
     @Tag("Normal")
     fun diameter() {
@@ -625,7 +643,7 @@ class Tests {
             0.15898231462041423,
             5e-324
         )))*/
-
+        /*
         val myDiameter = diameter(
             Point(
                 0.6989402250698986,
@@ -680,7 +698,7 @@ class Tests {
                 -2.220446049250313e-16
             )
         )
-
+        */
         //assertEquals(p1, myDiameter)
 
 

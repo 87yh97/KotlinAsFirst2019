@@ -106,6 +106,15 @@ data class Segment(val begin: Point, val end: Point) {
 
     override fun hashCode() =
         begin.hashCode() + end.hashCode()
+
+    fun middlePoint(): Point {
+        return Point((begin.x + end.x) / 2, (begin.y + end.y) / 2)
+    }
+
+    fun halfLength(): Double {
+        return begin.distance(middlePoint())
+    }
+
 }
 
 /**
@@ -135,7 +144,9 @@ fun diameter(vararg points: Point): Segment {
  * Построить окружность по её диаметру, заданному двумя точками
  * Центр её должен находиться посередине между точками, а радиус составлять половину расстояния между ними
  */
-fun circleByDiameter(diameter: Segment): Circle = TODO()
+fun circleByDiameter(diameter: Segment): Circle {
+    return (Circle(diameter.middlePoint(), diameter.halfLength()))
+}
 
 /**
  * Прямая, заданная точкой point и углом наклона angle (в радианах) по отношению к оси X.
