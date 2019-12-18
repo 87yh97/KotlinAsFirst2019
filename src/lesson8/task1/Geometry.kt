@@ -181,15 +181,17 @@ class Line private constructor(val b: Double, val angle: Double) {
 
     override fun toString() = "Line(${cos(angle)} * y = ${sin(angle)} * x + $b)"
 }
-//val a = Line(Point(1.0, 1.0), 1.0)
-//val c = Line(3.0, 1.0)
-//val b = a.
+
 /**
  * Средняя
  *
  * Построить прямую по отрезку
  */
-fun lineBySegment(s: Segment): Line = TODO()
+fun lineBySegment(s: Segment): Line {
+    var angle = (atan((s.end.y - s.begin.y) / (s.end.x - s.begin.x)))
+    if (angle < 0) angle += PI
+    return Line(s.begin, angle)
+}
 
 /**
  * Средняя
